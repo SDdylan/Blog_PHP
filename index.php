@@ -4,5 +4,12 @@ use App\Controller\Front\HomeController;
 
 require 'vendor/autoload.php';
 
+// Routeur
 
-new HomeController();
+/*
+ *  $controller = 'HomeController'
+ *
+ */
+
+$controller = new HomeController();
+$controller->execute();
