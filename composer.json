@@ -1,0 +1,11 @@
+{
+    "name": "dylan/blog_php",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.3"
+    }
+}
