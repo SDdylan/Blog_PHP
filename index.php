@@ -13,3 +13,5 @@ require 'vendor/autoload.php';
 
 $controller = new HomeController();
 $controller->execute();
+
+require 'index.html';
