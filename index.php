@@ -1,8 +1,9 @@
 <?php
+require 'vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 use App\Controller\Front\HomeController;
-
-require 'vendor/autoload.php';
 
 // Routeur
 
@@ -14,4 +15,5 @@ require 'vendor/autoload.php';
 $controller = new HomeController();
 $controller->execute();
 
-require 'index.html';
+/*require 'index.html';*/
+require 'src/View/Front/test.php';
