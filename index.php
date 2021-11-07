@@ -15,5 +15,4 @@ use App\Controller\Front\HomeController;
 $controller = new HomeController();
 $controller->execute();
 
-/*require 'index.html';*/
-require 'src/View/Front/test.php';
+require 'src/View/Front/homepage.php';
