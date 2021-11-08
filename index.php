@@ -1,18 +1,13 @@
 <?php
+
+use App\Service\Router;
+
 require 'vendor/autoload.php';
+
+//Load .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-use App\Controller\Front\HomeController;
-
-// Routeur
-
-/*
- *  $controller = 'HomeController'
- *
- */
-
-/*$controller = new HomeController();
-$controller->execute();*/
-
-require 'src/View/Front/test.php';
+//Load router
+$router = new Router();
+$router->run();
