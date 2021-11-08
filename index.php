@@ -12,7 +12,7 @@ use App\Controller\Front\HomeController;
  *
  */
 
-$controller = new HomeController();
-$controller->execute();
+/*$controller = new HomeController();
+$controller->execute();*/
 
-require 'src/View/Front/homepage.php';
+require 'src/View/Front/test.php';
