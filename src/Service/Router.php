@@ -7,7 +7,9 @@ class Router
 {
     public static array $routes = [
         '' => 'Front\HomeController',
-       'contact' => 'Front\ContactController',
+       '?contact' => 'Front\ContactController',
+       '?posts' => 'Front\PostController',
+       '?connexion' => 'Front\ConnexionController',
     ];
 
     public function run(): void

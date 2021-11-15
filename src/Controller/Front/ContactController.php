@@ -9,7 +9,10 @@ class ContactController
 
     public function __invoke()
     {
-        echo 'ContactPage loaded';
-        //require '../../View/Front/homepage.php';
+        $loader = new \Twig\Loader\FilesystemLoader(ROOTPATH . '\src\View\Front');
+        $twig = new \Twig\Environment($loader, [
+        'cache' => false,
+        ]);
+        echo $twig->render('contact.twig');
     }
 }

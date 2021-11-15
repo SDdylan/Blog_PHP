@@ -1,0 +1,26 @@
+{% extends "layout.twig" %}
+
+{% block pageheader %}
+<header class="masthead" style="background-image: url('../../../assets/img/contact-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Connexion</h1>
+                    <form action="" method="post">
+                        <div class="col-12">
+                            <input type="email" id="mail" name="user_mail" placeholder="E-mail">
+                        </div>
+                        <div class="col-12">
+                            <input type="password" id="password" name="user_psw" placeholder="Mot de passe">
+                        </div>
+                        <input type="submit" value="Connexion">
+                        <br>
+                        <a href=""><font size="-0.7">Mot de passe oublié</font></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}

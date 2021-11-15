@@ -4,7 +4,7 @@ namespace App\Controller\Front;
 
 use App\Repository\PostRepository;
 
-class HomeController
+class PostController
 {
 
     public function __invoke()
@@ -13,7 +13,6 @@ class HomeController
         $twig = new \Twig\Environment($loader, [
         'cache' => false,
         ]);
-        echo $twig->render('homepage.twig');
+        echo $twig->render('posts.twig');
     }
 }
-
