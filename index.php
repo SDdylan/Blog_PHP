@@ -1,5 +1,6 @@
 <?php
 
+use App\Controller\Front\HomeController;
 use App\Service\Router;
 define('ROOTPATH', __DIR__);
 require 'vendor/autoload.php';

@@ -27,15 +27,3 @@ class Router
         $controller();
     }
 }
-
-/*
-//Exemple de routing via Twig
-
-$loader = new Twig_Loader_Filesystem(__DIR__ . '\templates');
-$twig = new Twig_Environment($loader, [
-'cache' => false,
-]);
-
-echo $twig->render('home.twig');
-
-*/        
