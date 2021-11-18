@@ -2,17 +2,13 @@
 
 namespace App\Controller\Front;
 
-use App\Repository\PostRepository;
+use App\Controller\AbstractController;
 
-class PostController
+class PostController extends AbstractController
 {
 
     public function __invoke()
     {
-        $loader = new \Twig\Loader\FilesystemLoader(ROOTPATH . '\src\View\Front');
-        $twig = new \Twig\Environment($loader, [
-        'cache' => false,
-        ]);
-        echo $twig->render('posts.twig');
+        $this->render('post.twig', 'Front');
     }
 }
