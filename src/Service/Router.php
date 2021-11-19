@@ -10,7 +10,9 @@ class Router
        'contact' => 'Front\ContactController',
        'posts' => 'Front\PostController',
        'connexion' => 'Front\ConnexionController',
-       'homeadmin' => 'Admin\HomeAdminController',
+       '?admin' => 'Admin\HomeAdminController',
+       'admin/newpost' => 'Admin\PostController',
+       'admin/newtag' => 'Admin\TagController',
     ];
 
     public function run(): void
