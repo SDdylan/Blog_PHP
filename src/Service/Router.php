@@ -10,6 +10,7 @@ class Router
        'contact' => 'Front\ContactController',
        'posts' => 'Front\PostController',
        'connexion' => 'Front\ConnexionController',
+       'process' => 'Front\ProcessController',
        '?admin' => 'Admin\HomeAdminController',
        'admin/newpost' => 'Admin\PostController',
        'admin/newtag' => 'Admin\TagController',

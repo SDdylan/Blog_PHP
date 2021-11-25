@@ -8,16 +8,16 @@
                         <div class='page-heading container'>
                             <h2>Connexion</h2>
 
-                            <form class="my-5" action="" method="post" data-sb-form-api-token="API_TOKEN">
+                            <form action="process" class="my-5" action="" method="GET" data-sb-form-api-token="API_TOKEN">
                                 <div class="form-floating my-2">
-                                    <input class="form-control" id="name" type="text" placeholder="Votre e-mail" data-sb-validations="required" />
-                                    <label for="name">E-mail</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">E-mail requis.</div>
+                                    <input class="form-control" id="email" name="email" type="text" placeholder="Votre e-mail" data-sb-validations="required" />
+                                    <label for="email">E-mail</label>
+                                    <div class="invalid-feedback" data-sb-feedback="email:required">E-mail requis.</div>
                                 </div>
                                 <div class="form-floating my-2">
-                                    <input class="form-control" id="name" type="text" placeholder="Votre mot de passe" data-sb-validations="required" />
-                                    <label for="name">Mot de passe</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">Mot de passe requis.</div>
+                                    <input class="form-control" id="mdp" name="mdp" type="text" placeholder="Votre mot de passe" data-sb-validations="required" />
+                                    <label for="mdp">Mot de passe</label>
+                                    <div class="invalid-feedback" data-sb-feedback="mdp:required">Mot de passe requis.</div>
                                 </div>
                                 <input class="btn btn-primary text-uppercase my-2" type="submit" value="Connexion">
                                 <br>
