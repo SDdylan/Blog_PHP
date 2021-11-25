@@ -6,25 +6,25 @@ use PDO;
 
 class DBConnection {
 
-    private $dbname;
-    private $host;
-    private $username;
-    private $password;
-    private $pdo;
+    private static ?PDO $pdo = null;
 
-    public function __construct(string $dbname, string $host, string $username, string $password) 
+    public static function getPDO(): PDO 
     {
-        $this->$dbname = $dbname;
-        $this->$host = $host;
-        $this->$username = $username;
-        $this->$password = $password;
-    }
-
-    public function getPDO(): PDO 
-    {
-        return $this->pdo ?? $this->pdo = new PDO("mysql:dbname={$this->dbname};host={$this->host}", $this->username, $this->password,
+        //return self::$pdo ?? self::$pdo = new PDO("mysql:dbname={$_ENV['DATABASE_NAME']};host={$_ENV['DATABASE_HOST']}", $_ENV['DATABASE_USER'], $_ENV['DATABASE_PASSWORD'],
         /*PDO::ATTR_ERRMODE -> PDO::ERRMODE_EXCEPTION, 
-        PDO_ATTR_DEFAULT_FETCH_MODE -> PDO::FETCH_OBJ*/);
+        PDO_ATTR_DEFAULT_FETCH_MODE -> PDO::FETCH_OBJ);*/
+
+        if (is_null(self::$pdo)) {
+            $host= $_ENV['DATABASE_HOST'];
+            $dbName=$_ENV['DATABASE_NAME'];
+            $dbUser=$_ENV['DATABASE_USER'];
+            $dbPwd=$_ENV['DATABASE_PASSWORD'];
+            $pdo= new \PDO("mysql:dbname=$dbName;host=$host", $dbUser, $dbPwd);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
+            self::$pdo = $pdo;
+        }
+        return self::$pdo;
         
     }
 }
