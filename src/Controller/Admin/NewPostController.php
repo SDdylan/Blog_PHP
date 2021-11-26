@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
 
-class PostController extends AbstractController
+class NewPostController extends AbstractController
 {
     public function __invoke()
     {
