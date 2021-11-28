@@ -7,7 +7,7 @@ use App\Database\DBConnection;
 class TagRepository
 {
     //Fonction pour ajouter un Tag a la BDD
-    public static function setNewTag(string $name)
+    public static function createTag(string $name)
     {
         $pdo = DBConnection::getPDO();
         $sql = 'INSERT INTO category ("name", ) VALUES (' . $name . ') ';

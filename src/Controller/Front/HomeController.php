@@ -11,9 +11,9 @@ class HomeController extends AbstractController
         //$posts = PostRepository::getLastPosts();
         //$this->render('homepage.twig', 'Front', ['listPost' => $posts]);
 
-        $post = PostRepository::getPost(1);
-        var_dump($post);
-        exit;
+        $post = PostRepository::createPost(1,1,"Title test 2", "chapo test 2", "content test 2");
+        //var_dump($post);
+        //exit;
         $this->render('homepage.twig', 'Front', ['post' => $post]);
     }
 }

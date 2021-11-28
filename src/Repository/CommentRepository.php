@@ -22,7 +22,7 @@ class CommentRepository
     }
 
     //Créer nouveau commentaire
-    public static function setNewComments(int $user_id, int $post_id, string $content) 
+    public static function setNewComment(int $user_id, int $post_id, string $content) 
     {
         $pdo = DBConnection::getPDO();
         $sql = 'INSERT INTO comment ("user_id", "post_id", "created_at", "content") VALUES (' . $user_id . ', ' . $post_id . ', ' . getdate() . ', ' . $content . ' ) ';
@@ -30,4 +30,9 @@ class CommentRepository
         
     }
 
-
+    //Supprimer un commentaire
+    public static function deleteComment(int $comment_id) {
+        $pdo = DBConnection::getPDO();
+        $sql = 'DELETE FROM comment WHERE id = ' . $comment_id;
+        $commentPDO = $pdo->query($sql);
+    }

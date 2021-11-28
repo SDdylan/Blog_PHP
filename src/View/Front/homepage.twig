@@ -34,13 +34,23 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
             <!-- Post preview-->
-
-            {% for posts in listPost %}
-                <li>{{ post.title }}</li>
-            {% endfor %}
-
-
             <h2>Derniers Articles :</h2>
+            {% for posts in listPost %}
+                <hr class="my-4" />
+                <!-- Post preview-->
+                <div class="post-preview">
+                    <a href="post.html">
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <h3 class="post-subtitle">{{ post.chapo }}</h3>
+                    </a>
+                    <p class="post-meta">
+                        Posté le {{ post.updated_date }}
+                        <!--<a href="#!">Start Bootstrap</a>-->
+                    </p>
+                </div>
+                <hr class="my-4" /> 
+            {% endfor %}
+            <!--
             <div class="post-preview">
                 <a href="post.html">
                     <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
@@ -52,9 +62,7 @@
                     on September 24, 2021
                 </p>
             </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-            <!-- Post preview-->
+            
             <div class="post-preview">
                 <a href="post.html"><h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2></a>
                 <p class="post-meta">
@@ -63,9 +71,9 @@
                     on September 18, 2021
                 </p>
             </div>
-            <!-- Divider-->
+
             <hr class="my-4" />
-            <!-- Post preview-->
+
             <div class="post-preview">
                 <a href="post.html">
                     <h2 class="post-title">Science has not yet mastered prophecy</h2>
@@ -77,9 +85,9 @@
                     on August 24, 2021
                 </p>
             </div>
-            <!-- Divider-->
+
             <hr class="my-4" />
-            <!-- Post preview-->
+
             <div class="post-preview">
                 <a href="post.html">
                     <h2 class="post-title">Failure is not an option</h2>
@@ -91,10 +99,10 @@
                     on July 8, 2021
                 </p>
             </div>
-            <!-- Divider-->
+
             <hr class="my-4" />
-            <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+            <! Pager-->
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Tout les Articles →</a></div>
         </div>
     </div>
 </div>
