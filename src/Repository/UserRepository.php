@@ -26,19 +26,39 @@ class UserRepository
     {
         $pdo = DBConnection::getPDO();
         $sql = 'UPDATE user SET is_admin = 1  WHERE id=? ASC LIMIT ';
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
+        //$adminDPO = $pdo->prepare($sql);
+        //$adminPDO->execute([$id]);
         //$userPDO = $pdo->query($sql);
-        
+        //return void;
     }
 
     //Créer un nouvel utilisateur
     public static function createUser(string $email, string $password, string $alias, string $firstname, string $lastname)
     {
+        $user = [
+            'email' => $email,
+            'password' => $password,
+            'alias' => $alias,
+            'firstname' => $firstname,
+            'lastname' => $lastname
+        ];
         $pdo = DBConnection::getPDO();
-        $sql = 'INSERT INTO user ("email", "password", "alias", firstname, "lastname") VALUES (' . $email . ', ' . $password . ', ' . $alias . ', ' . $firstname . ', ' . $lastname . ') ';
+        $sql = 'INSERT INTO user (email, password, alias, firstname, lastname) VALUES (:email, :password, :alias, :firstname, :lastname) ';
+        $insert = $pdo->prepare($sql);
+        $insert->execute($user);
+        //var_dump($sql);
+        //exit;
+    }
+
+    public static function modifyPasswordUser(string $newPassword)
+    {
+        $pdo = DBConnection::getPDO();
+        //On part du principe que l'utilisateur est déjà loggé
+        $sql = 'UPDATE user (password) VALUES (' . $newPassword . ') WHERE alias = ' . $_SESSION['login'] . ' AND password = ' . $_SESSION['password'] ;
         $userPDO = $pdo->query($sql);
     }
+
+
 
     //Fonction de connexion ?
     //Bannir utilisateur

@@ -19,7 +19,8 @@ class HomeController extends AbstractController
         //exit;
         //$this->render('homepage.twig', 'Front', ['post' => $post]);
 
-        $user = UserRepository::setAdmin(1);
+        $user = UserRepository::createUser('test@email.fr', 'password', 'user2', 'prenom2', 'nom2');
+       //$email, string $password, string $alias, string $firstname, string $lastname
         
     }
 }
