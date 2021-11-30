@@ -8,8 +8,7 @@ use App\Repository\PostRepository;
 
 class PostController extends AbstractController
 {
-
-    public function __invoke()
+    public function __invoke(string $slug = 'mon-premier-post')
     {
         $post = PostRepository::getPost(1);
         $comments = CommentRepository::getCommentsPost(1);
