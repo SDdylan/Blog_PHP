@@ -3,19 +3,24 @@
 namespace App\Repository;
 
 use App\Database\DBConnection;
+use App\Entity\Post;
+use App\Entity\PostFactory;
 
 class PostRepository
 {
-    //A factoriser ?
-    //Fonction pour récuperer les "n-ième" derniers posts publiés 
-    public static function getLastPosts(int $limit = 10)
+    /**
+     * @param int $limit
+     * @return Post[]
+     */
+    public static function getLastPosts(int $limit = 10): array
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM post ORDER BY updated_at DESC LIMIT ' . $limit;
-        $articlesPDO = $pdo->query($sql);
-        $posts =[];
-        foreach ($articlesPDO as $article) {
-            $posts[] = $article;
+        $postsPDO = $pdo->query($sql);
+
+        $posts = [];
+        foreach ($postsPDO as $postPDO) {
+            $posts[] = PostFactory::createFromDatabase($postPDO);
         }
         return $posts;
         
