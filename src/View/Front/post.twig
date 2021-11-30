@@ -1,17 +1,19 @@
 {% extends "layout.twig" %}
 
+{% set datePost = post[0].updated_at|split('-') %}
+{% set datePostHeure = dateUp[2]|split(' ') %}
+
+
 {% block pageheader %}
 <header class="masthead" style="background-image: url('../../../assets/img/post-bg.jpg')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="post-heading">
-                    <h1>Man must explore, and this is exploration at its greatest</h1>
-                    <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+                    <h1>{{ post[0].title }}</h1>
+                    <h2 class="subheading">{{ post[0].chapo }}</h2>
                     <span class="meta">
-                        Posted by
-                        <a href="#!">Start Bootstrap</a>
-                        on August 24, 2021
+                        Posté le {{ datePostHeure[0] }}/{{ datePost[1]}}/{{ datePost[0] }} à {{ datePostHeure[1] }} 
                     </span>
                 </div>
             </div>
@@ -26,7 +28,8 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+                    {{ post[0].content }}
+                    <!--<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
                     <p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
                     <p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
                     <p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
@@ -47,10 +50,31 @@
                         <a href="http://spaceipsum.com/">Space Ipsum</a>
                         &middot; Images by
                         <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>
-                    </p>
+                    </p>-->
                 </div>
             </div>
         </div>
     </article>
+    <!-- Comments -->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+            {% for comment in comments %}
+                {% set dateComment = comment.created_at|split('-') %}
+                {% set dateCommentHeure = dateComment[2]|split(' ') %}
+                <hr class="my-4" />
+                <!-- Post preview-->
+                <div class="card">
+                    <h5>{{ comment.alias }}</h5>
+                    <p>Posté le {{ dateCommentHeure[0] }}/{{ dateComment[1]}}/{{ dateComment[0] }} à {{ dateCommentHeure[1] }}<br>
+                        {{ comment.content }}
+                    </p>
+                </div>
+                <hr class="my-4" /> 
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
     

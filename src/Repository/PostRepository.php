@@ -28,6 +28,8 @@ class PostRepository
         $sql = 'SELECT * FROM post WHERE id = ' . $post_id;
         $articlePDO = $pdo->query($sql);
         $post = $articlePDO -> fetchAll();
+        //var_dump($post);
+        //exit;
         return $post;
     }
 
@@ -45,6 +47,7 @@ class PostRepository
     }
 
     //Fonction pour créer un post 
+    //NE FONCTIONNE PAS ENCORE
     public static function createPost(int $user_id, int $category_id, string $title, string $chapo, string $content)
     {
         $pdo = DBConnection::getPDO();

@@ -25,8 +25,10 @@ class UserRepository
     public static function setAdmin(int $id)
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'UPDATE user SET is_admin = 1  WHERE id = ' . $id . ' ASC LIMIT ';
-        $userPDO = $pdo->query($sql);
+        $sql = 'UPDATE user SET is_admin = 1  WHERE id=? ASC LIMIT ';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        //$userPDO = $pdo->query($sql);
         
     }
 
@@ -41,3 +43,4 @@ class UserRepository
     //Fonction de connexion ?
     //Bannir utilisateur
     //Modifier alias, mdp, email, ...
+}
