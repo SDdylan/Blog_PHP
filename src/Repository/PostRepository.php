@@ -42,7 +42,7 @@ class PostRepository
     public static function getPostsByTag(int $posts_tag_id)
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM post WHERE category_id = ' . $posts_tag_id . ' ORDER BY updated_at DESC' ;
+        $sql = 'SELECT * FROM post WHERE tag_id = ' . $posts_tag_id . ' ORDER BY updated_at DESC' ;
         $articlesPDO = $pdo->query($sql);
         $posts =[];
         foreach ($articlesPDO as $article) {
@@ -53,12 +53,12 @@ class PostRepository
 
     //Fonction pour créer un post 
     //NE FONCTIONNE PAS ENCORE
-    public static function createPost(int $user_id, int $category_id, string $title, string $chapo, string $content)
+    public static function createPost(int $user_id, int $tag_id, string $title, string $chapo, string $content)
     {
         $pdo = DBConnection::getPDO();
         $date = getdate();
         $updated_date = $date['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds'];
-        $sql = 'INSERT INTO post (user_id, category_id, title, updated_at, chapo, content) VALUES (' . $user_id . ', ' . $category_id . ', ' . $title . ', ' . $updated_date . ', ' . $chapo . ', ' . $content . ')' ;
+        $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content) VALUES (' . $user_id . ', ' . $tag_id . ', ' . $title . ', ' . $updated_date . ', ' . $chapo . ', ' . $content . ')' ;
         //var_dump($sql);
         //exit;
         $articlePDO = $pdo->query($sql);

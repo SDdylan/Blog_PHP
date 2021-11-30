@@ -10,7 +10,7 @@ class TagRepository
     public static function createTag(string $name)
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'INSERT INTO category ("name", ) VALUES (' . $name . ') ';
+        $sql = 'INSERT INTO tag ("name", ) VALUES (' . $name . ') ';
         $userPDO = $pdo->query($sql);
     }
 
@@ -18,7 +18,7 @@ class TagRepository
     public static function getTags()
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM categories ORDER BY updated_at DESC';
+        $sql = 'SELECT * FROM tag ORDER BY updated_at DESC';
         $articlesPDO = $pdo->query($sql);
         $posts =[];
         foreach ($articlesPDO as $article) {

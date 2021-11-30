@@ -8,6 +8,8 @@ class Post
 
     private ?User $user;
 
+    private ?Tag $tag;
+
     private string $title;
 
     private string $chapo;
