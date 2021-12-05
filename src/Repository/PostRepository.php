@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Database\DBConnection;
 use App\Entity\Post;
 use App\Entity\PostFactory;
+use Cocur\Slugify\Slugify;
 
 class PostRepository
 {
@@ -32,10 +33,7 @@ class PostRepository
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM post WHERE id = ' . $post_id;
         $articlePDO = $pdo->query($sql);
-        $post = $articlePDO -> fetchAll();
-        //var_dump($post);
-        //exit;
-        return $post;
+        return $articlePDO -> fetchAll();
     }
 
     //Fonction pour renvoyer les derniers posts appartenant a une certaine catégorie/tag (ajouter une limite ?)
@@ -51,17 +49,55 @@ class PostRepository
         return $posts;
     }
 
-    //Fonction pour créer un post 
-    //NE FONCTIONNE PAS ENCORE
-    public static function createPost(int $user_id, int $tag_id, string $title, string $chapo, string $content)
+    //Fonction pour créer un post
+    public static function createPost(Post $post) : void
+    {
+        $postParams = [
+            "user_id" => $post->getUser(),
+            "tag_id" => $post->getTag(),
+            "title" => $post->getTitle(),
+            "updated_at" => $post->getUpdatedAt(),
+            "chapo" => $post->getChapo(),
+            "content" => $post->getContent()
+        ];
+        $pdo = DBConnection::getPDO();
+        //$date = getdate();
+        //$updated_date = $date['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds'];
+        $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content) VALUES (:user_id, :tag_id, :title, :updated_at, :chapo, :content)' ;
+        $insert = $pdo->prepare($sql);
+        $insert->execute($postParams);
+    }
+
+    //récuperation d'un Post à partir d'un slug
+    public static function getPostBySlug(string $slug) : Post
     {
         $pdo = DBConnection::getPDO();
-        $date = getdate();
-        $updated_date = $date['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds'];
-        $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content) VALUES (' . $user_id . ', ' . $tag_id . ', ' . $title . ', ' . $updated_date . ', ' . $chapo . ', ' . $content . ')' ;
-        //var_dump($sql);
-        //exit;
-        $articlePDO = $pdo->query($sql);
-        return $articlePDO;
+
+        $sql = 'SELECT * FROM post ORDER BY updated_at ';
+        $postsPDO = $pdo->query($sql);
+
+        $postBySlug = new Post();
+
+        foreach ($postsPDO as $postPDO) {
+            $post = PostFactory::createFromDatabase($postPDO);
+
+            $slugify = new Slugify();
+
+            //var_dump($slugify->slugify($post->getTitle()));
+            var_dump($post);
+            exit;
+
+            /*if ($slug == $slugify->slugify($post->getTitle())) {
+                $postBySlug->setId($post->getId());
+                $postBySlug->setUserId($post->getUserId());
+                $postBySlug->setTag($post->getTag());
+                $postBySlug->setTitle($post->getTitle());
+                $postBySlug->setUpdatedAt($post->getUpdatedAt());
+                $postBySlug->setChapo($post->getChapo());
+                $postBySlug->setContent($post->getContent());
+                break;
+            }*/
+        }
+        return $postBySlug;
     }
 }

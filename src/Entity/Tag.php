@@ -18,12 +18,10 @@ class Tag
 
     /**
      * @param int|null $id
-     * @return Tag
      */
-    public function setId(?int $id): User
+    public function setId(?int $id): void
     {
         $this->id = $id;
-        return $this;
     }
 
     /**
@@ -36,12 +34,10 @@ class Tag
 
     /**
      * @param string $name
-     * @return User
      */
-    public function setName(string $name): User
+    public function setName(string $name): void
     {
         $this->name = $name;
-        return $this;
     }
 
 }

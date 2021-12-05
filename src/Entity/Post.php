@@ -55,6 +55,24 @@ class Post
     }
 
     /**
+     * @return Tag|null
+     */
+    public function getTag(): ?Tag
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param Tag|null $tag
+     * @return Post
+     */
+    public function setTag(?Tag $tag): Post
+    {
+        $this->tag = $tag;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getTitle(): string
@@ -100,13 +118,12 @@ class Post
 
     /**
      * @param string $content
-     * @return Post
      */
-    public function setContent(string $content): Post
+    public function setContent(string $content): void
     {
         $this->content = $content;
-        return $this;
     }
+
 
     /**
      * @return \DateTimeInterface

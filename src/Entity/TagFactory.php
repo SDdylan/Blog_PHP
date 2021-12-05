@@ -11,10 +11,14 @@ class TagFactory
         return $tag;
     }
 
-    public static function createFromDatabase(object $tagFromDatabase): User
+    public static function createFromDatabase(object $tagFromDatabase): Tag
     {
         $tag = new Tag();
+
+        //ne fonctionne pas lorsque on utilise les setter à la suite comme dans les autres Factory
+        $tag->setId($tagFromDatabase->id);
         $tag->setName($tagFromDatabase->name);
-        return $user;
+
+        return $tag;
     }
 }

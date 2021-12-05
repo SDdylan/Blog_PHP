@@ -26,7 +26,7 @@ class UserRepository
     public static function getUser(int $userId): User
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM user WHERE id = ? LIMIT 1';
+        $sql = 'SELECT * FROM user WHERE id = ?';
         $select = $pdo->prepare($sql);
         $select->execute([$userId]);
         $userPDO = $select->fetch();
@@ -35,14 +35,15 @@ class UserRepository
     }
 
     //Passer un utilisateur en administrateur
-    public static function setAdmin(int $id): void
+    public static function setAdmin(User $user): void
     {
+        $userParams = [
+            'id' => $user->getId()
+        ];
         $pdo = DBConnection::getPDO();
-        $sql = 'UPDATE user SET is_admin = 1  WHERE id=? ASC LIMIT ';
-        //$adminDPO = $pdo->prepare($sql);
-        //$adminPDO->execute([$id]);
-        //$userPDO = $pdo->query($sql);
-        //return void;
+        $sql = 'UPDATE user SET is_admin = 1  WHERE id = :id';
+        $insert = $pdo->prepare($sql);
+        $insert->execute($userParams);
     }
 
     //Créer un nouvel utilisateur

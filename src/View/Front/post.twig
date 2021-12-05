@@ -1,7 +1,5 @@
 {% extends "layout.twig" %}
 
-{% set datePost = post[0].updated_at|split('-') %}
-{% set datePostHeure = dateUp[2]|split(' ') %}
 
 
 {% block pageheader %}
@@ -13,7 +11,7 @@
                     <h1>{{ post[0].title }}</h1>
                     <h2 class="subheading">{{ post[0].chapo }}</h2>
                     <span class="meta">
-                        Posté le {{ datePostHeure[0] }}/{{ datePost[1]}}/{{ datePost[0] }} à {{ datePostHeure[1] }} 
+                        Posté le {{ post[0].updated_date|format_datetime('full', 'full', locale='fr') }}
                     </span>
                 </div>
             </div>
