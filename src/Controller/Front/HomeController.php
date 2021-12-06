@@ -12,10 +12,10 @@ class HomeController extends AbstractController
 {
     public function __invoke()
     {
-        //$posts = PostRepository::getLastPosts();
-        //$this->render('homepage.twig', 'Front', ['listPost' => $posts]);
+        $posts = PostRepository::getLastPosts();
+        $this->render('homepage.twig', 'Front', ['listPost' => $posts]);
 
-        $posts = PostRepository::getPostBySlug("titre-test");
+        //$posts = PostRepository::getPostBySlug("titre-test");
         //$this->render('homepage.twig', 'Front', ['listPost' => $posts]);
 
         //$posts = PostRepository::getLastPosts();

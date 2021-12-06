@@ -2,6 +2,8 @@
 
 use App\Controller\Front\HomeController;
 use App\Service\Router;
+use Twig\Extra\Intl\IntlExtension;
+
 /* PATH A AJOUTER POUR LES DIFFERENTES VUES TWIG
 $loader->addPath(dirname(__DIR__).'/src/View', 'view');
 $loader->addPath( dirname(__DIR__). '/src/View/Front', 'front');

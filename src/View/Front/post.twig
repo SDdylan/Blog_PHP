@@ -1,17 +1,15 @@
 {% extends "layout.twig" %}
 
-
-
 {% block pageheader %}
 <header class="masthead" style="background-image: url('../../../assets/img/post-bg.jpg')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="post-heading">
-                    <h1>{{ post[0].title }}</h1>
-                    <h2 class="subheading">{{ post[0].chapo }}</h2>
+                    <h1>{{ post.title }}</h1>
+                    <h2 class="subheading">{{ post.chapo }}</h2>
                     <span class="meta">
-                        Posté le {{ post[0].updated_date|format_datetime('full', 'full', locale='fr') }}
+                        Posté le {{  post.updatedAt|date('d-m-Y') }} à {{ post.updatedAt|date('H:i') }}
                     </span>
                 </div>
             </div>
@@ -26,7 +24,7 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    {{ post[0].content }}
+                    {{ post.content }}
                     <!--<p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
                     <p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
                     <p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
@@ -58,13 +56,11 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
             {% for comment in comments %}
-                {% set dateComment = comment.created_at|split('-') %}
-                {% set dateCommentHeure = dateComment[2]|split(' ') %}
                 <hr class="my-4" />
                 <!-- Post preview-->
                 <div class="card">
-                    <h5>{{ comment.alias }}</h5>
-                    <p>Posté le {{ dateCommentHeure[0] }}/{{ dateComment[1]}}/{{ dateComment[0] }} à {{ dateCommentHeure[1] }}<br>
+                    <h5>{{ comment.user.alias }}</h5>
+                    <p>Posté le {{ comment.createdAt|date('d-m-Y')  }} à {{ comment.createdAt|date('H:i') }}<br>
                         {{ comment.content }}
                     </p>
                 </div>

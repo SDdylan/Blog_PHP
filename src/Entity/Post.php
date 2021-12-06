@@ -28,12 +28,10 @@ class Post
 
     /**
      * @param int|null $id
-     * @return Post
      */
-    public function setId(?int $id): Post
+    public function setId(?int $id): void
     {
         $this->id = $id;
-        return $this;
     }
 
     /**
@@ -46,12 +44,10 @@ class Post
 
     /**
      * @param User|null $user
-     * @return Post
      */
-    public function setUser(?User $user): Post
+    public function setUser(?User $user): void
     {
         $this->user = $user;
-        return $this;
     }
 
     /**
@@ -64,12 +60,10 @@ class Post
 
     /**
      * @param Tag|null $tag
-     * @return Post
      */
-    public function setTag(?Tag $tag): Post
+    public function setTag(?Tag $tag): void
     {
         $this->tag = $tag;
-        return $this;
     }
 
     /**
@@ -82,12 +76,10 @@ class Post
 
     /**
      * @param string $title
-     * @return Post
      */
-    public function setTitle(string $title): Post
+    public function setTitle(string $title): void
     {
         $this->title = $title;
-        return $this;
     }
 
     /**
@@ -100,12 +92,10 @@ class Post
 
     /**
      * @param string $chapo
-     * @return Post
      */
-    public function setChapo(string $chapo): Post
+    public function setChapo(string $chapo): void
     {
         $this->chapo = $chapo;
-        return $this;
     }
 
     /**
@@ -124,7 +114,6 @@ class Post
         $this->content = $content;
     }
 
-
     /**
      * @return \DateTimeInterface
      */
@@ -135,12 +124,13 @@ class Post
 
     /**
      * @param \DateTimeInterface $updatedAt
-     * @return Post
      */
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): Post
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-        return $this;
     }
 
+
+
 }
+

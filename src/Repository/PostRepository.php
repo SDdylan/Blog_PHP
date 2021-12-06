@@ -28,12 +28,15 @@ class PostRepository
     }
 
     //Fonction de récupération d'un post à partir de son id
-    public static function getPost(int $post_id)
+    public static function getPost(int $postId) : Post
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM post WHERE id = ' . $post_id;
-        $articlePDO = $pdo->query($sql);
-        return $articlePDO -> fetchAll();
+        $sql = 'SELECT * FROM post WHERE id = ?';
+        $select = $pdo->prepare($sql);
+        $select->execute([$postId]);
+        $postPDO = $select->fetch();
+
+        return PostFactory::createFromDatabase($postPDO);
     }
 
     //Fonction pour renvoyer les derniers posts appartenant a une certaine catégorie/tag (ajouter une limite ?)
@@ -83,20 +86,16 @@ class PostRepository
 
             $slugify = new Slugify();
 
-            //var_dump($slugify->slugify($post->getTitle()));
-            var_dump($post);
-            exit;
-
-            /*if ($slug == $slugify->slugify($post->getTitle())) {
+            if ($slug == $slugify->slugify($post->getTitle())) {
                 $postBySlug->setId($post->getId());
-                $postBySlug->setUserId($post->getUserId());
+                $postBySlug->setUser($post->getUser());
                 $postBySlug->setTag($post->getTag());
                 $postBySlug->setTitle($post->getTitle());
                 $postBySlug->setUpdatedAt($post->getUpdatedAt());
                 $postBySlug->setChapo($post->getChapo());
                 $postBySlug->setContent($post->getContent());
                 break;
-            }*/
+            }
         }
         return $postBySlug;
     }

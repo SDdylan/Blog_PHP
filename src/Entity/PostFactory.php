@@ -32,12 +32,13 @@ class PostFactory
         $tag = TagRepository::getTag($tagId);
 
         $post = new Post();
-        $post->setId($postFromDatabase->id)
-            ->setTitle($postFromDatabase->title)
-            ->setChapo($postFromDatabase->chapo)
-            ->setUpdatedAt(new \DateTime($postFromDatabase->updated_at))
-            ->setUser($user)
-            ->setTag($tag);
+        $post->setId($postFromDatabase->id);
+        $post->setTitle($postFromDatabase->title);
+        $post->setChapo($postFromDatabase->chapo);
+        $post->setContent($postFromDatabase->content);
+        $post->setUpdatedAt(new \DateTime($postFromDatabase->updated_at));
+        $post->setUser($user);
+        $post->setTag($tag);
 
         return $post;
     }

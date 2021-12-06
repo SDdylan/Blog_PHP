@@ -29,15 +29,14 @@ class CommentFactory
         $postId = $commentFromDatabase->post_id;
         $post = PostRepository::getPost($postId);
 
-
         $comment = new Comment();
-        $comment->setId($commentFromDatabase->id)
-            ->setUser($user)
-            ->setPost($post)
-            ->setCreatedAt(new DateTime($commentFromDatabase->created_at))
-            ->setContent($commentFromDatabase->content)
-            ->setIsValidated($commentFromDatabase->is_validated === 1);
+        $comment->setId($commentFromDatabase->id);
+        $comment->setUser($user);
+        $comment->setPost($post);
+        $comment->setCreatedAt(new \DateTime($commentFromDatabase->created_at));
+        $comment->setContent($commentFromDatabase->content);
+        $comment->setIsValidated($commentFromDatabase->is_validated === 1);
 
-        return $comment;;
+        return $comment;
     }
 }

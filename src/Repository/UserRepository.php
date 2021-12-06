@@ -62,6 +62,7 @@ class UserRepository
         $insert->execute($userParams);
     }
 
+    //Fonction pour update les infos de l'utilisateur
     public static function modifyPasswordUser(string $newPassword)
     {
         $pdo = DBConnection::getPDO();
