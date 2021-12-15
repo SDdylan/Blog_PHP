@@ -25,20 +25,19 @@ class ConnexionController extends AbstractController
             var_dump($user);
             $hash = $user->getPassword();
             var_dump($hash);
+
             if (password_verify($_POST["password-register"], $hash)) {
                 echo 'Le mot de passe est valide !';
             } else {
                 echo 'Le mot de passe est invalide.';
             }
-            //exit();
-            //$newUser = UserRepository::createUser($user);
         }
 
         if(isset($_POST["connexion-form"])) {
             var_dump($_POST["mail-connexion"]);
             var_dump($_POST["password-connexion"]);
-            $connexion = UserRepository::login($_POST["mail-connexion"],$_POST["password-connexion"]);
-
+            $connexion = UserRepository::getUserByEmail($_POST["mail-connexion"],$_POST["password-connexion"]);
+            //ajouter pop-up puis redirection vers page de profil ou page d'accueil
 
         }
 

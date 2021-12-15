@@ -74,7 +74,7 @@ class UserRepository
     }
 
     //Fonction de connexion
-    public static function login($mail, $password){
+    public static function getUserByEmail($mail, $password){
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM user WHERE email = "'.  $mail . '"';
         var_dump($sql);
