@@ -8,7 +8,7 @@ class UserFactory
     {
         $user = new User();
 
-        $encodedPassword = $password;
+        $encodedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $user->setFirstName($firstName)
             ->setLastName($lastName)

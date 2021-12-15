@@ -3,15 +3,22 @@
 namespace App\Controller\Front;
 
 use App\Controller\AbstractController;
+use App\Exception\PostNotFoundException;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 
 class PostController extends AbstractController
 {
-    public function __invoke(string $slug = 'titre-test')
+    public function __invoke(array $parameters)
     {
-        $post = PostRepository::getPostBySlug($slug);
-        $comments = CommentRepository::getCommentsPost($post->getId());
-        $this->render('post.twig', 'Front', ['post' => $post, 'comments' => $comments]);
+        $postId = (int) $parameters['postId'];
+        $slug = $parameters['postSlug'];
+        try {
+            $post = PostRepository::getPost($postId);
+            $comments = CommentRepository::getCommentsPost(1);
+            $this->render('post.twig', 'Front', ['post' => $post, 'comments' => $comments]);
+        } catch (PostNotFoundException $exception) {
+            $this->redirectToUrl();
+        }
     }
 }

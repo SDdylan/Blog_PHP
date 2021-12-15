@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -56,6 +57,9 @@ class Router
         $route = new Route('/process', ['_controller' => ProcessController::class]);
         $routes->add('process', $route);
 
+        $route = new Route('/posts/{postId}-{postSlug}', ['_controller' => PostController::class]);
+        $routes->add('post_detail', $route);
+
         $context = new RequestContext();
 
         $matcher = new UrlMatcher($routes, $context);
@@ -63,7 +67,19 @@ class Router
         $parameters = $matcher->match($routeUri);
         $controllerName = $parameters['_controller'];
 
+
+        $extraParameters = [];
+        foreach ($parameters as $paramName => $value) {
+            if ($paramName !== '_controller' && $paramName !== '_route') {
+                $extraParameters[$paramName] = $value;
+            }
+        }
+
         $controller = new $controllerName();
-        $controller();
+        if(empty($extraParameters)) {
+            $controller();
+        }else{
+            $controller($extraParameters);
+        }
     }
 }

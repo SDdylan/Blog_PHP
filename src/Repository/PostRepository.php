@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Database\DBConnection;
 use App\Entity\Post;
 use App\Entity\PostFactory;
+use App\Exception\PostNotFoundException;
 use Cocur\Slugify\Slugify;
 
 class PostRepository
@@ -35,7 +36,9 @@ class PostRepository
         $select = $pdo->prepare($sql);
         $select->execute([$postId]);
         $postPDO = $select->fetch();
-
+        if (!$postPDO) {
+            throw new PostNotFoundException();
+        }
         return PostFactory::createFromDatabase($postPDO);
     }
 
@@ -64,8 +67,6 @@ class PostRepository
             "content" => $post->getContent()
         ];
         $pdo = DBConnection::getPDO();
-        //$date = getdate();
-        //$updated_date = $date['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds'];
         $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content) VALUES (:user_id, :tag_id, :title, :updated_at, :chapo, :content)' ;
         $insert = $pdo->prepare($sql);
         $insert->execute($postParams);
@@ -76,27 +77,14 @@ class PostRepository
     {
         $pdo = DBConnection::getPDO();
 
-        $sql = 'SELECT * FROM post ORDER BY updated_at ';
-        $postsPDO = $pdo->query($sql);
-
-        $postBySlug = new Post();
-
-        foreach ($postsPDO as $postPDO) {
-            $post = PostFactory::createFromDatabase($postPDO);
-
-            $slugify = new Slugify();
-
-            if ($slug == $slugify->slugify($post->getTitle())) {
-                $postBySlug->setId($post->getId());
-                $postBySlug->setUser($post->getUser());
-                $postBySlug->setTag($post->getTag());
-                $postBySlug->setTitle($post->getTitle());
-                $postBySlug->setUpdatedAt($post->getUpdatedAt());
-                $postBySlug->setChapo($post->getChapo());
-                $postBySlug->setContent($post->getContent());
-                break;
-            }
+        $sql = 'SELECT * FROM post WHERE slug = "' . $slug . '" ';
+        //$postPDO = $pdo->query($sql);
+        $select = $pdo->prepare($sql);
+        $select->execute();
+        $postPDO = $select->fetch();
+        if (!$postPDO) {
+            throw new PostNotFoundException();
         }
-        return $postBySlug;
+        return PostFactory::createFromDatabase($postPDO);
     }
 }

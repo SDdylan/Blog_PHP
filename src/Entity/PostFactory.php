@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
+use Cocur\Slugify\Slugify;
 
 class PostFactory
 {
@@ -14,12 +15,15 @@ class PostFactory
         $tagId = (new Tag)->getId($tag);
         $userId = (new User)->getId($user);
 
-        $post->setTag($tagId)
-            ->setUser($userId)
-            ->setTitle($title)
-            ->setUpdatedAt($updatedAt)
-            ->setChapo($chapo)
-            ->setContent($content);
+        $slugify = new Slugify();
+
+        $post->setTag($tagId);
+        $post->setUser($userId);
+        $post->setTitle($title);
+        $post->setUpdatedAt($updatedAt);
+        $post->setChapo($chapo);
+        $post->setContent($content);
+        $post->setSlug($slugify->slugify($title));
         return $post;
     }
 
@@ -37,6 +41,7 @@ class PostFactory
         $post->setChapo($postFromDatabase->chapo);
         $post->setContent($postFromDatabase->content);
         $post->setUpdatedAt(new \DateTime($postFromDatabase->updated_at));
+        $post->setSlug($postFromDatabase->slug);
         $post->setUser($user);
         $post->setTag($tag);
 

@@ -63,15 +63,31 @@ class UserRepository
     }
 
     //Fonction pour update les infos de l'utilisateur
-    public static function modifyPasswordUser(string $newPassword)
+    public static function modifyPasswordUser(string $newPassword) : void
     {
         $pdo = DBConnection::getPDO();
+        $pwd = password_hash($newPassword, PASSWORD_DEFAULT);
         //On part du principe que l'utilisateur est déjà loggé
-        $sql = 'UPDATE user (password) VALUES (' . $newPassword . ') WHERE alias = ' . $_SESSION['login'] . ' AND password = ' . $_SESSION['password'] ;
+        $sql = 'UPDATE user SET password = "' . $pwd . '" WHERE id = 1 ' ;
+        var_dump($sql);
         $userPDO = $pdo->query($sql);
     }
 
-
+    //Fonction de connexion
+    public static function login($mail, $password){
+        $pdo = DBConnection::getPDO();
+        $sql = 'SELECT * FROM user WHERE email = "'.  $mail . '"';
+        var_dump($sql);
+        $select = $pdo->prepare($sql);
+        $select->execute();
+        $userPDO = $select->fetch();
+        $user = UserFactory::createFromDatabase($userPDO);
+        if (password_verify($password, $user->getPassword())) {
+            echo "Bienvenue" . $user->getDisplayName();
+        } else {
+            echo "erreur de mdp";
+        }
+    }
 
     //Fonction de connexion ?
     //Bannir utilisateur

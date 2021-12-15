@@ -16,6 +16,8 @@ class Post
 
     private string $content;
 
+    private string $slug;
+
     private \DateTimeInterface $updatedAt;
 
     /**
@@ -112,6 +114,22 @@ class Post
     public function setContent(string $content): void
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     /**

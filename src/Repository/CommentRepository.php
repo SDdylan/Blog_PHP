@@ -10,17 +10,16 @@ class CommentRepository
 {
     //A factoriser ?
     //Fonction pour récuperer les derniers commentaires publiés sur un post (il faut aussi les pseudo des utilisateurs)
-    public static function getCommentsPost(int $post_id)
+    public static function getCommentsPost(int $postId)
     {
 
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM comment JOIN user ON comment.user_id = user.id WHERE comment.post_id = ' . $post_id . ' AND comment.is_validated = 1 ORDER BY comment.created_at DESC ';
+        $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' AND is_validated = 1 ORDER BY created_at DESC ';
         $commentsPDO = $pdo->query($sql);
         $comments =[];
         foreach ($commentsPDO as $comment) {
             $comments[] = CommentFactory::createFromDatabase($comment);
         }
-
         return $comments;
     }
 

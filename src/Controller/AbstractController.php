@@ -12,4 +12,10 @@ abstract class AbstractController
         ]);
         echo $twig->render($templateName, $content);
     }
+
+    protected function redirectToUrl(string $url = "/")
+    {
+        header('Location: ' . $url);
+        exit();
+    }
 }
