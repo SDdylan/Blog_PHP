@@ -128,6 +128,7 @@ class User
 
     public function encodePassword(string $clearPassword): User
     {
+        //Modifier cette ligne pour que $encodedPassword utilise le password_hash de PHP
         $encodedPassword = $clearPassword;
 
         return $this->setPassword($encodedPassword);

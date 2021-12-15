@@ -47,7 +47,7 @@ class UserRepository
     }
 
     //Créer un nouvel utilisateur
-    public static function createUser(User $user): void
+    public static function createUser(User $user): User
     {
         $userParams = [
             'email' => $user->getEmail(),
@@ -60,6 +60,8 @@ class UserRepository
         $sql = 'INSERT INTO user (email, password, alias, firstname, lastname) VALUES (:email, :password, :alias, :firstname, :lastname) ';
         $insert = $pdo->prepare($sql);
         $insert->execute($userParams);
+
+        return self::getUserByEmail($user->getEmail());
     }
 
     //Fonction pour update les infos de l'utilisateur
@@ -74,6 +76,10 @@ class UserRepository
     }
 
     //Fonction de connexion
+    //Typer les paramètres (ex : string $mail)
+    //Typer le format du retour => getUserByEmail(..): User
+    //Ne prendre en paramètre que l'email
+    //Respecter les PSR au niveau de l'alignement des accolades
     public static function getUserByEmail($mail, $password){
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM user WHERE email = "'.  $mail . '"';
@@ -82,6 +88,10 @@ class UserRepository
         $select->execute();
         $userPDO = $select->fetch();
         $user = UserFactory::createFromDatabase($userPDO);
+
+        //Cette méthode doit faire un return de $user
+
+        /* Ne pas utiliser le password_verify ici (c'est la responsabilité de l'entité => method checkPassword dans User à créer) */
         if (password_verify($password, $user->getPassword())) {
             echo "Bienvenue" . $user->getDisplayName();
         } else {

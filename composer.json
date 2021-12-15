@@ -9,7 +9,7 @@
         "twig/twig": "3.0",
         "phpmailer/phpmailer": "^6.5",
         "vlucas/phpdotenv": "^4.2",
-        "beberlei/assert": "^2.9",
+        "beberlei/assert": "^3.3",
         "symfony/routing": "5.3",
         "cocur/slugify": "^3.2",
         "twig/intl-extra": "^3.3",

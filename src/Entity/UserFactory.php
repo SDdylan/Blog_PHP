@@ -8,6 +8,8 @@ class UserFactory
     {
         $user = new User();
 
+        //Au lieu d'encoder le password ici, utiliser plutôt la méthode encodePassword de User
+
         $encodedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $user->setFirstName($firstName)
