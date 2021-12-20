@@ -128,9 +128,7 @@ class User
 
     public function encodePassword(string $clearPassword): User
     {
-        //Modifier cette ligne pour que $encodedPassword utilise le password_hash de PHP
-        $encodedPassword = $clearPassword;
-
+        $encodedPassword = password_hash($clearPassword, PASSWORD_DEFAULT);
         return $this->setPassword($encodedPassword);
     }
 
@@ -155,6 +153,11 @@ class User
     public function getDisplayName(): string
     {
         return $this->getFirstName() .' '.$this->getLastName();
+    }
+
+    public function checkPassword($clearPassword) : bool
+    {
+        return password_verify($clearPassword, $this->getPassword());
     }
 
 }

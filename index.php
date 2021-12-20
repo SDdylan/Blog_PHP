@@ -4,11 +4,12 @@ use App\Controller\Front\HomeController;
 use App\Service\Router;
 use Twig\Extra\Intl\IntlExtension;
 
+session_start();
+
 /* PATH A AJOUTER POUR LES DIFFERENTES VUES TWIG
 $loader->addPath(dirname(__DIR__).'/src/View', 'view');
 $loader->addPath( dirname(__DIR__). '/src/View/Front', 'front');
 $loader->addPath( dirname(__DIR__). '/src/View/Admin', 'admin');*/
-define('ROOTPATH', __DIR__);
 require 'vendor/autoload.php';
 
 //Load .env file

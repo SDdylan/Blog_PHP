@@ -8,9 +8,8 @@ use App\Entity\UserFactory;
 
 class UserRepository
 {
-    //A factoriser ?
     //Fonction pour récuperer les utilisateurs 
-    public static function getUsers(int $limit = 10)
+    public static function getUsers(int $limit = 10) : array
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM user ORDER BY id ASC LIMIT ' . $limit;
@@ -76,11 +75,9 @@ class UserRepository
     }
 
     //Fonction de connexion
-    //Typer les paramètres (ex : string $mail)
-    //Typer le format du retour => getUserByEmail(..): User
-    //Ne prendre en paramètre que l'email
     //Respecter les PSR au niveau de l'alignement des accolades
-    public static function getUserByEmail($mail, $password){
+    public static function getUserByEmail(string $mail) : User
+    {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM user WHERE email = "'.  $mail . '"';
         var_dump($sql);
@@ -88,15 +85,7 @@ class UserRepository
         $select->execute();
         $userPDO = $select->fetch();
         $user = UserFactory::createFromDatabase($userPDO);
-
-        //Cette méthode doit faire un return de $user
-
-        /* Ne pas utiliser le password_verify ici (c'est la responsabilité de l'entité => method checkPassword dans User à créer) */
-        if (password_verify($password, $user->getPassword())) {
-            echo "Bienvenue" . $user->getDisplayName();
-        } else {
-            echo "erreur de mdp";
-        }
+        return $user;
     }
 
     //Fonction de connexion ?
