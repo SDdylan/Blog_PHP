@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
 
-class HomeAdminController extends AbstractController
+class HomeAdminController extends AdminController
 {
     public function __invoke()
     {

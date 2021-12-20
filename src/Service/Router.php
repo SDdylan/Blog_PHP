@@ -45,6 +45,7 @@ class Router
         $route = new Route('/connexion', ['_controller' => ConnexionController::class]);
         $routes->add('connexion', $route);
 
+        //Adapter le bon controleur à la route juste en dessous
         $route = new Route('/admin', ['_controller' => HomeAdminController::class]);
         $routes->add('admin', $route);
 

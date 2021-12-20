@@ -29,7 +29,7 @@ class ConnexionController extends AbstractController
 
                 //Créer la session PHP pour stocker toutes les données de User (plus tard, la session sera gérée dans un service de session)
                 $_SESSION['user'] = $user;
-
+                $this->redirectToHomepage();
             }
         }
 
@@ -43,6 +43,7 @@ class ConnexionController extends AbstractController
                 //Vérifier la validité du password en comparant $user->getPassword() à $_POST["password-connexion"]
                 if ($user->checkPassword($_POST["password-connexion"])) {
                     $_SESSION['user'] = $user;
+                    $this->redirectToHomepage();
                 }
             }
         }
