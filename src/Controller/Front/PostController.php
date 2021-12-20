@@ -12,7 +12,6 @@ class PostController extends AbstractController
     public function __invoke(array $parameters)
     {
         $postId = (int) $parameters['postId'];
-        $slug = $parameters['postSlug'];
         try {
             $post = PostRepository::getPost($postId);
             $comments = CommentRepository::getCommentsPost(1);
