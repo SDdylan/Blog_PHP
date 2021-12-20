@@ -1,18 +1,21 @@
 <?php
+
+use App\Controller\Front\HomeController;
+use App\Service\Router;
+use Twig\Extra\Intl\IntlExtension;
+
+session_start();
+
+/* PATH A AJOUTER POUR LES DIFFERENTES VUES TWIG
+$loader->addPath(dirname(__DIR__).'/src/View', 'view');
+$loader->addPath( dirname(__DIR__). '/src/View/Front', 'front');
+$loader->addPath( dirname(__DIR__). '/src/View/Admin', 'admin');*/
 require 'vendor/autoload.php';
+
+//Load .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-use App\Controller\Front\HomeController;
-
-// Routeur
-
-/*
- *  $controller = 'HomeController'
- *
- */
-
-/*$controller = new HomeController();
-$controller->execute();*/
-
-require 'src/View/Front/test.php';
+//Load router
+$router = new Router();
+$router->run();

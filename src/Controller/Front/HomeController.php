@@ -1,25 +1,44 @@
 <?php
 
 namespace App\Controller\Front;
-
+use App\Entity\TagFactory;
+use App\Entity\UserFactory;
 use App\Repository\PostRepository;
-
-class HomeController
+use App\Repository\TagRepository;
+use App\Repository\UserRepository;
+use App\Controller\AbstractController;
+use App\Database\DBConnection;
+class HomeController extends AbstractController
 {
-
-    public function __construct()
+    public function __invoke()
     {
-
-    }
-
-    public function execute()
-    {
-        //Récupérer la liste des 10 derniers posts
+        /*$test = PostRepository::getPostBySlug('titre-test');
+        var_dump($test);
+        exit;*/
         $posts = PostRepository::getLastPosts();
+        $this->render('homepage.twig', 'Front', ['listPost' => $posts]);
 
-        //Envoyer les données récupérées à la vue concernée
-        //Loader la vue Twig correspondante en lui passant notre variable $posts
+        //$posts = PostRepository::getPostBySlug("titre-test");
+        //$this->render('homepage.twig', 'Front', ['listPost' => $posts]);
 
+        //$posts = PostRepository::getLastPosts();
+        //var_dump($posts);
+        //exit;
+        //$this->render('homepage.twig', 'Front', ['listPost' => $posts]);
+
+        //$post = PostRepository::createPost(1,1,"Title test 2", "chapo test 2", "content test 2");
+        //var_dump($post);
+        //exit;
+        //$this->render('homepage.twig', 'Front', ['post' => $post]);
+
+        //$user = UserRepository::GetUser(1);
+        //$userAd = UserRepository::setAdmin(UserRepository::GetUser(1));
+        //$newTag = TagFactory::create('Divers');
+        //var_dump($newTag);
+
+        //$Tag = TagRepository::createTag($newTag);
+
+
+        
     }
 }
-

@@ -1,0 +1,61 @@
+{% extends "layout.twig" %}
+
+{% block pageheader %}0
+<header class="masthead" style="background-image: url('../../../assets/img/post-bg.jpg')">
+    <div class=" position-relative  row">
+        <div class=" col col-xs-12">
+            <div class='page-heading container'>
+                <h2>Connexion</h2>
+                <form class="my-5" method="POST">
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="mail-connexion" name="mail-connexion" type="text" placeholder="Votre e-mail" required/>
+                        <label for="mail-connexion">E-mail</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="password-connexion" name="password-connexion" type="password" placeholder="Votre mot de passe" required/>
+                        <label for="password-connexion">Mot de passe</label>
+                    </div>
+                    <input type="hidden" id="connexion-form" name="connexion-form" value="1">
+                    <input class="btn btn-primary text-uppercase my-2" type="submit" value="Connexion">
+                    <br>
+                    <a href="" style="color: white;"><font size="-0.7">Mot de passe oublié</font></a>
+                </form>
+            </div>
+        </div>
+        <div class="col col-xs-12" >
+            <div class='page-heading container'>
+                <h2>Inscription</h2>
+                <form class=" my-5" method="POST">
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="firstname-register" name="firstname-register" type="text" placeholder="Votre nom" required/>
+                        <label for="name">Nom</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="lastname-register" name="lastname-register" type="text" placeholder="Votre prénom" required/>
+                        <label for="name">Prénom</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="alias-register" name="alias-register" type="text" placeholder="Votre pseudo" required/>
+                        <label for="name">Pseudo</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="mail-register" name="mail-register" type="email" placeholder="Votre e-mail" required/>
+                        <label for="name">E-mail</label>
+                    </div>
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="password-register" name="password-register" type="password" placeholder="Votre mot de passe" required/>
+                        <label for="name">Mot de passe</label>
+                    </div>
+                    <input type="hidden" id="register-form" name="register-form" value="1">
+                    <input class="btn btn-primary text-uppercase" type="submit" value="Connexion">
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<hr class="my-4">
+{% endblock %}
