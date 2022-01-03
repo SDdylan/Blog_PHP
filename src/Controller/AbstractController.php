@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserFactory;
+use App\Service\SessionService;
 
 abstract class AbstractController
 {
@@ -34,11 +36,20 @@ abstract class AbstractController
 
     protected function getUser(): ?User
     {
+        /*$user = UserFactory::create($_SESSION['user']->getFirstName(), $_SESSION['user']->getLastName(), $_SESSION['user']->getEmail(), $_SESSION['user']->getAlias(), $_SESSION['user']->getPassword());
+        return $user;*/
         return null;
     }
 
     protected function isUserLoggedIn(): bool
     {
+        /*if(isset($_SESSION['user'])) {
+            $logged = true;
+        } else {
+            $logged = false;
+        }
+        return $logged; */
+
         // SessionService::isUserLoggedIn()   //isset($_SESSION['user']
         return true;
     }
@@ -53,6 +64,10 @@ abstract class AbstractController
          * $user = $this->getUser();
          * return $user->isAdmin();
          */
+
+        //d'ou viens le $user ?
+        /*$user = SessionService::getUser();
+        return $user->isAdmin();   */
 
         return true;
     }

@@ -12,6 +12,8 @@ class AdminController extends AbstractController
         if( !$this->isUserLoggedIn() || !$this->isUserAdmin()) {
             $this->redirectToHomepage();
         }
+
+        $this->render('homeadmin.twig', 'Admin');
     }
 
 }

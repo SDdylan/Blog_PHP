@@ -6,18 +6,16 @@ use App\Controller\AbstractController;
 use App\Entity\UserFactory;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Service\SessionService;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
 
 class ConnexionController extends AbstractController
 {
 
+
     public function __invoke()
     {
-        /*
-         * Supprimer commentaire inutiles
-         */
-
         // Si on a soumis le formulaire d'enregistrement
         if (isset($_POST["register-form"])) {
             //Validation des données (à compléter)
@@ -28,7 +26,7 @@ class ConnexionController extends AbstractController
                 $createUser = UserRepository::createUser($user);
 
                 //Créer la session PHP pour stocker toutes les données de User (plus tard, la session sera gérée dans un service de session)
-                $_SESSION['user'] = $user;
+                SessionService::createSession($user);
                 $this->redirectToHomepage();
             }
         }
@@ -39,11 +37,16 @@ class ConnexionController extends AbstractController
             $errors = $this->validateSignInForm();
             if(empty($errors)) {
                 $user = UserRepository::getUserByEmail($_POST["mail-connexion"]);
-
                 //Vérifier la validité du password en comparant $user->getPassword() à $_POST["password-connexion"]
                 if ($user->checkPassword($_POST["password-connexion"])) {
-                    $_SESSION['user'] = $user;
-                    $this->redirectToHomepage();
+                    SessionService::createSession($user);
+                    var_dump($_SESSION['user']->isAdmin());
+                    var_dump($_SESSION['user']->getFirstName());
+                    if ($_SESSION['user']->isAdmin() === true) {
+                        $this->redirectToAdminHomepage();
+                    } elseif ($_SESSION['user']->isAdmin() === false) {
+                        $this->redirectToHomepage();
+                    }
                 }
             }
         }
@@ -79,8 +82,7 @@ class ConnexionController extends AbstractController
         try {
             Assertion::notEmpty($password);
             Assertion::betweenLength($password, 8,255);
-            //Assertion regex a corriger
-            Assertion::regex($password,"[A-Za-z][0-9][$&+,:;=?@#|'<>.^*()%!-]"); // au moins 1 lettre majuscule ou minuscule, 1 chiffre et 1 caractère spécial
+            Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])");
         } catch (AssertionFailedException $exception) {
             $errors['password-register'] = "Le format du mot de passe est invalide";
         }
@@ -108,6 +110,8 @@ class ConnexionController extends AbstractController
      */
     private function validateSignInForm(): array
     {
+        $errors = [];
+
         $email = $_POST["mail-connexion"];
         try {
             Assertion::notEmpty($email);
@@ -120,7 +124,7 @@ class ConnexionController extends AbstractController
         try {
             Assertion::notEmpty($password);
             Assertion::betweenLength($password, 8,255);
-            Assertion::regex($password,"[A-Za-z][0-9][$&+,:;=?@#|'<>.^*()%!-]"); // au moins 1 lettre majuscule ou minuscule, 1 chiffre et 1 caractère spécial
+            Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])"); // au moins 1 lettre majuscule ou minuscule, 1 chiffre et 1 caractère spécial
         } catch (AssertionFailedException $exception) {
             $errors['password-connexion'] = "Le format du mot de passe est invalide";
         }

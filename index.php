@@ -12,6 +12,9 @@ $loader->addPath( dirname(__DIR__). '/src/View/Front', 'front');
 $loader->addPath( dirname(__DIR__). '/src/View/Admin', 'admin');*/
 require 'vendor/autoload.php';
 
+//constante définissant la racine du projet (AbstractController)
+const ROOTPATH = __DIR__;
+
 //Load .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
