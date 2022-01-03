@@ -6,9 +6,9 @@ class Post
 {
     private ?int $id;
 
-    private ?User $user;
+    private ?int $user;
 
-    private ?Tag $tag;
+    private ?int $tag;
 
     private string $title;
 
@@ -37,33 +37,33 @@ class Post
     }
 
     /**
-     * @return User|null
+     * @return int|null
      */
-    public function getUser(): ?User
+    public function getUser(): ?int
     {
         return $this->user;
     }
 
     /**
-     * @param User|null $user
+     * @param int|null $user
      */
-    public function setUser(?User $user): void
+    public function setUser(?int $user): void
     {
         $this->user = $user;
     }
 
     /**
-     * @return Tag|null
+     * @return int|null
      */
-    public function getTag(): ?Tag
+    public function getTag(): ?int
     {
         return $this->tag;
     }
 
     /**
-     * @param Tag|null $tag
+     * @param int|null $tag
      */
-    public function setTag(?Tag $tag): void
+    public function setTag(?int $tag): void
     {
         $this->tag = $tag;
     }

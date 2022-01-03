@@ -16,13 +16,13 @@ class NewPostController extends AbstractController
             //Validation des données (à compléter)
             $errors = $this->validateRegisterForm();
             if(empty($errors)) {
-                $user = PostFactory::create($_POST["firstname-register"], $_POST["lastname-register"], $_POST["mail-register"], $_POST["alias-register"], $_POST["password-register"]);
+                //$user = PostFactory::create($_POST["tag"], $_SESSION["user"], $_POST["title"], date("Y-m-d H:i:s") , $_POST["chapo"], $_POST["content"]);
                 //Insertion de l'utilisateur dans la BDD
-                $createUser = UserRepository::createUser($user);
+                /*$createUser = UserRepository::createUser($user);
 
                 //Créer la session PHP pour stocker toutes les données de User (plus tard, la session sera gérée dans un service de session)
                 SessionService::createSession($user);
-                $this->redirectToHomepage();
+                $this->redirectToHomepage();*/
             }
         }
 
@@ -30,4 +30,6 @@ class NewPostController extends AbstractController
         $tags = TagRepository::getTags();
         $this->render('addpost.twig', 'Admin',  ['listTag' => $tags]);
     }
+
+
 }
