@@ -37,35 +37,45 @@ class Post
     }
 
     /**
-     * @return int|null
+     * @return User|null
      */
-    public function getUser(): ?int
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
     /**
-     * @param int|null $user
+     * @param User|null $user
      */
-    public function setUser(?int $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
 
+    public function getUserId(): int
+    {
+        return $this->getUser()->getId();
+    }
+
     /**
-     * @return int|null
+     * @return Tag|null
      */
-    public function getTag(): ?int
+    public function getTag(): ?Tag
     {
         return $this->tag;
     }
 
     /**
-     * @param int|null $tag
+     * @param Tag|null $tag
      */
-    public function setTag(?int $tag): void
+    public function setTag(?Tag $tag): void
     {
         $this->tag = $tag;
+    }
+
+    public function getTagId(): int
+    {
+        return $this->getTag()->getId();
     }
 
     /**

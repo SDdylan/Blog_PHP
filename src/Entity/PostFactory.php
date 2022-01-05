@@ -12,13 +12,13 @@ class PostFactory
     {
         $post = new Post();
 
-        /*$tagId = (new Tag)->getId($tag);
-        $userId = (new User)->getId($user);*/
+        $tagId = (new Tag)->getId($tag);
+        $userId = (new User)->getId($user);
 
         $slugify = new Slugify();
 
-        $post->setTag($tag);
-        $post->setUser($user);
+        $post->setTag($tagId);
+        $post->setUser($userId);
         $post->setTitle($title);
         $post->setUpdatedAt($updatedAt);
         $post->setChapo($chapo);
@@ -29,11 +29,11 @@ class PostFactory
 
     public static function createFromDatabase(object $postFromDatabase): Post
     {
-        /*$userId = $postFromDatabase->user_id;
+        $userId = $postFromDatabase->user_id;
         $user = UserRepository::getUser($userId);
 
         $tagId = $postFromDatabase->tag_id;
-        $tag = TagRepository::getTag($tagId);*/
+        $tag = TagRepository::getTag($tagId);
 
         $post = new Post();
         $post->setId($postFromDatabase->id);
@@ -42,8 +42,8 @@ class PostFactory
         $post->setContent($postFromDatabase->content);
         $post->setUpdatedAt(new \DateTime($postFromDatabase->updated_at));
         $post->setSlug($postFromDatabase->slug);
-        $post->setUser($postFromDatabase->user_id);
-        $post->setTag($postFromDatabase->tag_id);
+        $post->setUser($user);
+        $post->setTag($tag);
 
         return $post;
     }

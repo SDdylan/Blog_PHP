@@ -59,8 +59,8 @@ class PostRepository
     public static function createPost(Post $post) : void
     {
         $postParams = [
-            "user_id" => $post->getUser(),
-            "tag_id" => $post->getTag(),
+            "user_id" => $post->getUserId(), //getUserId()
+            "tag_id" => $post->getTagId(),    //getTagId à creer
             "title" => $post->getTitle(),
             "updated_at" => $post->getUpdatedAt(),
             "chapo" => $post->getChapo(),
