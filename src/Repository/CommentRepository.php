@@ -10,11 +10,24 @@ class CommentRepository
 {
     //A factoriser ?
     //Fonction pour récuperer les derniers commentaires publiés sur un post (il faut aussi les pseudo des utilisateurs)
-    public static function getCommentsPost(int $postId)
+    public static function getCommentsValidatedPost(int $postId)
     {
 
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' AND is_validated = 1 ORDER BY created_at DESC ';
+        $commentsPDO = $pdo->query($sql);
+        $comments =[];
+        foreach ($commentsPDO as $comment) {
+            $comments[] = CommentFactory::createFromDatabase($comment);
+        }
+        return $comments;
+    }
+
+    //Fonction pour récupérer tous les commentaires d'un post sans prendre en compte leurs statut
+    public static function getCommentsPost(int $postId)
+    {
+        $pdo = DBConnection::getPDO();
+        $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' ORDER BY created_at DESC ';
         $commentsPDO = $pdo->query($sql);
         $comments =[];
         foreach ($commentsPDO as $comment) {
@@ -60,5 +73,17 @@ class CommentRepository
         }
         return $comments;
         
+    }
+
+    public static function changeStatusComment(int $id_comment, int $status_comment)
+    {
+        $pdo = DBConnection::getPDO();
+        if ($status_comment == 0) {
+            $new_status = 1;
+        } else {
+            $new_status = 0;
+        }
+        $sql = 'UPDATE comment SET is_validated = ' . $new_status . ' WHERE id = ' . $id_comment;
+        $commentsPDO = $pdo->query($sql);
     }
 }

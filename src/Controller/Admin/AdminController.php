@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
+use App\Repository\PostRepository;
 
 class AdminController extends AbstractController
 {
@@ -12,8 +13,8 @@ class AdminController extends AbstractController
         if( !$this->isUserLoggedIn() || !$this->isUserAdmin()) {
             $this->redirectToHomepage();
         }
-
-        $this->render('homeadmin.twig', 'Admin');
+        $posts = PostRepository::getLastPosts();
+        $this->render('homeadmin.twig', 'Admin', ['listPost' => $posts]);
     }
 
 }

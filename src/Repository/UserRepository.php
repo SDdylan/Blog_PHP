@@ -82,8 +82,7 @@ class UserRepository
         $select = $pdo->prepare($sql);
         $select->execute();
         $userPDO = $select->fetch();
-        $user = UserFactory::createFromDatabase($userPDO);
-        return $user;
+        return UserFactory::createFromDatabase($userPDO);
     }
 
     //Fonction de connexion ?

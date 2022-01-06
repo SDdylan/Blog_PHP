@@ -36,22 +36,12 @@ abstract class AbstractController
 
     protected function getUser(): ?User
     {
-        /*$user = UserFactory::create($_SESSION['user']->getFirstName(), $_SESSION['user']->getLastName(), $_SESSION['user']->getEmail(), $_SESSION['user']->getAlias(), $_SESSION['user']->getPassword());
-        return $user;*/
-        return null;
+        return SessionService::getUser();
     }
 
     protected function isUserLoggedIn(): bool
     {
-        /*if(isset($_SESSION['user'])) {
-            $logged = true;
-        } else {
-            $logged = false;
-        }
-        return $logged; */
-
-        // SessionService::isUserLoggedIn()   //isset($_SESSION['user']
-        return true;
+        return SessionService::isUserLoggedIn();
     }
 
     protected function isUserAdmin(): bool
@@ -59,17 +49,9 @@ abstract class AbstractController
         if(!$this->isUserLoggedIn()) {
             return false;
         }
+        $user = $this->getUser();
+        return $user->isAdmin();
 
-        /*
-         * $user = $this->getUser();
-         * return $user->isAdmin();
-         */
-
-        //d'ou viens le $user ?
-        /*$user = SessionService::getUser();
-        return $user->isAdmin();   */
-
-        return true;
     }
 
 }

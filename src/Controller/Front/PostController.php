@@ -15,7 +15,7 @@ class PostController extends AbstractController
 
         try {
             $post = PostRepository::getPost($postId);
-            $comments = CommentRepository::getCommentsPost(1);
+            $comments = CommentRepository::getCommentsValidatedPost($post->getId());
             $this->render('post.twig', 'Front', ['post' => $post, 'comments' => $comments]);
         } catch (PostNotFoundException $exception) {
             $this->redirectToUrl();

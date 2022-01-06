@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Controller\Admin\PostCommentController;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -60,6 +61,9 @@ class Router
 
         $route = new Route('/posts/{postId}-{postSlug}', ['_controller' => PostController::class]);
         $routes->add('post_detail', $route);
+
+        $route = new Route('/admin/posts-comments/{postId}', ['_controller' => PostCommentController::class]);
+        $routes->add('post_comment', $route);
 
         $context = new RequestContext();
 

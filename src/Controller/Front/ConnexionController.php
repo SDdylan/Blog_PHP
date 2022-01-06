@@ -40,13 +40,13 @@ class ConnexionController extends AbstractController
                 //Vérifier la validité du password en comparant $user->getPassword() à $_POST["password-connexion"]
                 if ($user->checkPassword($_POST["password-connexion"])) {
                     SessionService::createSession($user);
-                    var_dump($_SESSION['user']->isAdmin());
-                    var_dump($_SESSION['user']->getFirstName());
-                    if ($_SESSION['user']->isAdmin() === true) {
+                    var_dump($_SESSION['user']);
+                    $this->redirectToAdminHomepage();
+                    /*if ($_SESSION['user']->isAdmin() === true) {
                         $this->redirectToAdminHomepage();
                     } elseif ($_SESSION['user']->isAdmin() === false) {
                         $this->redirectToHomepage();
-                    }
+                    }*/
                 }
             }
         }

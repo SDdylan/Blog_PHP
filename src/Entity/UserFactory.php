@@ -27,7 +27,7 @@ class UserFactory
             ->setEmail($userFromDatabase->email)
             ->setAlias($userFromDatabase->alias)
             ->setPassword($userFromDatabase->password)
-            ->setIsAdmin($userFromDatabase->is_admin === 1);
+            ->setIsAdmin((int)$userFromDatabase->is_admin === 1);
 
         return $user;
     }

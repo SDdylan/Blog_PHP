@@ -7,16 +7,15 @@ use App\Repository\PostRepository;
 
 class CommentFactory
 {
-    public static function create(int $id, User $user, Post $post, \DateTimeInterface $createdAt, string $content): Comment
+    public static function create(User $user, Post $post, \DateTimeInterface $createdAt, string $content): Comment
     {
         $comment = new Comment();
 
 
-        $comment->setId($id)
-            ->setUser($user)
-            ->setPost($post)
-            ->setCreatedAt($createdAt)
-            ->setContent($content);
+        $comment->setUser($user);
+        $comment->setPost($post);
+        $comment->setCreatedAt($createdAt);
+        $comment->setContent($content);
 
         return $comment;
     }
@@ -35,7 +34,7 @@ class CommentFactory
         $comment->setPost($post);
         $comment->setCreatedAt(new \DateTime($commentFromDatabase->created_at));
         $comment->setContent($commentFromDatabase->content);
-        $comment->setIsValidated($commentFromDatabase->is_validated === 1);
+        $comment->setIsValidated((int)$commentFromDatabase->is_validated === 1);
 
         return $comment;
     }

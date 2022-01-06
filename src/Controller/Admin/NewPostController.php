@@ -3,11 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController;
+use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use App\Entity\TagFactory;
 use App\Entity\PostFactory;
+use Assert\Assertion;
+use Assert\AssertionFailedException;
 
-class NewPostController extends AbstractController
+class NewPostController extends AdminController
 {
     public function __invoke()
     {
@@ -16,13 +19,13 @@ class NewPostController extends AbstractController
             //Validation des données (à compléter)
             $errors = $this->validateRegisterForm();
             if(empty($errors)) {
-                //$user = PostFactory::create($_POST["tag"], $_SESSION["user"], $_POST["title"], date("Y-m-d H:i:s") , $_POST["chapo"], $_POST["content"]);
+                //$tag = TagRepository::getTag($_POST["tag"]);
+                $post = PostFactory::create(TagRepository::getTag($_POST["tag"]), $this->getUser(), $_POST["title"], new \DateTime(), $_POST["chapo"], $_POST["content"]);
+                var_dump($post);
+                $date = ($post->getUpdatedAt()->format('Y-m-d H:i:s'));
+                var_dump($date);
                 //Insertion de l'utilisateur dans la BDD
-                /*$createUser = UserRepository::createUser($user);
-
-                //Créer la session PHP pour stocker toutes les données de User (plus tard, la session sera gérée dans un service de session)
-                SessionService::createSession($user);
-                $this->redirectToHomepage();*/
+                $createPost = PostRepository::createPost($post);
             }
         }
 
@@ -30,6 +33,42 @@ class NewPostController extends AbstractController
         $tags = TagRepository::getTags();
         $this->render('addpost.twig', 'Admin',  ['listTag' => $tags]);
     }
+    //const time = DateTimeInterface::ATOM;
+    //var_dump(datetime);
 
+    private function validateRegisterForm(): array //$_POST en paramètre provoque une erreur : Cannot re-assign auto-global variable _POST
+    {
+        $errors = [];
 
-}
+        $firstName = $_POST["tag"];
+        try {
+            Assertion::notEmpty($firstName);
+        } catch (AssertionFailedException $exception) {
+            $errors['tag'] = "Le tag ne peut pas être vide";
+        }
+
+        $title = $_POST["title"];
+        try {
+            Assertion::notEmpty($title);
+        } catch (AssertionFailedException $exception) {
+            $errors['title'] = "Le titre ne peut être vide";
+        }
+
+        $chapo = $_POST["chapo"];
+        try {
+            Assertion::notEmpty($chapo);
+        } catch (AssertionFailedException $exception) {
+            $errors['chapo'] = "Le chapo ne peut être vide";
+        }
+
+        $content = $_POST["content"];
+        try {
+            Assertion::notEmpty($content);
+        } catch (AssertionFailedException $exception) {
+            $errors['content'] = "Le contenu ne peut être vide";
+        }
+
+        return $errors;
+    }
+
+    }

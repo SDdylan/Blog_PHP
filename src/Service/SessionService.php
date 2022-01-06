@@ -15,34 +15,26 @@ class SessionService
      * 3) deleteSession() -> supprimer la session (en ayant vérifié que la clé $_SESSION['user'] existe bien
      * 4) getUser() -> renvoie $_SESSION['user'] si ça existe
      */
-    public static function isUserLoggedId() : bool
+    public static function isUserLoggedIn() : bool
     {
-        return session_status() === PHP_SESSION_ACTIVE;
+        return isset($_SESSION['user']);
     }
 
-    public static function createSession(User $user)
+    public static function createSession(User $user) : void
     {
         $_SESSION['user'] = $user;
-        return $_SESSION['user'];
     }
 
     public static function deleteSession() : void
     {
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            if (isset($_SESSION['user'])){
-                session_destroy();
-            }
-
-        }
+        session_destroy();
     }
 
-    public static function getUser() : User
+    public static function getUser() : ?User
     {
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            return self::createUser($_SESSION['user']);
-            //return UserFactory::createFromDatabase($_SESSION['user']);
-        } else {
-            exit;
+        if (self::isUserLoggedIn()) {
+            return $_SESSION['user'];
         }
+        return null;
     }
 }

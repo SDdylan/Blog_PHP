@@ -62,12 +62,14 @@ class PostRepository
             "user_id" => $post->getUserId(), //getUserId()
             "tag_id" => $post->getTagId(),    //getTagId à creer
             "title" => $post->getTitle(),
-            "updated_at" => $post->getUpdatedAt(),
+            "updated_at" => $post->getUpdatedAt()->format('Y-m-d H:i:s'), //on ne recupère que la date de l'objet DateTime
             "chapo" => $post->getChapo(),
-            "content" => $post->getContent()
+            "content" => $post->getContent(),
+            "slug" => $post->getSlug()
+            //AJOUTER LE SLUG
         ];
         $pdo = DBConnection::getPDO();
-        $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content) VALUES (:user_id, :tag_id, :title, :updated_at, :chapo, :content)' ;
+        $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content, slug) VALUES (:user_id, :tag_id, :title, :updated_at, :chapo, :content, :slug)' ;
         $insert = $pdo->prepare($sql);
         $insert->execute($postParams);
     }

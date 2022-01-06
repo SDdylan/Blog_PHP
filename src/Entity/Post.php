@@ -6,9 +6,9 @@ class Post
 {
     private ?int $id;
 
-    private ?int $user;
+    private User $user;
 
-    private ?int $tag;
+    private Tag $tag;
 
     private string $title;
 
