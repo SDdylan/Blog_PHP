@@ -6,9 +6,9 @@ class Post
 {
     private ?int $id;
 
-    private ?User $user;
+    private User $user;
 
-    private ?Tag $tag;
+    private Tag $tag;
 
     private string $title;
 
@@ -52,6 +52,11 @@ class Post
         $this->user = $user;
     }
 
+    public function getUserId(): int
+    {
+        return $this->getUser()->getId();
+    }
+
     /**
      * @return Tag|null
      */
@@ -66,6 +71,11 @@ class Post
     public function setTag(?Tag $tag): void
     {
         $this->tag = $tag;
+    }
+
+    public function getTagId(): int
+    {
+        return $this->getTag()->getId();
     }
 
     /**

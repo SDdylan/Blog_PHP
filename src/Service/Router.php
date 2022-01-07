@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Controller\Admin\PostCommentController;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -14,6 +15,7 @@ use App\Controller\Front\ProcessController;
 use App\Controller\Admin\HomeAdminController;
 use App\Controller\Admin\NewPostController;
 use App\Controller\Admin\TagController;
+use App\Controller\Admin\AdminController;
 
 class Router
 {
@@ -32,20 +34,20 @@ class Router
     {
         $routes = new RouteCollection();
 
-        //!\ A Factoriser /!\
         $route = new Route('/', ['_controller' => HomeController::class]);
         $routes->add('home', $route);
 
         $route = new Route('/contact', ['_controller' => ContactController::class]);
         $routes->add('contact', $route);
 
-        $route = new Route('/posts', ['_controller' => PostController::class]);
-        $routes->add('posts', $route);
+        /*$route = new Route('/posts', ['_controller' => PostController::class]);
+        $routes->add('posts', $route);*/
 
         $route = new Route('/connexion', ['_controller' => ConnexionController::class]);
         $routes->add('connexion', $route);
 
-        $route = new Route('/admin', ['_controller' => HomeAdminController::class]);
+        //Adapter le bon controleur à la route juste en dessous
+        $route = new Route('/admin', ['_controller' => AdminController::class]);
         $routes->add('admin', $route);
 
         $route = new Route('/admin/newpost', ['_controller' => NewPostController::class]);
@@ -59,6 +61,9 @@ class Router
 
         $route = new Route('/posts/{postId}-{postSlug}', ['_controller' => PostController::class]);
         $routes->add('post_detail', $route);
+
+        $route = new Route('/admin/posts-comments/{postId}', ['_controller' => PostCommentController::class]);
+        $routes->add('post_comment', $route);
 
         $context = new RequestContext();
 
@@ -78,7 +83,7 @@ class Router
         $controller = new $controllerName();
         if(empty($extraParameters)) {
             $controller();
-        }else{
+        } else {
             $controller($extraParameters);
         }
     }

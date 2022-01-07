@@ -12,13 +12,13 @@ class PostFactory
     {
         $post = new Post();
 
-        $tagId = (new Tag)->getId($tag);
-        $userId = (new User)->getId($user);
+        /*$tagId = (new Tag)->getId($tag);
+        $userId = (new User)->getId($user);*/
 
         $slugify = new Slugify();
 
-        $post->setTag($tagId);
-        $post->setUser($userId);
+        $post->setTag($tag);
+        $post->setUser($user);
         $post->setTitle($title);
         $post->setUpdatedAt($updatedAt);
         $post->setChapo($chapo);
@@ -33,6 +33,7 @@ class PostFactory
         $user = UserRepository::getUser($userId);
 
         $tagId = $postFromDatabase->tag_id;
+
         $tag = TagRepository::getTag($tagId);
 
         $post = new Post();
@@ -44,7 +45,6 @@ class PostFactory
         $post->setSlug($postFromDatabase->slug);
         $post->setUser($user);
         $post->setTag($tag);
-
         return $post;
     }
 }

@@ -12,9 +12,6 @@ class HomeController extends AbstractController
 {
     public function __invoke()
     {
-        /*$test = PostRepository::getPostBySlug('titre-test');
-        var_dump($test);
-        exit;*/
         $posts = PostRepository::getLastPosts();
         $this->render('homepage.twig', 'Front', ['listPost' => $posts]);
 
@@ -38,7 +35,5 @@ class HomeController extends AbstractController
 
         //$Tag = TagRepository::createTag($newTag);
 
-
-        
     }
 }

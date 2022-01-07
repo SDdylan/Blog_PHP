@@ -70,7 +70,6 @@ class UserRepository
         $pwd = password_hash($newPassword, PASSWORD_DEFAULT);
         //On part du principe que l'utilisateur est déjà loggé
         $sql = 'UPDATE user SET password = "' . $pwd . '" WHERE id = 1 ' ;
-        var_dump($sql);
         $userPDO = $pdo->query($sql);
     }
 
@@ -80,12 +79,10 @@ class UserRepository
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM user WHERE email = "'.  $mail . '"';
-        var_dump($sql);
         $select = $pdo->prepare($sql);
         $select->execute();
         $userPDO = $select->fetch();
-        $user = UserFactory::createFromDatabase($userPDO);
-        return $user;
+        return UserFactory::createFromDatabase($userPDO);
     }
 
     //Fonction de connexion ?

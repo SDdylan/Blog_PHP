@@ -12,9 +12,10 @@ class PostController extends AbstractController
     public function __invoke(array $parameters)
     {
         $postId = (int) $parameters['postId'];
+
         try {
             $post = PostRepository::getPost($postId);
-            $comments = CommentRepository::getCommentsPost(1);
+            $comments = CommentRepository::getCommentsValidatedPost($post->getId());
             $this->render('post.twig', 'Front', ['post' => $post, 'comments' => $comments]);
         } catch (PostNotFoundException $exception) {
             $this->redirectToUrl();
