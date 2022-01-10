@@ -40,6 +40,11 @@ class Comment
         return $this->user;
     }
 
+    public function getUserId() : int
+    {
+        return $this->getUser()->getId();
+    }
+
     /**
      * @param User|null $user
      */
@@ -48,12 +53,18 @@ class Comment
         $this->user = $user;
     }
 
+
     /**
      * @return Post|null
      */
     public function getPost(): ?Post
     {
         return $this->post;
+    }
+
+    public function getPostId(): int
+    {
+        return $this->getPost()->getId();
     }
 
     /**
@@ -111,5 +122,7 @@ class Comment
     {
         $this->isValidated = $isValidated;
     }
+
+
 
 }

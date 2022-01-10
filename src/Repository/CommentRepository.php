@@ -40,16 +40,14 @@ class CommentRepository
     public static function createComment(Comment $comment)
     {
         $commentParams = [
-            "user_id" => $comment->getUser(),
-            "post_id" => $comment->getPost(),
-            "created_at" => $comment->getCreatedAt(),
+            "user_id" => $comment->getUserId(),
+            "post_id" => $comment->getPostId(),
+            "created_at" => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
             "content" => $comment->getContent()
         ];
 
         $pdo = DBConnection::getPDO();
-        $date = getdate();
-        $created_date = $date['year'] . '-' . $date['mon'] . '-' . $date['mday'] . ' ' . $date['hours'] . ':' . $date['minutes'] . ':' . $date['seconds'];
-        $sql = 'INSERT INTO comment ("user_id", "post_id", "created_at", "content") VALUES (:user_id, :post_id, :created_at, :content) ';
+        $sql = 'INSERT INTO comment (user_id, post_id, created_at, content) VALUES (:user_id, :post_id, :created_at, :content) ';
         $insert = $pdo->prepare($sql);
         $insert->execute($commentParams);
     }

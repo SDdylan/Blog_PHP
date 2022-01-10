@@ -21,9 +21,6 @@ class NewPostController extends AdminController
             if(empty($errors)) {
                 //$tag = TagRepository::getTag($_POST["tag"]);
                 $post = PostFactory::create(TagRepository::getTag($_POST["tag"]), $this->getUser(), $_POST["title"], new \DateTime(), $_POST["chapo"], $_POST["content"]);
-                var_dump($post);
-                $date = ($post->getUpdatedAt()->format('Y-m-d H:i:s'));
-                var_dump($date);
                 //Insertion de l'utilisateur dans la BDD
                 $createPost = PostRepository::createPost($post);
             }
