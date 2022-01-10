@@ -1,0 +1,41 @@
+{% extends "layout.twig" %}
+
+{% block pageheader %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center text-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <h2>Créer Article</h2>
+            <hr>
+            <form id="addPostForm" method="POST">
+                <div class="form-floating my-2">
+                    <input class="form-control" id="title" name="title" type="text" placeholder="Titre..." required/>
+                    <label for="title">Titre</label>
+                </div>
+                <div class="form-floating my-2">
+                    <input class="form-control" id="chapo" name="chapo" type="text" placeholder="Chapo..." required/>
+                    <label for="chapo">Chapo</label>
+                </div>
+                <div class="form-floating my-2">
+                    <textarea class="form-control" style="height: 12rem" id="content" name="content" type="text" placeholder="Content..." required/></textarea>
+                    <label for="content">Content</label>
+                </div>
+                <!-- Aller chercher les différents tags disponible sur la BDD -->
+                <div class="form-floating">
+                    <select class="form-control" name="tag" id="tag">
+                        {% for tag in listTag %}
+                            <option value="{{ tag.id }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" id="post-form" name="post-form" value="1">
+                <br/>
+                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
