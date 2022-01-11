@@ -14,34 +14,30 @@
     </div>
     <hr class="my-4">
     <div class="container px-4 px-lg-5">
-        <table style="width: 100%">
-            <tr>
-                <td><strong>Titre</strong></td>
-                <td><strong>Chapo</strong></td>
-                <td><strong>Date de modification</strong></td>
+        <div class="row justify-content-center">
+            <a href="/admin/posts/add"  class="btn btn-primary col-md-2 col-sm-6 text-uppercase">Ajouter Post</a>
+            <table style="width: 100%">
+                <tr>
+                    <td><strong>Titre</strong></td>
+                    <td><strong>Date de modification</strong></td>
 
-            </tr>
-            {% for post in listPost %}
-                <form>
-                    <tr>
-                        <td>{{ post.title }}</td>
-                        <td>{{ post.chapo }}</td>
-                        <td>{{ post.updatedAt | date('m/d/Y') }}</td>
-                        <td><a href="admin/posts-comments/{{ post.id }}">commentaires</a></td>                    <!-- Ajouter la page de la liste des commentaires <a href="posts/{{ post.id }}-{{ post.slug }}"> -->
-                        <td><a href="">éditer</a></td>                          <!-- Ajouter la page d'édition du post -->
-                        <td>
-                            <input type="button" id="post-form" name="post-form" value="supprimer">
-                            <input type="hidden" value="{{ post.id }}">
-                        </td>
-                    </tr>
-                </form>
-                <!--<div class="post-preview">
-                    <a href="posts/{{ post.id }}-{{ post.slug }}">
-                        <h2 class="post-title">{{ post.title }}</h2>
-                        <h3 class="post-subtitle">{{ post.chapo }}</h3>
-                        -->
-            {% endfor %}
+                </tr>
+                {% for post in listPost %}
+                    <form>
+                        <tr>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.updatedAt | date('m/d/Y') }}</td>
+                            <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/comments">commentaires</a></td>                    <!-- Ajouter la page de la liste des commentaires <a href="posts/{{ post.id }}-{{ post.slug }}"> -->
+                            <td><a class="btn btn-primary btn-sm" href="">éditer</a></td>                          <!-- Ajouter la page d'édition du post -->
+                            <td>
+                                <input class="btn btn-danger btn-sm" type="button" id="post-form" name="post-form" value="supprimer">
+                                <input type="hidden" value="{{ post.id }}">
+                            </td>
+                        </tr>
+                    </form>
+                {% endfor %}
 
-        </table>
+            </table>
+        </div>
     </div>
 {% endblock %}
