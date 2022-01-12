@@ -25,7 +25,24 @@ class PostRepository
             $posts[] = PostFactory::createFromDatabase($postPDO);
         }
         return $posts;
-        
+    }
+
+    public static function getNbPosts()
+    {
+        $pdo = DBConnection::getPDO();
+        $sql = 'SELECT COUNT(*) as nbpost FROM post';
+        $select = $pdo->prepare($sql);
+        $select->execute();
+        $postPDO = $select->fetch();
+        return (int)$postPDO->nbpost;
+    }
+
+    public static function displayPost(int $nbpage = 1): array
+    {
+        $nbpost = self::getNbPosts();
+        if ($nbpost > $nbpage*10) {
+            $sql = "SELECT * FROM post WHERE id BETWEEN "
+        }
     }
 
     //Fonction de récupération d'un post à partir de son id
