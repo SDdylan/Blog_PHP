@@ -87,20 +87,39 @@
 
                 </tr>
                 {% for post in listPost %}
-                    <form>
                         <tr>
                             <td>{{ post.title }}</td>
-                            <td>{{ post.updatedAt | date('m/d/Y') }}</td>
-                            <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/comments">commentaires</a></td>                    <!-- Ajouter la page de la liste des commentaires <a href="posts/{{ post.id }}-{{ post.slug }}"> -->
+                            <td>{{ post.updatedAt | date('d/m/Y') }}</td>
+                            <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/comments">commentaires</a></td>
                             <td><a class="btn btn-primary btn-sm" href="">éditer</a></td>                          <!-- Ajouter la page d'édition du post -->
                             <td>
-                                <input class="btn btn-danger btn-sm" type="button" id="post-form" name="post-form" value="supprimer">
-                                <input type="hidden" value="{{ post.id }}">
+                                <!-- Input pour accèder au modal de suppression -->
+                                <input class="btn btn-danger btn-sm" type="button" id="post-form" name="post-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ post.id }}" value="supprimer">
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal{{ post.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Êtes-vous sur de vouloir supprimer l'article : "{{ post.title }}" ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+                                                <form name="deleteForm" method="POST">
+                                                    <button type="submit" class="btn btn-primary">Oui</button>
+                                                    <input type="hidden" name="delete_post" value="{{ post.id }}">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
-                    </form>
                 {% endfor %}
-
             </table>
         </div>
     </div>

@@ -126,4 +126,15 @@ class PostRepository
         }
         return PostFactory::createFromDatabase($postPDO);
     }
+
+    //supprimer un post a partir d'un id
+    public static function deletePost(int $id_post)
+    {
+        $pdo = DBConnection::getPDO();
+
+        $sql = 'DELETE FROM post WHERE id = ' . $id_post ;
+        $insert = $pdo->prepare($sql);
+        $insert->execute();
+    }
+
 }

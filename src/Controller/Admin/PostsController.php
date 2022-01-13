@@ -15,6 +15,11 @@ class PostsController extends AdminController
         } else {
             $page = 1;
         }
+
+        if (isset($_POST['delete_post'])) {
+            $deletePost = PostRepository::deletePost($_POST['delete_post']);
+        }
+
         $posts = PostRepository::displayPost($page);
         //transmettre le numéro de page et le nbpost pour la pagination
         $this->render('homeadmin.twig', 'Admin', ['listPost' => $posts, 'nbPages' => $nbpages, 'currentPage' => $page]);
