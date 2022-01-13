@@ -37,18 +37,25 @@ class PostRepository
         return (int)$postPDO->nbpost;
     }
 
+    public static function getNbPagesPosts() {
+        $nbposts = self::getNbPosts();
+        $nbpages = floatval($nbposts/10);
+        $nbpages = ceil($nbpages);
+        return $nbpages;
+    }
+
     public static function displayPost(int $numpages = 1): array
     {
         $pdo = DBConnection::getPDO();
         $nbpost = self::getNbPosts();
         if ($nbpost > $numpages*10) {
-            if ($numpages ===1) {
+            if ($numpages === 1) {
                 $sql = "SELECT * FROM post ORDER BY updated_at DESC LIMIT 10 ";
             } elseif ($numpages > 1) {
-                $sql = "SELECT * FROM post ORDER BY updated_at DESC OFFSET " . ($numpages-1)*10 . " FETCH FIRST 10 ROWS ONLY";
+                $sql = "SELECT * FROM post ORDER BY updated_at DESC LIMIT 10 OFFSET " . ($numpages-1)*10 ;
             }
         } else {
-            $sql = "SELECT * FROM post ORDER BY updated_at DESC";
+            $sql = "SELECT * FROM post ORDER BY updated_at DESC LIMIT 10 OFFSET " . ($numpages-1)*10 ;
         }
         $postsPDO = $pdo->query($sql);
         $posts = [];

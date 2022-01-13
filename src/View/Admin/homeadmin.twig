@@ -16,6 +16,70 @@
     <div class="container px-4 px-lg-5">
         <div class="row justify-content-center">
             <a href="/admin/posts/add"  class="btn btn-primary col-md-2 col-sm-6 text-uppercase">Ajouter Post</a>
+            <!-- DEBUT PAGINATION -->
+
+            {% if nbPages > 1 %}
+
+                {# Number of page around current page+1 #}
+                {% set nearbyPagesLimit = 4 %}
+
+                <div class="row text-uppercase justify-content-center">
+                    <ul class="pagination justify-content-center" style="width: 50%">
+                        {% if currentPage != 1 %}
+                            <!--<li class="page-item">
+                                <a class="page-link" href="/admin?page_post=1">First</a>
+                            </li>-->
+                            <li class="page-item">
+                                <a class="page-link" href="/admin?page_post={{ currentPage-1 }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="/admin" aria-label="Previous" disabled="disabled">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for i in 1..nbPages %}
+                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                                <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
+                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                                <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
+                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                            {% else %}
+                                <li {% if currentPage == loop.index  %} class="active page-item"{% endif %}>
+                                    <a class="page-link" href="/admin?page_post={{ loop.index }}">{{ loop.index }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if currentPage != nbPages %}
+                            <!--<li class="page-item">
+                                <a class="page-link" href="/admin?page_post={{ nbPages }}">Last</a>
+                            </li>-->
+                            <li class="page-item">
+                                <a class="page-link" href="/admin?page_post={{ currentPage+1 }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="/admin?page_post={{ currentPage}}" aria-label="Next" disabled="disabled">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- FIN PAGINATION -->
+
             <table style="width: 100%">
                 <tr>
                     <td><strong>Titre</strong></td>

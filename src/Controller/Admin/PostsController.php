@@ -8,9 +8,15 @@ class PostsController extends AdminController
 {
     public function __invoke()
     {
-        $posts = PostRepository::getLastPosts();
-        $nbpost = PostRepository::getNbPosts();
-        var_dump($nbpost);
-        $this->render('homeadmin.twig', 'Admin', ['listPost' => $posts]);
+        $nbpages = PostRepository::getNbPagesPosts();
+        //$nbpost = PostRepository::getNbPosts();
+        if (isset($_GET['page_post'])) {
+            $page = $_GET['page_post'];
+        } else {
+            $page = 1;
+        }
+        $posts = PostRepository::displayPost($page);
+        //transmettre le numéro de page et le nbpost pour la pagination
+        $this->render('homeadmin.twig', 'Admin', ['listPost' => $posts, 'nbPages' => $nbpages, 'currentPage' => $page]);
     }
 }
