@@ -12,6 +12,7 @@ class PostCommentController extends AdminController
     {
         $postId = (int) $parameters['postId'];
         $post = PostRepository::getPost($postId);
+        $posts = PostRepository::displayPost();
         try {
             if (isset($_POST["status-form"])) {
                 var_dump($_POST["comment-id"]);

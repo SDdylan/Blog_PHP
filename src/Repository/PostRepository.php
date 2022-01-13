@@ -37,12 +37,25 @@ class PostRepository
         return (int)$postPDO->nbpost;
     }
 
-    public static function displayPost(int $nbpage = 1): array
+    public static function displayPost(int $numpages = 1): array
     {
+        $pdo = DBConnection::getPDO();
         $nbpost = self::getNbPosts();
-        if ($nbpost > $nbpage*10) {
-            $sql = "SELECT * FROM post WHERE id BETWEEN "
+        if ($nbpost > $numpages*10) {
+            if ($numpages ===1) {
+                $sql = "SELECT * FROM post ORDER BY updated_at DESC LIMIT 10 ";
+            } elseif ($numpages > 1) {
+                $sql = "SELECT * FROM post ORDER BY updated_at DESC OFFSET " . ($numpages-1)*10 . " FETCH FIRST 10 ROWS ONLY";
+            }
+        } else {
+            $sql = "SELECT * FROM post ORDER BY updated_at DESC";
         }
+        $postsPDO = $pdo->query($sql);
+        $posts = [];
+        foreach ($postsPDO as $postPDO) {
+            $posts[] = PostFactory::createFromDatabase($postPDO);
+        }
+        return $posts;
     }
 
     //Fonction de récupération d'un post à partir de son id
