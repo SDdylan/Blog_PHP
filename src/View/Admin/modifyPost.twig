@@ -1,0 +1,45 @@
+{% extends "layout.twig" %}
+
+{% block pageheader %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center text-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <h2>Éditer Article</h2>
+            <h3>{{ post.title }}</h3>
+            <hr>
+            <form id="addPostForm" method="POST">
+                <div class="form-floating my-2">
+                    <a href="/admin" class="btn btn-primary text-uppercase">Retour</a>
+                </div>
+                <div class="form-floating my-2">
+                    <input class="form-control" id="title" name="title" type="text" placeholder="Titre..." value="{{ post.title }}" required/>
+                    <label for="title">Titre</label>
+                </div>
+                <div class="form-floating my-2">
+                    <input class="form-control" id="chapo" name="chapo" type="text" placeholder="Chapo..." value="{{ post.chapo }}" required/>
+                    <label for="chapo">Chapo</label>
+                </div>
+                <div class="form-floating my-2">
+                    <textarea class="form-control" style="height: 12rem" id="content" name="content" type="text" placeholder="Content..." required/>{{ post.content }}</textarea>
+                    <label for="content">Content</label>
+                </div>
+                <!-- Aller chercher les différents tags disponible sur la BDD -->
+                <div class="form-floating">
+                    <select class="form-control" name="tag" id="tag">
+                        {% for tag in listTag %}
+                            <option value="{{ tag.id }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" id="post-modify-form" name="post-modify-form" value="1">
+                <br/>
+                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Valider</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+

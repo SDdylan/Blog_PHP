@@ -25,13 +25,10 @@ class NewPostController extends AdminController
                 $createPost = PostRepository::createPost($post);
             }
         }
-
         //récuperer les tags
         $tags = TagRepository::getTags();
-        $this->render('addpost.twig', 'Admin',  ['listTag' => $tags]);
+        $this->render('addPost.twig', 'Admin',  ['listTag' => $tags]);
     }
-    //const time = DateTimeInterface::ATOM;
-    //var_dump(datetime);
 
     private function validateRegisterForm(): array //$_POST en paramètre provoque une erreur : Cannot re-assign auto-global variable _POST
     {

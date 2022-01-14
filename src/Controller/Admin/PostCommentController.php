@@ -14,8 +14,6 @@ class PostCommentController extends AdminController
         $post = PostRepository::getPost($postId);
         try {
             if (isset($_POST["status-form"])) {
-                var_dump($_POST["comment-id"]);
-                var_dump($_POST["comment-status"]);
                 $commentStatus = CommentRepository::changeStatusComment($_POST["comment-id"], $_POST["comment-status"]);
             }
             $comments = CommentRepository::getCommentsPost($postId);

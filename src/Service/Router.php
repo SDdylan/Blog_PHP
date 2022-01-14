@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Controller\Admin\ModifyPostController;
 use App\Controller\Admin\PostCommentController;
 use App\Controller\Admin\PostsController as AdminPostsController;
 use App\Controller\Front\PostsController;
@@ -57,6 +58,9 @@ class Router
 
         $route = new Route('/admin/posts/add', ['_controller' => NewPostController::class]);
         $routes->add('newpost', $route);
+
+        $route = new Route('/admin/posts/{postId}/modify', ['_controller' => ModifyPostController::class]);
+        $routes->add('modify_post', $route);
 
         $route = new Route('/admin/tags/add', ['_controller' => TagController::class]);
         $routes->add('newtag', $route);

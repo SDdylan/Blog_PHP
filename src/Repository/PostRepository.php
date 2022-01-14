@@ -111,6 +111,16 @@ class PostRepository
         $insert->execute($postParams);
     }
 
+    //Fonction pour modifier un Post (faire par post ?)
+    public static function modifyPost(int $postId, string $title, string $chapo, string $content, int $tag, \DateTimeInterface $updatedAt): void
+    {
+        $pdo = DBConnection::getPDO();
+        $sql = 'UPDATE post SET title = "' . $title . '", chapo = "' . $chapo . '", content = "' . $content . '", updated_at = "' . $updatedAt->format('Y-m-d H:i:s') . '" WHERE id = ' . $postId;
+        //var_dump($sql);
+        $insert = $pdo->prepare($sql);
+        $insert->execute();
+    }
+
     //récuperation d'un Post à partir d'un slug
     public static function getPostBySlug(string $slug) : Post
     {
