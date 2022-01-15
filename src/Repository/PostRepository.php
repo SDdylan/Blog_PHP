@@ -27,7 +27,7 @@ class PostRepository
         return $posts;
     }
 
-    public static function getNbPosts()
+    public static function getNbPosts() : int
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT COUNT(*) as nbpost FROM post';
@@ -37,7 +37,8 @@ class PostRepository
         return (int)$postPDO->nbpost;
     }
 
-    public static function getNbPagesPosts() {
+    public static function getNbPagesPosts() : int
+    {
         $nbposts = self::getNbPosts();
         $nbpages = floatval($nbposts/10);
         $nbpages = ceil($nbpages);

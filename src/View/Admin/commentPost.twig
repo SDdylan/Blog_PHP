@@ -24,20 +24,44 @@
                     <td><strong>Statut</strong></td>
                 </tr>
                 {% for comment in comments %}
-                    <form id="CommentForm{{ comment.id }}" method="POST">
-                        <tr>
-                            <td>{{ comment.user.alias }}</td>
-                            <td>{{ comment.content }}</td>
-                            <td>{{ comment.createdAt | date('d/m/Y H:i:s') }}</td>
-                            <td>{{ comment.isValidated ? 'Validé' : 'Non validé' }}</td>
-                            <td>
-                                <input type="submit" id="status-form" name="status-form" value="Changer Statut">
-                                <input type="hidden" id="comment-id" name="comment-id" value="{{ comment.id }}">
-                                <input type="hidden" id="comment-status" name="comment-status" value="{{ comment.isValidated ? 1 : 0 }}">
-                            </td>
+                    <tr>
+                        <td>{{ comment.user.alias }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.createdAt | date('d/m/Y H:i:s') }}</td>
+                        <td>{{ comment.isValidated ? '<p style="color:green;">Validé</p>' : '<p style="color:red;">Non validé</p>' }}</td>
+                        <td>
+                            <!--<input type="submit" id="status-form" name="status-form" value="Changer Statut">
+                            <input type="hidden" id="comment-id" name="comment-id" value="{{ comment.id }}">
+                            <input type="hidden" id="comment-status" name="comment-status" value="{{ comment.isValidated ? 1 : 0 }}">-->
 
-                        </tr>
-                    </form>
+                            <!-- Input pour accèder au modal de changement de statut -->
+                            <input class="btn btn-danger btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ comment.id }}" value="Changer Statut">
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{ comment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Changement de Status</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Êtes-vous sur de vouloir modifier le statut de ce commentaire ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+                                            <form name="statusComment{{ comment.id }}" method="POST">
+                                                <button type="submit" class="btn btn-primary">Oui</button>
+                                                <input type="hidden" id="comment-id" name="comment-id" value="{{ comment.id }}">
+                                                <input type="hidden" id="comment-status" name="comment-status" value="{{ comment.isValidated ? 1 : 0 }}">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+
+                    </tr>
                 {% endfor %}
             </table>
         </div>

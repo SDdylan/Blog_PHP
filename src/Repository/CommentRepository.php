@@ -70,10 +70,48 @@ class CommentRepository
             $comments[] = $comment;
         }
         return $comments;
-        
     }
 
-    public static function changeStatusComment(int $id_comment, int $status_comment)
+    public static function getNbComments() : int
+    {
+        $pdo = DBConnection::getPDO();
+        $sql = 'SELECT COUNT(*) as nbcomment FROM comment';
+        $select = $pdo->prepare($sql);
+        $select->execute();
+        $commentPDO = $select->fetch();
+        return (int)$commentPDO->nbcomment;
+    }
+
+    public static function getNbPagesComments() : int
+    {
+        $nbComments = self::getNbComments();
+        $nbpages = floatval($nbComments/10);
+        $nbpages = ceil($nbpages);
+        return $nbpages;
+    }
+
+    public static function displayComments(int $numpages = 1): array
+    {
+        $pdo = DBConnection::getPDO();
+        $nbComments = self::getNbComments();
+        if ($nbComments > $numpages*10) {
+            if ($numpages === 1) {
+                $sql = "SELECT * FROM comment ORDER BY created_at DESC LIMIT 10 ";
+            } elseif ($numpages > 1) {
+                $sql = "SELECT * FROM comment ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numpages-1)*10 ;
+            }
+        } else {
+            $sql = "SELECT * FROM comment ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numpages-1)*10 ;
+        }
+        $commentsPDO = $pdo->query($sql);
+        $comments = [];
+        foreach ($commentsPDO as $commentPDO) {
+            $comments[] = CommentFactory::createFromDatabase($commentPDO);
+        }
+        return $comments;
+    }
+
+    public static function changeStatusComment(int $id_comment, int $status_comment) : void
     {
         $pdo = DBConnection::getPDO();
         if ($status_comment == 0) {

@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Controller\Admin\ModifyPostController;
 use App\Controller\Admin\PostCommentController;
 use App\Controller\Admin\PostsController as AdminPostsController;
+use App\Controller\Admin\UserAdminController;
+use App\Controller\Admin\UserCommentsAdminController;
 use App\Controller\Front\PostsController;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -22,17 +24,6 @@ use App\Controller\Admin\AdminController;
 
 class Router
 {
-    /*public static array $routes = [
-        '' => 'Front\HomeController',
-       'contact' => 'Front\ContactController',
-       'posts' => 'Front\PostController',
-       'connexion' => 'Front\ConnexionController',
-       'process' => 'Front\ProcessController',
-       '?admin' => 'Admin\HomeAdminController',
-       'admin/newpost' => 'Admin\PostController',
-       'admin/newtag' => 'Admin\TagController',
-    ];*/
-
     public function run(): void
     {
         $routes = new RouteCollection();
@@ -62,11 +53,17 @@ class Router
         $route = new Route('/admin/posts/{postId}/modify', ['_controller' => ModifyPostController::class]);
         $routes->add('modify_post', $route);
 
+        $route = new Route('/admin/posts/{postId}/comments', ['_controller' => PostCommentController::class]);
+        $routes->add('post_comment', $route);
+
         $route = new Route('/admin/tags/add', ['_controller' => TagController::class]);
         $routes->add('newtag', $route);
 
-        $route = new Route('/admin/posts/{postId}/comments', ['_controller' => PostCommentController::class]);
-        $routes->add('post_comment', $route);
+        $route = new Route('/admin/users', ['_controller' => UserAdminController::class]);
+        $routes->add('users', $route);
+
+        $route = new Route('admin/users/{userId}/comments', ['_controller' => UserCommentsAdminController::class]);
+        $routes->add('users_comments', $route);
 
         $context = new RequestContext();
 

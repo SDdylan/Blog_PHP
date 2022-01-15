@@ -12,13 +12,14 @@ class PostCommentController extends AdminController
     {
         $postId = (int) $parameters['postId'];
         $post = PostRepository::getPost($postId);
+
         try {
-            if (isset($_POST["status-form"])) {
+            if (isset($_POST["comment-status"])) {
                 $commentStatus = CommentRepository::changeStatusComment($_POST["comment-id"], $_POST["comment-status"]);
             }
             $comments = CommentRepository::getCommentsPost($postId);
             $this->render('commentPost.twig', 'Admin', ['comments' => $comments, 'post' => $post]);
-        } catch (PostNotFoundException $exception) {
+        } catch (PostNotFoundException $exception) { //CHANGER L'EXCEPTION
             $this->redirectToUrl();
         }
 
