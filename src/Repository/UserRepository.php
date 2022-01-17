@@ -85,9 +85,10 @@ class UserRepository
     }
 
     //Fonction pour changer le statut d'un utilisateur
-    public static function changeStatusUser(int $idUser, int $statusUser) : void
+    public static function changeStatusUser(User $user, int $statusUser) : void
     {
         $pdo = DBConnection::getPDO();
+        $idUser = $user->getId();
         if ($statusUser == 0) {
             $newStatus = 1;
         } else {

@@ -20,7 +20,7 @@ class UserAdminController extends AdminController
 
             //changement de statut de l'utilisateur
             if (isset($_POST["user-id"])) {
-                $userStatus = UserRepository::changeStatusUser($_POST["user-id"], $_POST["user-status"]);
+                $userStatus = UserRepository::changeStatusUser(UserRepository::getUser($_POST["user-id"]), $_POST["user-status"]);
             }
 
             $users = UserRepository::displayUsers($page);

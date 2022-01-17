@@ -24,7 +24,7 @@ class UserCommentsAdminController extends AdminController
 
         //changement de statut du commentaire
         if (isset($_POST["comment-id"])) {
-            $commentStatus = CommentRepository::changeStatusComment($_POST["comment-id"], $_POST["comment-status"]);
+            $commentStatus = CommentRepository::changeStatusComment(CommentRepository::getComment($_POST["comment-id"]), $_POST["comment-status"]);
         }
 
         //CREER DISPLAY COMMENTS
