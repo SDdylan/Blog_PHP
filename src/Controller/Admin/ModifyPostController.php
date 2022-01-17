@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\PostFactory;
 use App\Exception\PostNotFoundException;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
@@ -19,7 +20,10 @@ class ModifyPostController extends AdminController
             if (isset($_POST['post-modify-form'])) {
                 $errors = $this->validateRegisterForm();
                 if(empty($errors)) {
-                    $modifyPost = PostRepository::modifyPost($postId, $_POST['title'], $_POST['chapo'], $_POST['content'], $_POST['tag'], new \DateTime());
+                    $updatedPost = PostFactory::create(TagRepository::getTag($_POST['tag']), $this->getUser(), $_POST['title'], new \DateTime(), $_POST['chapo'], $_POST['content']);
+                    //On set l'id pour qu'il soit bien compris pour l'update du POST
+                    $updatedPost->setId($postId);
+                    $modifyPost = PostRepository::modifyPost($updatedPost);
                     //on récupère de nouveau le contenu pour l'afficher correctement sur la page.
                     $post = PostRepository::getPost($postId);
                 }

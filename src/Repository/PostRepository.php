@@ -97,14 +97,13 @@ class PostRepository
     public static function createPost(Post $post) : void
     {
         $postParams = [
-            "user_id" => $post->getUserId(), //getUserId()
-            "tag_id" => $post->getTagId(),    //getTagId à creer
+            "user_id" => $post->getUserId(),
+            "tag_id" => $post->getTagId(),
             "title" => $post->getTitle(),
             "updated_at" => $post->getUpdatedAt()->format('Y-m-d H:i:s'), //on ne recupère que la date de l'objet DateTime
             "chapo" => $post->getChapo(),
             "content" => $post->getContent(),
             "slug" => $post->getSlug()
-            //AJOUTER LE SLUG
         ];
         $pdo = DBConnection::getPDO();
         $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content, slug) VALUES (:user_id, :tag_id, :title, :updated_at, :chapo, :content, :slug)' ;
@@ -113,13 +112,22 @@ class PostRepository
     }
 
     //Fonction pour modifier un Post (faire par post ?)
-    public static function modifyPost(int $postId, string $title, string $chapo, string $content, int $tag, \DateTimeInterface $updatedAt): void
+    public static function modifyPost(Post $post): void
     {
+        $postParams = [
+            "id" => $post->getId(),
+            "user_id" => $post->getUserId(), //getUserId()
+            "tag_id" => $post->getTagId(),    //getTagId à creer
+            "title" => $post->getTitle(),
+            "updated_at" => $post->getUpdatedAt()->format('Y-m-d H:i:s'), //on ne recupère que la date de l'objet DateTime
+            "chapo" => $post->getChapo(),
+            "content" => $post->getContent(),
+            "slug" => $post->getSlug()
+        ];
         $pdo = DBConnection::getPDO();
-        $sql = 'UPDATE post SET title = "' . $title . '", chapo = "' . $chapo . '", content = "' . $content . '", updated_at = "' . $updatedAt->format('Y-m-d H:i:s') . '" WHERE id = ' . $postId;
-        //var_dump($sql);
+        $sql = 'UPDATE post SET user_id = :user_id, tag_id =  :tag_id, title =  :title, updated_at = :updated_at, chapo = :chapo, content = :content, slug = :slug WHERE (id = :id)';
         $insert = $pdo->prepare($sql);
-        $insert->execute();
+        $insert->execute($postParams);
     }
 
     //récuperation d'un Post à partir d'un slug
