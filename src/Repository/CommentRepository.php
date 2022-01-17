@@ -10,7 +10,7 @@ class CommentRepository
 {
     //A factoriser ?
     //Fonction pour récuperer les derniers commentaires publiés sur un post (il faut aussi les pseudo des utilisateurs)
-    public static function getCommentsValidatedPost(int $postId)
+    public static function getCommentsValidatedPost(int $postId) : array
     {
 
         $pdo = DBConnection::getPDO();
@@ -24,7 +24,7 @@ class CommentRepository
     }
 
     //Fonction pour récupérer tous les commentaires d'un post sans prendre en compte leurs statut
-    public static function getCommentsPost(int $postId)
+    public static function getCommentsPost(int $postId) : array
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' ORDER BY created_at DESC ';
@@ -36,8 +36,20 @@ class CommentRepository
         return $comments;
     }
 
+    //Récupérer un Commentaire à partir de son id
+    public static function getComment(int $commentId) : Comment
+    {
+        $pdo = DBConnection::getPDO();
+        $sql = 'SELECT * FROM comment WHERE id = ?';
+        $select = $pdo->prepare($sql);
+        $select->execute([$commentId]);
+        $commentPDO = $select->fetch();
+
+        return CommentFactory::createFromDatabase($commentPDO);
+    }
+
     //Créer nouveau commentaire
-    public static function createComment(Comment $comment)
+    public static function createComment(Comment $comment) : void
     {
         $commentParams = [
             "user_id" => $comment->getUserId(),
@@ -53,7 +65,8 @@ class CommentRepository
     }
 
     //Supprimer un commentaire
-    public static function deleteComment(int $comment_id) {
+    public static function deleteComment(int $comment_id) : void
+    {
         $pdo = DBConnection::getPDO();
         $sql = 'DELETE FROM comment WHERE id = ' . $comment_id;
         $commentPDO = $pdo->query($sql);
@@ -111,7 +124,7 @@ class CommentRepository
         return $comments;
     }
 
-    public static function changeStatusComment(int $id_comment, int $status_comment) : void
+    public static function changeStatusComment(Comment $comment, int $status_comment) : void
     {
         $pdo = DBConnection::getPDO();
         if ($status_comment == 0) {
@@ -119,7 +132,7 @@ class CommentRepository
         } else {
             $new_status = 0;
         }
-        $sql = 'UPDATE comment SET is_validated = ' . $new_status . ' WHERE id = ' . $id_comment;
+        $sql = 'UPDATE comment SET is_validated = ' . $new_status . ' WHERE id = ' . $comment->getId();
         $commentsPDO = $pdo->query($sql);
     }
 }
