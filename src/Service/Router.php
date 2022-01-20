@@ -10,6 +10,7 @@ use App\Controller\Admin\PostDeleteController;
 use App\Controller\Admin\PostsController as AdminPostsController;
 use App\Controller\Admin\UserAdminController;
 use App\Controller\Admin\UserCommentsAdminController;
+use App\Controller\Front\CommentController;
 use App\Controller\Front\PostsController;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -38,14 +39,17 @@ class Router
         $route = new Route('/contact', ['_controller' => ContactController::class]);
         $routes->add('contact', $route);
 
-        $route = new Route('/posts', ['_controller' => PostsController::class]);
-        $routes->add('posts', $route);
-
         $route = new Route('/connexion', ['_controller' => ConnexionController::class]);
         $routes->add('connexion', $route);
 
+        $route = new Route('/posts', ['_controller' => PostsController::class]);
+        $routes->add('posts', $route);
+
+        $route = new Route('/posts/{postId}/comments/add', ['_controller' => CommentController::class]);
+        $routes->add('postNewComment', $route);
+
         $route = new Route('/posts/{postId}-{postSlug}', ['_controller' => PostController::class]);
-        $routes->add('post_detail', $route);
+        $routes->add('postDetail', $route);
 
         //Adapter le bon controleur à la route juste en dessous
         $route = new Route('/admin', ['_controller' => AdminPostsController::class]);

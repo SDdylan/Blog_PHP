@@ -33,7 +33,7 @@
     <div id="form-comments" class="mb-4 container px-4 px-lg-5">
         <h4>Commentaires</h4>
         {% if isLogged == true %}
-        <form id="addCommentForm" method="POST" class="row gx-4 gx-lg-5 justify-content-center">
+        <form id="addCommentForm" method="POST" class="row gx-4 gx-lg-5 justify-content-center" action="/posts/{{ post.id }}/comments/add">
             <div class="form-floating my-2">
                 <input class="form-control" id="comment-text" name="comment-text" type="text" placeholder="Titre..." required/>
                 <label for="comment-text">Commentaire</label>
