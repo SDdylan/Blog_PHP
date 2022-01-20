@@ -9,7 +9,7 @@ use App\Entity\UserFactory;
 class UserRepository
 {
     //Fonction pour récuperer les utilisateurs 
-    public static function getUsers(int $limit = 10) : array
+    public static function getLastUsers(int $limit = 10) : array
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM user ORDER BY id ASC LIMIT ' . $limit;
@@ -63,7 +63,7 @@ class UserRepository
         return $nbpages;
     }
 
-    public static function displayUsers(int $numpages = 1): array
+    public static function getUsers(int $numpages = 1): array
     {
         $pdo = DBConnection::getPDO();
         $nbusers = self::getNbUsers();

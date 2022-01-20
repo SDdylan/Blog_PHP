@@ -18,27 +18,32 @@ class PostController extends AbstractController
         $postId = (int) $parameters['postId'];
 
         try {
+            $isLogged = SessionService::isUserLoggedIn();
+            $post = PostRepository::getPost($postId);
             //Si soumission d'un commentaire à la BDD
             if (isset($_POST["comment-form"])) {
                 //Validation des données (à compléter)
                 $errors = $this->validateCommentForm();
+
+
+                //!\\ A DEPLACER DANS UN CommentController //!\\
                 if(empty($errors)) {
                     $comment = CommentFactory::create($this->getUser(), PostRepository::getPost($postId), new \DateTime(), $_POST["comment-text"]);
-                    var_dump($comment);
                     //Insertion de l'utilisateur dans la BDD
-                    $createPost = CommentRepository::createComment($comment);
+                    $comment = CommentRepository::addComment($comment);
                 }
-            }
+                // ---------------------------------- //
 
-            $isLogged = SessionService::isUserLoggedIn();
-            $post = PostRepository::getPost($postId);
-            $comments = CommentRepository::getCommentsValidatedPost($post->getId());
+
+            }
+            $comments = CommentRepository::getCommentsPost($post->getId());
             $this->render('post.twig', 'Front', ['post' => $post, 'comments' => $comments, 'isLogged' => $isLogged]);
         } catch (PostNotFoundException $exception) {
             $this->redirectToUrl();
         }
     }
 
+    //A DEPLACER DANS UN COMMENT CONTROLLER
     private function validateCommentForm(): array
     {
         $errors = [];

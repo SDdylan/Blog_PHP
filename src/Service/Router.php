@@ -2,8 +2,11 @@
 
 namespace App\Service;
 
-use App\Controller\Admin\ModifyPostController;
-use App\Controller\Admin\PostCommentController;
+use App\Controller\Admin\ChangeCommentController;
+use App\Controller\Admin\ChangeUserController;
+use App\Controller\Admin\EditPostController;
+use App\Controller\Admin\GetCommentController;
+use App\Controller\Admin\PostDeleteController;
 use App\Controller\Admin\PostsController as AdminPostsController;
 use App\Controller\Admin\UserAdminController;
 use App\Controller\Admin\UserCommentsAdminController;
@@ -19,8 +22,9 @@ use App\Controller\Front\ConnexionController;
 use App\Controller\Front\ProcessController;
 use App\Controller\Admin\HomeAdminController;
 use App\Controller\Admin\NewPostController;
-use App\Controller\Admin\TagController;
+use App\Controller\Admin\NewTagController;
 use App\Controller\Admin\AdminController;
+
 
 class Router
 {
@@ -48,22 +52,31 @@ class Router
         $routes->add('admin', $route);
 
         $route = new Route('/admin/posts/add', ['_controller' => NewPostController::class]);
-        $routes->add('newpost', $route);
+        $routes->add('newPost', $route);
 
-        $route = new Route('/admin/posts/{postId}/modify', ['_controller' => ModifyPostController::class]);
-        $routes->add('modify_post', $route);
+        $route = new Route('/admin/posts/{postId}/delete', ['_controller' => PostDeleteController::class]);
+        $routes->add('deletePost', $route);
 
-        $route = new Route('/admin/posts/{postId}/comments', ['_controller' => PostCommentController::class]);
-        $routes->add('post_comment', $route);
+        $route = new Route('/admin/posts/{postId}/edit', ['_controller' => EditPostController::class]);
+        $routes->add('edit_post', $route);
 
-        $route = new Route('/admin/tags/add', ['_controller' => TagController::class]);
-        $routes->add('newtag', $route);
+        $route = new Route('/admin/posts/{postId}/comments', ['_controller' => GetCommentController::class]);
+        $routes->add('postComment', $route);
+
+        $route = new Route('/admin/comments/{commentId}/change', ['_controller' => ChangeCommentController::class]);
+        $routes->add('commentChange', $route);
+
+        $route = new Route('/admin/tags/add', ['_controller' => NewTagController::class]);
+        $routes->add('newTag', $route);
 
         $route = new Route('/admin/users', ['_controller' => UserAdminController::class]);
         $routes->add('users', $route);
 
         $route = new Route('admin/users/{userId}/comments', ['_controller' => UserCommentsAdminController::class]);
         $routes->add('users_comments', $route);
+
+        $route = new Route('admin/users/{userId}/change', ['_controller' => ChangeUserController::class]);
+        $routes->add('users_change', $route);
 
         $context = new RequestContext();
 

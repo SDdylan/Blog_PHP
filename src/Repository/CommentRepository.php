@@ -5,29 +5,16 @@ namespace App\Repository;
 use App\Database\DBConnection;
 use App\Entity\CommentFactory;
 use App\Entity\Comment;
+use App\Entity\User;
 
 class CommentRepository
 {
-    //A factoriser ?
-    //Fonction pour récuperer les derniers commentaires publiés sur un post (il faut aussi les pseudo des utilisateurs)
-    public static function getCommentsValidatedPost(int $postId) : array
-    {
-
-        $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' AND is_validated = 1 ORDER BY created_at DESC ';
-        $commentsPDO = $pdo->query($sql);
-        $comments =[];
-        foreach ($commentsPDO as $comment) {
-            $comments[] = CommentFactory::createFromDatabase($comment);
-        }
-        return $comments;
-    }
-
-    //Fonction pour récupérer tous les commentaires d'un post sans prendre en compte leurs statut
-    public static function getCommentsPost(int $postId) : array
+    //Fonction pour récupérer tous les commentaires d'un post validés ou non
+    public static function getCommentsPost(int $postId, bool $validOnly = true) : array
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' ORDER BY created_at DESC ';
+        $validOnly = ($validOnly === true) ? ' AND is_validated = 1' : null;
+        $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' ' . $validOnly . ' ORDER BY created_at DESC ';
         $commentsPDO = $pdo->query($sql);
         $comments =[];
         foreach ($commentsPDO as $comment) {
@@ -49,7 +36,7 @@ class CommentRepository
     }
 
     //Créer nouveau commentaire
-    public static function createComment(Comment $comment) : void
+    public static function addComment(Comment $comment) : void
     {
         $commentParams = [
             "user_id" => $comment->getUserId(),
@@ -65,25 +52,25 @@ class CommentRepository
     }
 
     //Supprimer un commentaire
-    public static function deleteComment(int $comment_id) : void
+    public static function deleteComment(int $commentId) : void
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'DELETE FROM comment WHERE id = ' . $comment_id;
+        $sql = 'DELETE FROM comment WHERE id = ' . $commentId;
         $commentPDO = $pdo->query($sql);
     }
 
     //Recupérer tout les commentaires d'un utilisateur
-    public static function getCommentsUser(int $id_user) 
+    /*public static function getCommentsUser(int $idUser): array
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM comment WHERE user_id = ' . $id_user . ' ORDER BY created_at DESC ';
+        $sql = 'SELECT * FROM comment WHERE user_id = ' . $idUser . ' ORDER BY created_at DESC ';
         $commentsPDO = $pdo->query($sql);
         $comments =[];
         foreach ($commentsPDO as $comment) {
             $comments[] = $comment;
         }
         return $comments;
-    }
+    }*/
 
     public static function getNbComments() : int
     {
@@ -103,19 +90,13 @@ class CommentRepository
         return $nbpages;
     }
 
-    public static function displayComments(int $numpages = 1): array
+    //Récuperation et affichage de tout les commentaires d'un utilisateur
+    public static function getCommentsUser(User $user, int $numPages = 1): array
     {
         $pdo = DBConnection::getPDO();
         $nbComments = self::getNbComments();
-        if ($nbComments > $numpages*10) {
-            if ($numpages === 1) {
-                $sql = "SELECT * FROM comment ORDER BY created_at DESC LIMIT 10 ";
-            } elseif ($numpages > 1) {
-                $sql = "SELECT * FROM comment ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numpages-1)*10 ;
-            }
-        } else {
-            $sql = "SELECT * FROM comment ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numpages-1)*10 ;
-        }
+        $idUser = $user->getId();
+        $sql = $nbComments > $numPages * 10 && $numPages === 1 ? "SELECT * FROM comment WHERE user_id = " . $idUser . " ORDER BY created_at DESC LIMIT 10 " : "SELECT * FROM comment WHERE user_id = " . $idUser . " ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numPages - 1) * 10;
         $commentsPDO = $pdo->query($sql);
         $comments = [];
         foreach ($commentsPDO as $commentPDO) {
@@ -124,14 +105,10 @@ class CommentRepository
         return $comments;
     }
 
-    public static function changeStatusComment(Comment $comment, int $status_comment) : void
+    public static function changeStatusComment(Comment $comment, int $commentStatus) : void
     {
         $pdo = DBConnection::getPDO();
-        if ($status_comment == 0) {
-            $new_status = 1;
-        } else {
-            $new_status = 0;
-        }
+        $new_status = $commentStatus == 0 ? 1 : 0;
         $sql = 'UPDATE comment SET is_validated = ' . $new_status . ' WHERE id = ' . $comment->getId();
         $commentsPDO = $pdo->query($sql);
     }

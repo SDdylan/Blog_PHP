@@ -85,10 +85,10 @@
                         <td>{{ user.alias }}</td>
                         <td>{{ user.email }}</td>
 
-                        <td>{{ user.isAdmin ? '<p style="color:green;">Administrateur</p>' : '<p>Utilisateur</p>' }}</td>
+                        <td>{{ user.isAdmin ? '<p><i class="fas fa-user-shield"></i></p>' : '<p><i class="fas fa-user"></i></p>' }}</td>
                         <td>
                             <!-- Input pour accèder au modal de changement de statut -->
-                            <input class="btn btn-danger btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ user.id }}" value="Changer Statut">
+                            <input class="btn btn-primary btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ user.id }}" value="Changer Statut">
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -102,7 +102,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
-                                            <form name="statusUser{{ user.id }}" method="POST">
+                                            <form name="statusUser{{ user.id }}" method="POST" action="/admin/users/{{ user.id }}/change">
                                                 <button type="submit" class="btn btn-primary">Oui</button>
                                                 <input type="hidden" id="user-id" name="user-id" value="{{ user.id }}">
                                                 <input type="hidden" id="user-id" name="user-status" value="{{ user.isAdmin ? 1 : 0 }}">

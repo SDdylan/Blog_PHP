@@ -8,20 +8,17 @@ class PostsController extends AdminController
 {
     public function __invoke()
     {
-        $nbpages = PostRepository::getNbPagesPosts();
-        //$nbpost = PostRepository::getNbPosts();
-        if (isset($_GET['page_post'])) {
-            $page = $_GET['page_post'];
-        } else {
-            $page = 1;
-        }
+        $nbPages = PostRepository::getNbPagesPosts();
+        $page = $_GET['page'] ?? 1;
 
-        if (isset($_POST['delete_post'])) {
+        //!\\ DOIT ETRE FAIT DANS UN AUTRE CONTROLLER //!\\
+        /*if (isset($_POST['delete_post'])) {
             $deletePost = PostRepository::deletePost($_POST['delete_post']);
-        }
+        }*/
+        // ------------------------------------------- //
 
-        $posts = PostRepository::displayPost($page);
+        $posts = PostRepository::getPosts($page);
         //transmettre le numéro de page et le nbpost pour la pagination
-        $this->render('homeadmin.twig', 'Admin', ['listPost' => $posts, 'nbPages' => $nbpages, 'currentPage' => $page]);
+        $this->render('homeAdmin.twig', 'Admin', ['listPost' => $posts, 'nbPages' => $nbPages, 'currentPage' => $page]);
     }
 }

@@ -45,7 +45,7 @@ class PostRepository
         return $nbpages;
     }
 
-    public static function displayPost(int $numpages = 1): array
+    public static function getPosts(int $numpages = 1): array
     {
         $pdo = DBConnection::getPDO();
         $nbpost = self::getNbPosts();
@@ -112,7 +112,7 @@ class PostRepository
     }
 
     //Fonction pour modifier un Post (faire par post ?)
-    public static function modifyPost(Post $post): void
+    public static function editPost(Post $post): void
     {
         $postParams = [
             "id" => $post->getId(),

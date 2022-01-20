@@ -26,12 +26,12 @@ class TagRepository
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM tag ORDER BY id DESC';
-        $articlesPDO = $pdo->query($sql);
-        $posts =[];
-        foreach ($articlesPDO as $article) {
-            $posts[] = $article;
+        $tagsPDO = $pdo->query($sql);
+        $tags =[];
+        foreach ($tagsPDO as $tag) {
+            $tags[] = TagFactory::createFromDatabase($tag);
         }
-        return $posts;
+        return $tags;
         
     }
 

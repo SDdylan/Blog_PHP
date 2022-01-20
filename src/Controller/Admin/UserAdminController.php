@@ -10,22 +10,19 @@ class UserAdminController extends AdminController
     public function __invoke()
     {
         try {
-            $nbpages = UserRepository::getNbPagesUsers();
+            $nbPages = UserRepository::getNbPagesUsers();
             //$nbpost = PostRepository::getNbPosts();
-            if (isset($_GET['page_user'])) {
-                $page = $_GET['page_user'];
-            } else {
-                $page = 1;
-            }
+            $page = $_GET['page_user'] ?? 1;
 
             //changement de statut de l'utilisateur
+            //!\\ DOIT ETRE FAIT DANS UN AUTRE CONTROLLER //!\\
             if (isset($_POST["user-id"])) {
-                $userStatus = UserRepository::changeStatusUser(UserRepository::getUser($_POST["user-id"]), $_POST["user-status"]);
+                UserRepository::changeStatusUser(UserRepository::getUser($_POST["user-id"]), $_POST["user-status"]);
             }
-
-            $users = UserRepository::displayUsers($page);
+            // ------------------------------- //
+            $users = UserRepository::getUsers($page);
             //transmettre le numéro de page et le nbpost pour la pagination
-            $this->render('users.twig', 'Admin', ['listUsers' => $users, 'nbPages' => $nbpages, 'currentPage' => $page]);
+            $this->render('users.twig', 'Admin', ['listUsers' => $users, 'nbPages' => $nbPages, 'currentPage' => $page]);
         } catch (UserNotFoundException $exception) {
             $this->redirectToUrl();
         }

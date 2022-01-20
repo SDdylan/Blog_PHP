@@ -15,10 +15,13 @@
     <hr class="my-4">
     <div class="container px-4 px-lg-5">
         <div class="row justify-content-center">
-            <div class="col-sm-6 text-center">
+            <div class="col-sm-4 text-center">
                 <a href="/admin/posts/add"  class="justify-content-center btn btn-primary text-uppercase">Ajouter Post</a>
             </div>
-            <div class="col-sm-6 text-center">
+            <div class="col-sm-4 text-center">
+                <a href="/admin/tags/add"  class="justify-content-center btn btn-primary text-uppercase">Ajouter Tag</a>
+            </div>
+            <div class="col-sm-4 text-center">
                 <a href="/admin/users"  class="justify-content-center btn btn-primary text-uppercase">Gestion Utilisateurs</a>
             </div>
             <!-- DEBUT PAGINATION -->
@@ -31,11 +34,8 @@
                 <div class="row text-uppercase justify-content-center">
                     <ul class="pagination justify-content-center" style="width: 50%">
                         {% if currentPage != 1 %}
-                            <!--<li class="page-item">
-                                <a class="page-link" href="/admin?page_post=1">First</a>
-                            </li>-->
                             <li class="page-item">
-                                <a class="page-link" href="/admin?page_post={{ currentPage-1 }}" aria-label="Previous">
+                                <a class="page-link" href="/admin?page={{ currentPage-1 }}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
@@ -57,23 +57,20 @@
                             {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
                             {% else %}
                                 <li {% if currentPage == loop.index  %} class="active page-item"{% endif %}>
-                                    <a class="page-link" href="/admin?page_post={{ loop.index }}">{{ loop.index }}</a>
+                                    <a class="page-link" href="/admin?page={{ loop.index }}">{{ loop.index }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}
                         {% if currentPage != nbPages %}
-                            <!--<li class="page-item">
-                                <a class="page-link" href="/admin?page_post={{ nbPages }}">Last</a>
-                            </li>-->
                             <li class="page-item">
-                                <a class="page-link" href="/admin?page_post={{ currentPage+1 }}" aria-label="Next">
+                                <a class="page-link" href="/admin?page={{ currentPage+1 }}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
                             </li>
                         {% else %}
                             <li class="page-item">
-                                <a class="page-link" href="/admin?page_post={{ currentPage}}" aria-label="Next" disabled="disabled">
+                                <a class="page-link" href="/admin?page={{ currentPage}}" aria-label="Next" disabled="disabled">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
@@ -96,7 +93,7 @@
                             <td>{{ post.title }}</td>
                             <td>{{ post.updatedAt | date('d/m/Y') }}</td>
                             <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/comments">commentaires</a></td>
-                            <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/modify">éditer</a></td>                          <!-- Ajouter la page d'édition du post -->
+                            <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/edit">éditer</a></td>
                             <td>
                                 <!-- Input pour accèder au modal de suppression -->
                                 <input class="btn btn-danger btn-sm" type="button" id="post-form" name="post-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ post.id }}" value="supprimer">
@@ -114,7 +111,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
-                                                <form name="deleteForm" method="POST">
+                                                <form name="deleteForm" method="POST" action="/admin/posts/{{ post.id }}/delete">
                                                     <button type="submit" class="btn btn-primary">Oui</button>
                                                     <input type="hidden" name="delete_post" value="{{ post.id }}">
                                                 </form>

@@ -23,8 +23,7 @@ class ConnexionController extends AbstractController
             if(empty($errors)) {
                 $user = UserFactory::create($_POST["firstname-register"], $_POST["lastname-register"], $_POST["mail-register"], $_POST["alias-register"], $_POST["password-register"]);
                 //Insertion de l'utilisateur dans la BDD
-                $createUser = UserRepository::createUser($user);
-
+                UserRepository::createUser($user);
                 //Créer la session PHP pour stocker toutes les données de User (plus tard, la session sera gérée dans un service de session)
                 SessionService::createSession($user);
                 $this->redirectToHomepage();
@@ -40,13 +39,7 @@ class ConnexionController extends AbstractController
                 //Vérifier la validité du password en comparant $user->getPassword() à $_POST["password-connexion"]
                 if ($user->checkPassword($_POST["password-connexion"])) {
                     SessionService::createSession($user);
-                    var_dump($_SESSION['user']);
                     $this->redirectToAdminHomepage();
-                    /*if ($_SESSION['user']->isAdmin() === true) {
-                        $this->redirectToAdminHomepage();
-                    } elseif ($_SESSION['user']->isAdmin() === false) {
-                        $this->redirectToHomepage();
-                    }*/
                 }
             }
         }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Post;
 use App\Entity\PostFactory;
 use App\Exception\PostNotFoundException;
 use App\Repository\PostRepository;
@@ -9,29 +10,36 @@ use App\Repository\TagRepository;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
 
-class ModifyPostController extends AdminController
+class EditPostController extends AdminController
 {
     public function __invoke(array $parameters)
     {
         $postId = (int) $parameters['postId'];
         $post = PostRepository::getPost($postId);
         $tags = TagRepository::getTags();
+        $errors = null;
         try {
             if (isset($_POST['post-modify-form'])) {
                 $errors = $this->validateRegisterForm();
                 if(empty($errors)) {
-                    $updatedPost = PostFactory::create(TagRepository::getTag($_POST['tag']), $this->getUser(), $_POST['title'], new \DateTime(), $_POST['chapo'], $_POST['content']);
-                    //On set l'id pour qu'il soit bien compris pour l'update du POST
-                    $updatedPost->setId($postId);
-                    $modifyPost = PostRepository::modifyPost($updatedPost);
-                    //on récupère de nouveau le contenu pour l'afficher correctement sur la page.
-                    $post = PostRepository::getPost($postId);
+                    $editPost = PostRepository::editPost($this->updatePost($post));
                 }
             }
-            $this->render('modifyPost.twig', 'Admin', ['post' => $post, 'listTag' => $tags]);
+            $this->render('editPost.twig', 'Admin', ['post' => $post, 'listTag' => $tags, 'errors' => $errors]);
         } catch (PostNotFoundException $exception) {
             $this->redirectToUrl();
         }
+    }
+
+    private function updatePost(Post $post)
+    {
+        $post->setTag(TagRepository::getTag($_POST['tag']));
+        $post->setUser($this->getUser());
+        $post->setTitle($_POST['title']);
+        $post->setUpdatedAt(new \DateTime());
+        $post->setChapo($_POST['chapo']);
+        $post->setContent($_POST['content']);
+        return $post;
     }
 
     private function validateRegisterForm(): array
@@ -41,22 +49,25 @@ class ModifyPostController extends AdminController
         $title = $_POST['title'];
         try {
             Assertion::notEmpty($title);
+            Assertion::minLength($title, Post::TITLE_MIN_LENGTH);
         } catch (AssertionFailedException $exception) {
-            $errors['title'] = "Le titre ne peut être vide";
+            $errors['title'] = "Le titre ne faire moins de " . Post::TITLE_MIN_LENGTH  . " caractères.";
         }
 
         $chapo = $_POST["chapo"];
         try {
             Assertion::notEmpty($chapo);
+            Assertion::minLength($chapo, Post::CHAPO_MIN_LENGTH);
         } catch (AssertionFailedException $exception) {
-            $errors['chapo'] = "Le chapo ne peut être vide";
+            $errors['chapo'] = "Le chapo ne faire moins de " . Post::CHAPO_MIN_LENGTH  . " caractères.";
         }
 
         $content = $_POST["content"];
         try {
             Assertion::notEmpty($content);
+            Assertion::minLength($content, Post::CONTENT_MIN_LENGTH);
         } catch (AssertionFailedException $exception) {
-            $errors['content'] = "Le contenu ne peut être vide";
+            $errors['content'] = "Le contenu ne faire moins de " . Post::CONTENT_MIN_LENGTH  . " caractères.";
         }
 
         $tag = $_POST["tag"];
