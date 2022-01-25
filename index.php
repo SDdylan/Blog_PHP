@@ -31,29 +31,39 @@ $router = new Router();
 $router->run();
 
 
-function sendMail() //Ajouter les paramètres
+function sendMail($body, $email, $phone, $name) //Ajouter les paramètres
 {
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
     try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;                      //Enable verbose debug output
+        $mail->SMTPDebug = 4;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'localhost';                     //Set the SMTP server to send through
+        $mail->Host       = 'smtp.mailtrap.io';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'dylan.sardi@gmail.com';                     //SMTP username
-        $mail->Password   = 'secret';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 80;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->Username   = 'e8d6b16f24930c';                     //SMTP username
+        $mail->Password   = '625c7ab8b6ebbe';                               //SMTP password
+        $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
+        $mail->Port       = 2525;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->CharSet = 'UTF-8';
 
         //Recipients
-        $mail->setFrom('from@example.com', 'Mailer');
-        $mail->addAddress('joe@example.net', 'Joe User');     //Add a recipient
-        $mail->addAddress('ellen@example.com');               //Name is optional
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+        /*$mail->setFrom('dylan.sardi@gmail.com', 'Mailer');
+        $mail->addAddress('dylagia@gmail.com', 'User');     //Add a recipient
+        //$mail->addAddress('ellen@example.com');               //Name is optional
+        $mail->addReplyTo('dylan.sardi@gmail.com', 'Information');
+        //$mail->addCC('cc@example.com');
+        //$mail->addBCC('bcc@example.com');*/
+        $mail->setFrom('info@mailtrap.io', 'Mailtrap');
+        $mail->addReplyTo('info@mailtrap.io', 'Mailtrap');
+        $mail->addAddress('recipient1@mailtrap.io', 'Tim');
+        $mail->addCC($email, $name);
+        //$mail->addBCC('bcc1@example.com', 'Alex');
+        /*$mail->Subject = 'Test Email via Mailtrap SMTP using PHPMailer';
+        $mail->isHTML(true);
+        $mailContent = "<h1>Send HTML Email using SMTP in PHP</h1><p>This is a test email I’m sending using SMTP mail server with PHPMailer.</p>";
+        $mail->Body = $mailContent;*/
 
         //Attachments
         //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
@@ -61,8 +71,9 @@ function sendMail() //Ajouter les paramètres
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+        $mail->Subject = 'Formulaire de contact : Blog';
+        $mail->Body    = '<p>' . $name . ' à envoyé une demande de contact :</p><p>Adresse mail : ' . $email . '</p><p>Numéro de téléphone : ' . $phone . '</p><p>' . $body . '</p>';
+        //$mail->Body    = '<p>' . $name . ' à envoyé une demande de contact :</p><p>Adresse mail : ' . $email . '</p>';
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();

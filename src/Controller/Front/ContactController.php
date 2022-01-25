@@ -10,7 +10,7 @@ class ContactController extends AbstractController
     public function __invoke()
     {
         if (isset($_POST['submit'])){
-            $mail = sendMail();
+            sendMail($_POST["message"],$_POST["email"],$_POST["phone"],$_POST["name"]);
         }
         $this->render('contact.twig', 'Front');
     }
