@@ -16,6 +16,28 @@
 {% endblock %}
 
 {% block content %}
+    <!-- Modal (message envoyé ou erreur) -->
+    {% if success == 1 %}
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                $('#myModal').modal('show');
+            });
+            alert('test');
+        </script>
+    {% endif %}
+    <div class="modal hide fade" id="myModal">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Modal header</h3>
+        </div>
+        <div class="modal-body">
+            <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn">Close</a>
+            <a href="#" class="btn btn-primary">Save changes</a>
+        </div>
+    </div>
     <!-- Main Content-->
     <main class="mb-4">
         <div class="container px-4 px-lg-5">
@@ -23,13 +45,6 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Besoin d'informations complémentaires ? Veuillez remplir le formulaire ci-dessous et je vous répondrais dans les plus brefs délais.</p>
                     <div class="my-5">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
                         <form id="contactForm" method="POST">
                             <div class="form-floating">
                                 <input class="form-control" id="name" type="text" name="name" placeholder="Enter your name..."/>

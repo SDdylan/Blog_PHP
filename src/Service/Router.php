@@ -21,10 +21,9 @@ use App\Controller\Front\ContactController;
 use App\Controller\Front\PostController;
 use App\Controller\Front\ConnexionController;
 use App\Controller\Front\ProcessController;
-use App\Controller\Admin\HomeAdminController;
 use App\Controller\Admin\NewPostController;
 use App\Controller\Admin\NewTagController;
-use App\Controller\Admin\AdminController;
+//use App\Controller\Admin\AdminController;
 
 
 class Router
