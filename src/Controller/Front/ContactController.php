@@ -9,9 +9,20 @@ class ContactController extends AbstractController
 {
     public function __invoke()
     {
+        $success = false;
+        $error = false;
+
         if (isset($_POST['submit'])){
-            sendMail($_POST["message"],$_POST["email"],$_POST["phone"],$_POST["name"]);
+            try {
+                Mailer::sendContactEmail($_POST["message"],$_POST["email"],$_POST["name"], $_POST["phone"]);
+                $success = true;
+            } catch (\Exception $e) {
+                $error = true;
+            }
         }
-        $this->render('contact.twig', 'Front');
+        $this->render('contact.twig', 'Front', [
+            'success' => $success,
+            'error' => $error
+        ]);
     }
 }
