@@ -1,0 +1,80 @@
+{% extends "layout.twig" %}
+
+{% block pageheader %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center text-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <h2>Créer Article</h2>
+            <hr>
+            <form id="addPostForm" method="POST">
+                <div class="form-floating my-2">
+                    <a href="/admin" class="btn btn-primary text-uppercase">Retour</a>
+                </div>
+                <div class="form-floating my-2">
+                    <input class="form-control" id="title" name="title" type="text" placeholder="Titre..." required/>
+                    {% if errors.title is defined %}
+                        <label for="title" class="col-form-label text-danger">{{ errors.title }}</label>
+                    {% else %}
+                        <label for="title">Titre</label>
+                    {% endif %}
+                </div>
+                <div class="form-floating my-2">
+                    <input class="form-control" id="chapo" name="chapo" type="text" placeholder="Chapo..." required/>
+                    {% if errors.chapo is defined %}
+                        <label for="chapo" class="col-form-label text-danger">{{ errors.chapo }}</label>
+                    {% else %}
+                        <label for="chapo">Chapo</label>
+                    {% endif %}
+                </div>
+                <div class="form-floating my-2">
+                    <textarea class="form-control" style="height: 12rem" id="content" name="content" type="text" placeholder="Content..." required/></textarea>
+                    {% if errors.content is defined %}
+                        <label for="content" class="col-form-label text-danger">{{ errors.content }}</label>
+                    {% else %}
+                        <label for="content">Chapo</label>
+                    {% endif %}
+                </div>
+                <!-- Aller chercher les différents tags disponible sur la BDD -->
+                <div class="form-floating">
+                    <select class="form-control" name="tag" id="tag">
+                        {% for tag in listTag %}
+                            <option value="{{ tag.id }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if errors.tag is defined %}
+                        <label for="tag" class="col-form-label text-danger">{{ errors.tag }}</label>
+                    {% else %}
+                        <label for="tag">Tag</label>
+                    {% endif %}
+                </div>
+                <input type="hidden" id="post-form" name="post-form" value="1">
+                <br/>
+                <!-- Button vers Modal -->
+                <button class="btn btn-primary text-uppercase" id="submitButton" data-bs-toggle="modal" data-bs-target="#modalPost" type="button">Valider</button>
+                <!-- Modal -->
+                <div class="modal fade" id="modalPost" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">Création de l'article</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Êtes-vous sur de vouloir créer l'article ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+                                <button type="submit" class="btn btn-primary">Oui</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+

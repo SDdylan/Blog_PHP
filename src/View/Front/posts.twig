@@ -1,0 +1,94 @@
+{% extends "layoutAlter.twig" %}
+
+{% block pageheader %}
+{% endblock %}
+
+{% block content %}
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center text-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <h2>Liste des Posts</h2>
+            </div>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row justify-content-center">
+            <!-- DEBUT PAGINATION -->
+            {% if nbPages > 1 %}
+
+                {# Number of page around current page+1 #}
+                {% set nearbyPagesLimit = 4 %}
+
+                <div class="row text-uppercase justify-content-center">
+                    <ul class="pagination justify-content-center" style="width: 50%">
+                        {% if currentPage != 1 %}
+                            <!--<li class="page-item">
+                                <a class="page-link" href="/admin?page_post=1">First</a>
+                            </li>-->
+                            <li class="page-item">
+                                <a class="page-link" href="/posts?page_post={{ currentPage-1 }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="/posts" aria-label="Previous" disabled="disabled">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for i in 1..nbPages %}
+                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                                <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
+                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                                <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
+                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                            {% else %}
+                                <li {% if currentPage == loop.index  %} class="active page-item"{% endif %}>
+                                    <a class="page-link" href="/posts?page_post={{ loop.index }}">{{ loop.index }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if currentPage != nbPages %}
+                            <!--<li class="page-item">
+                                <a class="page-link" href="/admin?page_post={{ nbPages }}">Last</a>
+                            </li>-->
+                            <li class="page-item">
+                                <a class="page-link" href="/posts?page_post={{ currentPage+1 }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="/posts?page_post={{ currentPage}}" aria-label="Next" disabled="disabled">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+            <!-- FIN PAGINATION -->
+            <!-- AFFICHAGE DES POSTS -->
+                {% for post in listPost %}
+                    <hr class="my-1" />
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="posts/{{ post.id }}-{{ post.slug }}">
+                            <h2 class="post-title">{{ post.title }}</h2>
+                            <h3 class="post-subtitle">{{ post.chapo }}</h3>
+                        </a>
+                        <p class="post-meta align-content-end">
+                            Modifié le {{ post.updatedAt | date('m/d/Y') }}
+                        </p>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}

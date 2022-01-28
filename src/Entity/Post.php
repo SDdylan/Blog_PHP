@@ -4,6 +4,13 @@ namespace App\Entity;
 
 class Post
 {
+
+    const TITLE_MIN_LENGTH = 20;
+
+    const CHAPO_MIN_LENGTH = 20;
+
+    const CONTENT_MIN_LENGTH = 50;
+
     private ?int $id;
 
     private User $user;

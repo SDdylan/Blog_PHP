@@ -2,7 +2,16 @@
 
 namespace App\Service;
 
-use App\Controller\Admin\PostCommentController;
+use App\Controller\Admin\ChangeCommentController;
+use App\Controller\Admin\ChangeUserController;
+use App\Controller\Admin\EditPostController;
+use App\Controller\Admin\GetCommentController;
+use App\Controller\Admin\PostDeleteController;
+use App\Controller\Admin\PostsController as AdminPostsController;
+use App\Controller\Admin\UserAdminController;
+use App\Controller\Admin\UserCommentsAdminController;
+use App\Controller\Front\CommentController;
+use App\Controller\Front\PostsController;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -14,22 +23,12 @@ use App\Controller\Front\ConnexionController;
 use App\Controller\Front\ProcessController;
 use App\Controller\Admin\HomeAdminController;
 use App\Controller\Admin\NewPostController;
-use App\Controller\Admin\TagController;
+use App\Controller\Admin\NewTagController;
 use App\Controller\Admin\AdminController;
+
 
 class Router
 {
-    /*public static array $routes = [
-        '' => 'Front\HomeController',
-       'contact' => 'Front\ContactController',
-       'posts' => 'Front\PostController',
-       'connexion' => 'Front\ConnexionController',
-       'process' => 'Front\ProcessController',
-       '?admin' => 'Admin\HomeAdminController',
-       'admin/newpost' => 'Admin\PostController',
-       'admin/newtag' => 'Admin\TagController',
-    ];*/
-
     public function run(): void
     {
         $routes = new RouteCollection();
@@ -40,35 +39,53 @@ class Router
         $route = new Route('/contact', ['_controller' => ContactController::class]);
         $routes->add('contact', $route);
 
-        /*$route = new Route('/posts', ['_controller' => PostController::class]);
-        $routes->add('posts', $route);*/
-
         $route = new Route('/connexion', ['_controller' => ConnexionController::class]);
         $routes->add('connexion', $route);
 
-        //Adapter le bon controleur à la route juste en dessous
-        $route = new Route('/admin', ['_controller' => AdminController::class]);
-        $routes->add('admin', $route);
+        $route = new Route('/posts', ['_controller' => PostsController::class]);
+        $routes->add('posts', $route);
 
-        $route = new Route('/admin/newpost', ['_controller' => NewPostController::class]);
-        $routes->add('newpost', $route);
-
-        $route = new Route('/admin/newtag', ['_controller' => TagController::class]);
-        $routes->add('newtag', $route);
-
-        $route = new Route('/process', ['_controller' => ProcessController::class]);
-        $routes->add('process', $route);
+        $route = new Route('/posts/{postId}/comments/add', ['_controller' => CommentController::class]);
+        $routes->add('postNewComment', $route);
 
         $route = new Route('/posts/{postId}-{postSlug}', ['_controller' => PostController::class]);
-        $routes->add('post_detail', $route);
+        $routes->add('postDetail', $route);
 
-        $route = new Route('/admin/posts-comments/{postId}', ['_controller' => PostCommentController::class]);
-        $routes->add('post_comment', $route);
+        //Adapter le bon controleur à la route juste en dessous
+        $route = new Route('/admin', ['_controller' => AdminPostsController::class]);
+        $routes->add('admin', $route);
+
+        $route = new Route('/admin/posts/add', ['_controller' => NewPostController::class]);
+        $routes->add('newPost', $route);
+
+        $route = new Route('/admin/posts/{postId}/delete', ['_controller' => PostDeleteController::class]);
+        $routes->add('deletePost', $route);
+
+        $route = new Route('/admin/posts/{postId}/edit', ['_controller' => EditPostController::class]);
+        $routes->add('edit_post', $route);
+
+        $route = new Route('/admin/posts/{postId}/comments', ['_controller' => GetCommentController::class]);
+        $routes->add('postComment', $route);
+
+        $route = new Route('/admin/comments/{commentId}/change', ['_controller' => ChangeCommentController::class]);
+        $routes->add('commentChange', $route);
+
+        $route = new Route('/admin/tags/add', ['_controller' => NewTagController::class]);
+        $routes->add('newTag', $route);
+
+        $route = new Route('/admin/users', ['_controller' => UserAdminController::class]);
+        $routes->add('users', $route);
+
+        $route = new Route('admin/users/{userId}/comments', ['_controller' => UserCommentsAdminController::class]);
+        $routes->add('users_comments', $route);
+
+        $route = new Route('admin/users/{userId}/change', ['_controller' => ChangeUserController::class]);
+        $routes->add('users_change', $route);
 
         $context = new RequestContext();
 
         $matcher = new UrlMatcher($routes, $context);
-        $routeUri = $_SERVER['REQUEST_URI'];
+        $routeUri = !isset($_SERVER['REDIRECT_URL']) ? '/' : $_SERVER['REDIRECT_URL'];
         $parameters = $matcher->match($routeUri);
         $controllerName = $parameters['_controller'];
 
