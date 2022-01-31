@@ -16,6 +16,7 @@ class ConnexionController extends AbstractController
 
     public function __invoke()
     {
+        $errors = null;
         // Si on a soumis le formulaire d'enregistrement
         if (isset($_POST["register-form"])) {
             //Validation des données (à compléter)
@@ -45,7 +46,7 @@ class ConnexionController extends AbstractController
         }
 
         //Ajouter aux paramètres envoyées à la vue notre nouveau table d'erreur de saisie et afficher les messages d'erreur côté front le cas échéant
-        $this->render('connexion.twig', 'Front');
+        $this->render('connexion.twig', 'Front', ["errors" => $errors]);
     }
 
     /**

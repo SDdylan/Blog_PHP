@@ -16,7 +16,7 @@ class ContactController extends AbstractController
 
         if (isset($_POST['submit'])){
             try {
-                Mailer::sendContactEmail($_POST["message"],$_POST["email"],$_POST["name"], $_POST["phone"]);
+                Mailer::sendContactEmail($_POST["message"],$_POST["email"],$_POST["name"]);
                 $success = true;
             } catch (\Exception $e) {
                 $error = true;

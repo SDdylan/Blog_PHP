@@ -17,25 +17,17 @@
 
 {% block content %}
     <!-- Modal (message envoyé ou erreur) -->
-    {% if success == 1 %}
-        <script type="text/javascript">
-            $(window).on('load',function(){
-                $('#myModal').modal('show');
-            });
-            alert('test');
-        </script>
-    {% endif %}
-    <div class="modal hide fade" id="myModal">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
-            <h3>Modal header</h3>
-        </div>
-        <div class="modal-body">
-            <p>One fine body…</p>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn">Close</a>
-            <a href="#" class="btn btn-primary">Save changes</a>
+    <div id="myModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Message envoyé</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Votre message à été envoyé avec succès, vous serez recontacté dans les plus brefs délais.</p>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Main Content-->
@@ -56,11 +48,6 @@
                                 <label for="email">Email</label>
                                 <div class="invalid-feedback">An email is required.</div>
                                 <div class="invalid-feedback">Email is not valid.</div>
-                            </div>
-                            <div class="form-floating">
-                                <input class="form-control" id="phone" type="tel" name="phone" placeholder="Enter your phone number..."/>
-                                <label for="phone">Numéro de téléphone</label>
-                                <div class="invalid-feedback">A phone number is required.</div>
                             </div>
                             <div class="form-floating">
                                 <textarea class="form-control" id="message" name="message" placeholder="Enter your message here..." style="height: 12rem"></textarea>

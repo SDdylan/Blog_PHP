@@ -8,12 +8,11 @@ use PHPMailer\PHPMailer\SMTP;
 class Mailer
 {
 
-    public static function sendContactEmail(string $content, string $emailFrom, string $emailFromName, string $phone): void
+    public static function sendContactEmail(string $content, string $emailFrom, string $emailFromName): void
     {
         $mailContent = '<p>';
         $mailContent .= 'Nom : '.$emailFromName.'<br />';
         $mailContent .= 'Adresse e-mail : '.$emailFrom.'<br />';
-        $mailContent .= 'Numéro de téléphone : '.$phone.'<br />';
         $mailContent .= 'Contenu du message : ';
         $mailContent .= '</p>';
         $mailContent .= '<p>';
