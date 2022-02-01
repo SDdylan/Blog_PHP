@@ -11,6 +11,7 @@ use App\Controller\Admin\PostsController as AdminPostsController;
 use App\Controller\Admin\UserAdminController;
 use App\Controller\Admin\UserCommentsAdminController;
 use App\Controller\Front\CommentController;
+use App\Controller\Front\DeconnexionController;
 use App\Controller\Front\PostsController;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -40,6 +41,9 @@ class Router
 
         $route = new Route('/connexion', ['_controller' => ConnexionController::class]);
         $routes->add('connexion', $route);
+
+        $route = new Route('/deconnexion', ['_controller' => DeconnexionController::class]);
+        $routes->add('deconnexion', $route);
 
         $route = new Route('/posts', ['_controller' => PostsController::class]);
         $routes->add('posts', $route);

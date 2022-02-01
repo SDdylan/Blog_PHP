@@ -10,11 +10,13 @@ abstract class AbstractController
 {
     protected function render(string $templateName, string $folderName, array $content = [])
     {
-        $loader = new \Twig\Loader\FilesystemLoader(ROOTPATH . '/src/View/'.$folderName);
+        $loader = new \Twig\Loader\FilesystemLoader(ROOTPATH . '/src/View/');
         $twig = new \Twig\Environment($loader, [
             'cache' => false,
         ]);
-        echo $twig->render($templateName, $content);
+        $content['isLogged'] = $this->isUserLoggedIn();
+        $content['isAdmin'] = $this->isUserAdmin();
+        echo $twig->render($folderName . "/" . $templateName, $content);
     }
 
     protected function redirectToUrl(string $url = "/")

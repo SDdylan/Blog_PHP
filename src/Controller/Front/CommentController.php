@@ -28,7 +28,6 @@ class CommentController extends AbstractController
         $this->redirectToUrl('/posts/' . $postId . '-' . $post->getSlug());
     }
 
-    //A DEPLACER DANS UN COMMENT CONTROLLER
     private function validateCommentForm(): array
     {
         $errors = [];
