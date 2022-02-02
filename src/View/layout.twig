@@ -26,7 +26,7 @@
     </head>
     <body {% if (currentPage is defined) or isAdmin %} style="padding-top: 90px; height: 100%;" {% endif %}>
         <!-- /!\   Navbar différente si la page est celle de la page des posts ou non -->
-        {% include 'navbar.html.twig' %}
+        {% include 'navbar.twig' %}
         <!-- Page Header-->
         {% block pageheader %}{% endblock %}
         <!-- Main Content-->
