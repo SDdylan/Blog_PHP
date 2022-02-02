@@ -15,10 +15,10 @@ class EditPostController extends AdminController
     public function __invoke(array $parameters)
     {
         $postId = (int) $parameters['postId'];
-        $post = PostRepository::getPost($postId);
-        $tags = TagRepository::getTags();
         $errors = null;
         try {
+            $post = PostRepository::getPost($postId);
+            $tags = TagRepository::getTags();
             if (isset($_POST['post-modify-form'])) {
                 $errors = $this->validateRegisterForm();
                 if(empty($errors)) {

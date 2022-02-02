@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
+        <title>Clean Blog - Dylan Sardi</title>
         <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
@@ -13,9 +13,18 @@
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../../css/styles.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <script>
+            var myModal = document.getElementById('myModal')
+            var myInput = document.getElementById('myInput')
+
+            myModal.addEventListener('shown.bs.modal', function () {
+                myInput.focus()
+            })
+
+        </script>
     </head>
-    <body {% if currentPage is defined %} style="padding-top: 90px; height: 100%;" {% endif %}>
+    <body {% if (currentPage is defined) or isAdmin %} style="padding-top: 90px; height: 100%;" {% endif %}>
         <!-- /!\   Navbar différente si la page est celle de la page des posts ou non -->
         {% include 'navbar.html.twig' %}
         <!-- Page Header-->
@@ -29,7 +38,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
-                                <a href="www.linkedin.com/in/dylan-sardi-98a528182">
+                                <a href="https://www.linkedin.com/in/dylan-sardi-98a528182">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -45,7 +54,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2021</div>
+                        <div class="small text-center text-muted fst-italic">Dylan Sardi - 2022</div>
                     </div>
                 </div>
             </div>
