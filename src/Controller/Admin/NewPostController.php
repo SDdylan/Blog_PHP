@@ -23,9 +23,9 @@ class NewPostController extends AdminController
             if(empty($errors)) {
                 //Insertion du Post dans la BDD
                 PostRepository::createPost(PostFactory::create(TagRepository::getTag($_POST["tag"]), $this->getUser(), $_POST["title"], new \DateTime(), $_POST["chapo"], $_POST["content"]));
+                $this->redirectToAdminHomepage();
             }
         }
-        //récuperer les tags
         $tags = TagRepository::getTags();
         $this->render('addPost.twig', 'Admin',  ['listTag' => $tags, "errors" => $errors]);
     }
@@ -68,4 +68,4 @@ class NewPostController extends AdminController
         return $errors;
     }
 
-    }
+}

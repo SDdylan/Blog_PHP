@@ -18,10 +18,15 @@ class PostController extends AbstractController
         $postId = (int) $parameters['postId'];
 
         try {
-            $isLogged = SessionService::isUserLoggedIn();
+            //$isLogged = SessionService::isUserLoggedIn();
             $post = PostRepository::getPost($postId);
             $comments = CommentRepository::getCommentsPost($post->getId());
-            $this->render('post.twig', 'Front', ['post' => $post, 'comments' => $comments, 'isLogged' => $isLogged]);
+            if (isset($_GET['commented'])) {
+                $commented = true;
+            } else {
+                $commented = false;
+            }
+            $this->render('post.twig', 'Front', ['post' => $post, 'comments' => $comments, 'commented' => $commented]);
         } catch (PostNotFoundException $exception) {
             $this->redirectToUrl();
         }

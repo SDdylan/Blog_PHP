@@ -25,12 +25,9 @@
                 <a href="/admin/users"  class="justify-content-center btn btn-primary text-uppercase">Gestion Utilisateurs</a>
             </div>
             <!-- DEBUT PAGINATION -->
-
             {% if nbPages > 1 %}
-
-                {# Number of page around current page+1 #}
+                {# nombre de pages autour de l'actuelle page+1 #}
                 {% set nearbyPagesLimit = 4 %}
-
                 <div class="row text-uppercase justify-content-center">
                     <ul class="pagination justify-content-center" style="width: 50%">
                         {% if currentPage != 1 %}
@@ -49,12 +46,12 @@
                             </li>
                         {% endif %}
                         {% for i in 1..nbPages %}
-                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# points avant #}
                                 <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
-                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# points après #}
                                 <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
-                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
-                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# tout cacher avant #}
+                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# tout cacher après #}
                             {% else %}
                                 <li {% if currentPage == loop.index  %} class="active page-item"{% endif %}>
                                     <a class="page-link" href="/admin?page={{ loop.index }}">{{ loop.index }}</a>
@@ -79,14 +76,11 @@
                     </ul>
                 </div>
             {% endif %}
-
             <!-- FIN PAGINATION -->
-
             <table style="width: 100%">
                 <tr>
                     <td><strong>Titre</strong></td>
                     <td><strong>Date de modification</strong></td>
-
                 </tr>
                 {% for post in listPost %}
                         <tr>
@@ -97,7 +91,6 @@
                             <td>
                                 <!-- Input pour accèder au modal de suppression -->
                                 <input class="btn btn-danger btn-sm" type="button" id="post-form" name="post-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ post.id }}" value="supprimer">
-
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal{{ post.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">

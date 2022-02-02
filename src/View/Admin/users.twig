@@ -16,12 +16,9 @@
         <div class="row justify-content-center">
             <a href="/admin"  class="btn btn-primary col-md-2 col-sm-6 text-uppercase" style="margin-top: 2em; margin-bottom: 2em">Retour</a>
             <!-- DEBUT PAGINATION -->
-
             {% if nbPages > 1 %}
-
-                {# Number of page around current page+1 #}
+                {# nombre de pages autour de l'actuelle page+1 #}
                 {% set nearbyPagesLimit = 4 %}
-
                 <div class="row text-uppercase justify-content-center">
                     <ul class="pagination justify-content-center" style="width: 50%">
                         {% if currentPage != 1 %}
@@ -40,12 +37,12 @@
                             </li>
                         {% endif %}
                         {% for i in 1..nbPages %}
-                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# points avant #}
                                 <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
-                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# points après #}
                                 <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
-                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
-                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# tout cacher avant #}
+                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# tout cacher après #}
                             {% else %}
                                 <li {% if currentPage == loop.index  %} class="active page-item"{% endif %}>
                                     <a class="page-link" href="/admin/users?page_user={{ loop.index }}">{{ loop.index }}</a>
@@ -71,24 +68,20 @@
                 </div>
             {% endif %}
             <!-- FIN PAGINATION -->
-
             <table style="width: 100%">
                 <tr>
-                    <td><strong>Pseudo</strong></td>
-                    <td><strong>Email</strong></td>
-                    <td><strong>Statut</strong></td>
-
+                    <td><p><strong>Pseudo</strong></p></td>
+                    <td><p><strong>Email</strong></p></td>
+                    <td><p><strong>Statut</strong></p></td>
                 </tr>
-
                 {% for user in listUsers %}
                     <tr>
-                        <td>{{ user.alias }}</td>
-                        <td>{{ user.email }}</td>
-
-                        <td>{{ user.isAdmin ? '<p><i class="fas fa-user-shield"></i></p>' : '<p><i class="fas fa-user"></i></p>' }}</td>
+                        <td><p>{{ user.alias }}</p></td>
+                        <td><p>{{ user.email }}</p></td>
+                        <td><p>{{ user.isAdmin ? '<i class="fas fa-user-shield"></i>' : '<i class="fas fa-user"></i>' }}<p/></td>
                         <td>
                             <!-- Input pour accèder au modal de changement de statut -->
-                            <input class="btn btn-primary btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ user.id }}" value="Changer Statut">
+                            <p><input class="btn btn-primary btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ user.id }}" value="Changer Statut"></p>
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -112,7 +105,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td><a class="btn btn-primary btn-sm" href="/admin/users/{{ user.id }}/comments">commentaires</a></td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="/admin/users/{{ user.id }}/comments">commentaires</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

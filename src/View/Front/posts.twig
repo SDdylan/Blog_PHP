@@ -16,16 +16,11 @@
         <div class="row justify-content-center">
             <!-- DEBUT PAGINATION -->
             {% if nbPages > 1 %}
-
-                {# Number of page around current page+1 #}
+                {# nombre de pages autour de l'actuelle page+1 #}
                 {% set nearbyPagesLimit = 4 %}
-
                 <div class="row text-uppercase justify-content-center">
                     <ul class="pagination justify-content-center" style="width: 50%">
                         {% if currentPage != 1 %}
-                            <!--<li class="page-item">
-                                <a class="page-link" href="/admin?page_post=1">First</a>
-                            </li>-->
                             <li class="page-item">
                                 <a class="page-link" href="/posts?page_post={{ currentPage-1 }}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
@@ -41,12 +36,12 @@
                             </li>
                         {% endif %}
                         {% for i in 1..nbPages %}
-                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                            {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# points avant #}
                                 <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
-                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                            {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# points après #}
                                 <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
-                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
-                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                            {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %} {# tout cacher avant #}
+                            {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %} {# tout cacher après #}
                             {% else %}
                                 <li {% if currentPage == loop.index  %} class="active page-item"{% endif %}>
                                     <a class="page-link" href="/posts?page_post={{ loop.index }}">{{ loop.index }}</a>
@@ -54,9 +49,6 @@
                             {% endif %}
                         {% endfor %}
                         {% if currentPage != nbPages %}
-                            <!--<li class="page-item">
-                                <a class="page-link" href="/admin?page_post={{ nbPages }}">Last</a>
-                            </li>-->
                             <li class="page-item">
                                 <a class="page-link" href="/posts?page_post={{ currentPage+1 }}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
@@ -76,19 +68,19 @@
             {% endif %}
             <!-- FIN PAGINATION -->
             <!-- AFFICHAGE DES POSTS -->
-                {% for post in listPost %}
-                    <hr class="my-1" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="posts/{{ post.id }}-{{ post.slug }}">
-                            <h2 class="post-title">{{ post.title }}</h2>
-                            <h3 class="post-subtitle">{{ post.chapo }}</h3>
-                        </a>
-                        <p class="post-meta align-content-end">
-                            Modifié le {{ post.updatedAt | date('m/d/Y') }} par {{ post.user.alias }}
-                        </p>
-                    </div>
-                {% endfor %}
+            {% for post in listPost %}
+                <hr class="my-1" />
+                <!-- Post preview-->
+                <div class="post-preview">
+                    <a href="posts/{{ post.id }}-{{ post.slug }}">
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <h3 class="post-subtitle">{{ post.chapo }}</h3>
+                    </a>
+                    <p class="post-meta align-content-end">
+                        Modifié le {{ post.updatedAt | date('m/d/Y') }} par {{ post.user.alias }}
+                    </p>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

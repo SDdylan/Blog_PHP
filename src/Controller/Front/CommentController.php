@@ -25,7 +25,7 @@ class CommentController extends AbstractController
                 CommentRepository::addComment($comment);
             }
         }
-        $this->redirectToUrl('/posts/' . $postId . '-' . $post->getSlug());
+        $this->redirectToUrl('/posts/' . $postId . '-' . $post->getSlug() . "?commented=true");
     }
 
     private function validateCommentForm(): array

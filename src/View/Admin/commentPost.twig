@@ -18,24 +18,19 @@
             <a href="/admin"  class="btn btn-primary col-md-2 col-sm-6 text-uppercase">Retour</a>
             <table style="width: 100%">
                 <tr>
-                    <td><strong>Auteur</strong></td>
-                    <td><strong>Contenu</strong></td>
-                    <td><strong>Date de modification</strong></td>
-                    <td><strong>Statut</strong></td>
+                    <td><p><strong>Auteur</strong></p></td>
+                    <td><p><strong>Contenu</strong></p></td>
+                    <td><p><strong>Date de modification</strong></p></td>
+                    <td><p><strong>Statut</strong></p></td>
                 </tr>
                 {% for comment in comments %}
                     <tr>
-                        <td>{{ comment.user.alias }}</td>
-                        <td>{{ comment.content }}</td>
-                        <td>{{ comment.createdAt | date('d/m/Y H:i:s') }}</td>
-                        <td>{{ comment.isValidated ? '<p><i color="green" class="fa fa-check " aria-hidden="true"></i></p>' : '<p><i color="red" class="fa fa-times " aria-hidden="true"></i></p>' }}</td>
+                        <td><p>{{ comment.user.alias }}</p></td>
+                        <td><p>{{ comment.content }}</p></td>
+                        <td><p>{{ comment.createdAt | date('d/m/Y H:i:s') }}</p></td>
+                        <td><p>{{ comment.isValidated ? '<p><i color="green" class="fa fa-check " aria-hidden="true"></i></p>' : '<p><i color="red" class="fa fa-times " aria-hidden="true"></i></p>' }}</p></td>
                         <td>
-                            <!--<input type="submit" id="status-form" name="status-form" value="Changer Statut">
-                            <input type="hidden" id="comment-id" name="comment-id" value="{{ comment.id }}">
-                            <input type="hidden" id="comment-status" name="comment-status" value="{{ comment.isValidated ? 1 : 0 }}">-->
-
-                            <!-- Input pour accèder au modal de changement de statut -->
-                            <input class="btn btn-danger btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ comment.id }}" value="Changer Statut">
+                            <p><input class="btn btn-danger btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ comment.id }}" value="Changer Statut"></p>
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ comment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -59,9 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         </td>
-
                     </tr>
                 {% endfor %}
             </table>
