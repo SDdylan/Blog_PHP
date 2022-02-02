@@ -1,19 +1,27 @@
 {% extends "layout.twig" %}
 
-{% block pageheader %}0
+{% block pageheader %}
 <header class="masthead" style="background-image: url('../../../assets/img/post-bg.jpg')">
-    <div class=" position-relative  row">
-        <div class=" col col-xs-12">
+    <div class="position-relative row">
+        <div class="col col-xs-12">
             <div class='page-heading container'>
                 <h2>Connexion</h2>
                 <form class="my-5" method="POST">
                     <div class="form-floating my-2">
                         <input class="form-control" id="mail-connexion" name="mail-connexion" type="text" placeholder="Votre e-mail" required/>
-                        <label for="mail-connexion">E-mail</label>
+                        {% if error.mail-connexion is defined %}
+                            <label for="mail-connexion">{{ error.mail-connexion }}</label>
+                        {% else %}
+                            <label for="mail-connexion">E-mail</label>
+                        {% endif %}
                     </div>
                     <div class="form-floating my-2">
                         <input class="form-control" id="password-connexion" name="password-connexion" type="password" placeholder="Votre mot de passe" required/>
-                        <label for="password-connexion">Mot de passe</label>
+                        {% if error.password-connexion is defined %}
+                            <label for="password-connexion">{{ error.password-connexion }}</label>
+                        {% else %}
+                            <label for="password-connexion">Mot de passe</label>
+                        {% endif %}
                     </div>
                     <input type="hidden" id="connexion-form" name="connexion-form" value="1">
                     <input class="btn btn-primary text-uppercase my-2" type="submit" value="Connexion">
@@ -28,23 +36,43 @@
                 <form class=" my-5" method="POST">
                     <div class="form-floating my-2">
                         <input class="form-control" id="firstname-register" name="firstname-register" type="text" placeholder="Votre nom" required/>
-                        <label for="name">Nom</label>
+                        {% if error.firstname-register is defined %}
+                            <label for="firstname-register">{{ error.lastname-register }}</label>
+                        {% else %}
+                            <label for="firstname-register">Prénom</label>
+                        {% endif %}
                     </div>
                     <div class="form-floating my-2">
                         <input class="form-control" id="lastname-register" name="lastname-register" type="text" placeholder="Votre prénom" required/>
-                        <label for="name">Prénom</label>
+                        {% if error.lastname-register is defined %}
+                            <label for="lastname-register">{{ error.lastname-register }}</label>
+                        {% else %}
+                            <label for="lastname-register">Nom</label>
+                        {% endif %}
                     </div>
                     <div class="form-floating my-2">
                         <input class="form-control" id="alias-register" name="alias-register" type="text" placeholder="Votre pseudo" required/>
-                        <label for="name">Pseudo</label>
+                        {% if error.alias-register is defined %}
+                            <label for="alias-register">{{ error.alias-register }}</label>
+                        {% else %}
+                            <label for="alias-register">Pseudo</label>
+                        {% endif %}
                     </div>
                     <div class="form-floating my-2">
                         <input class="form-control" id="mail-register" name="mail-register" type="email" placeholder="Votre e-mail" required/>
-                        <label for="name">E-mail</label>
+                        {% if error.mail-register is defined %}
+                            <label for="mail-register">{{ error.mail-register }}</label>
+                        {% else %}
+                            <label for="mail-register">E-mail</label>
+                        {% endif %}
                     </div>
                     <div class="form-floating my-2">
                         <input class="form-control" id="password-register" name="password-register" type="password" placeholder="Votre mot de passe" required/>
-                        <label for="name">Mot de passe</label>
+                        {% if error.password-register is defined %}
+                            <label for="password-register">{{ error.password-register }}</label>
+                        {% else %}
+                            <label for="password-register">Mot de passe</label>
+                        {% endif %}
                     </div>
                     <input type="hidden" id="register-form" name="register-form" value="1">
                     <input class="btn btn-primary text-uppercase" type="submit" value="Connexion">

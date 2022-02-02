@@ -2,6 +2,10 @@
 
 use App\Controller\Front\HomeController;
 use App\Service\Router;
+use App\Service\Mailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use Twig\Extra\Intl\IntlExtension;
 //On importe la classe User afin que l'objet en session ne devienne pas un PHP_Incomplete_Class dans la navigation
 require_once __DIR__ . '/src/Entity/User.php';

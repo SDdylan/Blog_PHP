@@ -1,4 +1,4 @@
-{% extends "layoutAlter.twig" %}
+{% extends "layout.twig" %}
 
 {% block pageheader %}
 {% endblock %}
@@ -85,7 +85,7 @@
                             <h3 class="post-subtitle">{{ post.chapo }}</h3>
                         </a>
                         <p class="post-meta align-content-end">
-                            Modifié le {{ post.updatedAt | date('m/d/Y') }}
+                            Modifié le {{ post.updatedAt | date('m/d/Y') }} par {{ post.user.alias }}
                         </p>
                     </div>
                 {% endfor %}
