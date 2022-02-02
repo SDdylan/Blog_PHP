@@ -18,14 +18,13 @@ class EditPostController extends AdminController
         $errors = null;
         try {
             $post = PostRepository::getPost($postId);
-            $tags = TagRepository::getTags();
             if (isset($_POST['post-modify-form'])) {
                 $errors = $this->validateRegisterForm();
                 if(empty($errors)) {
                     $editPost = PostRepository::editPost($this->updatePost($post));
                 }
             }
-            $this->render('editPost.twig', 'Admin', ['post' => $post, 'listTag' => $tags, 'errors' => $errors]);
+            $this->render('editPost.twig', 'Admin', ['post' => $post, 'errors' => $errors]);
         } catch (PostNotFoundException $exception) {
             $this->redirectToUrl();
         }
@@ -33,7 +32,6 @@ class EditPostController extends AdminController
 
     private function updatePost(Post $post)
     {
-        $post->setTag(TagRepository::getTag($_POST['tag']));
         $post->setUser($this->getUser());
         $post->setTitle($_POST['title']);
         $post->setUpdatedAt(new \DateTime());
@@ -68,13 +66,6 @@ class EditPostController extends AdminController
             Assertion::minLength($content, Post::CONTENT_MIN_LENGTH);
         } catch (AssertionFailedException $exception) {
             $errors['content'] = "Le contenu ne faire moins de " . Post::CONTENT_MIN_LENGTH  . " caractères.";
-        }
-
-        $tag = $_POST["tag"];
-        try {
-            Assertion::notEmpty($tag);
-        } catch (AssertionFailedException $exception) {
-            $errors['tag'] = "Le contenu ne peut être vide";
         }
 
         return $errors;

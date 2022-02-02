@@ -80,25 +80,11 @@ class PostRepository
         return PostFactory::createFromDatabase($postPDO);
     }
 
-    //Fonction pour renvoyer les derniers posts appartenant a une certaine catégorie/tag (ajouter une limite ?)
-    public static function getPostsByTag(int $posts_tag_id)
-    {
-        $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM post WHERE tag_id = ' . $posts_tag_id . ' ORDER BY updated_at DESC' ;
-        $articlesPDO = $pdo->query($sql);
-        $posts =[];
-        foreach ($articlesPDO as $article) {
-            $posts[] = $article;
-        }
-        return $posts;
-    }
-
     //Fonction pour créer un post
     public static function createPost(Post $post) : void
     {
         $postParams = [
             "user_id" => $post->getUserId(),
-            "tag_id" => $post->getTagId(),
             "title" => $post->getTitle(),
             "updated_at" => $post->getUpdatedAt()->format('Y-m-d H:i:s'), //on ne recupère que la date de l'objet DateTime
             "chapo" => $post->getChapo(),
@@ -106,7 +92,7 @@ class PostRepository
             "slug" => $post->getSlug()
         ];
         $pdo = DBConnection::getPDO();
-        $sql = 'INSERT INTO post (user_id, tag_id, title, updated_at, chapo, content, slug) VALUES (:user_id, :tag_id, :title, :updated_at, :chapo, :content, :slug)' ;
+        $sql = 'INSERT INTO post (user_id, title, updated_at, chapo, content, slug) VALUES (:user_id, :title, :updated_at, :chapo, :content, :slug)' ;
         $insert = $pdo->prepare($sql);
         $insert->execute($postParams);
     }
@@ -116,8 +102,7 @@ class PostRepository
     {
         $postParams = [
             "id" => $post->getId(),
-            "user_id" => $post->getUserId(), //getUserId()
-            "tag_id" => $post->getTagId(),    //getTagId à creer
+            "user_id" => $post->getUserId(),
             "title" => $post->getTitle(),
             "updated_at" => $post->getUpdatedAt()->format('Y-m-d H:i:s'), //on ne recupère que la date de l'objet DateTime
             "chapo" => $post->getChapo(),
@@ -125,7 +110,7 @@ class PostRepository
             "slug" => $post->getSlug()
         ];
         $pdo = DBConnection::getPDO();
-        $sql = 'UPDATE post SET user_id = :user_id, tag_id =  :tag_id, title =  :title, updated_at = :updated_at, chapo = :chapo, content = :content, slug = :slug WHERE (id = :id)';
+        $sql = 'UPDATE post SET user_id = :user_id, title =  :title, updated_at = :updated_at, chapo = :chapo, content = :content, slug = :slug WHERE (id = :id)';
         $insert = $pdo->prepare($sql);
         $insert->execute($postParams);
     }

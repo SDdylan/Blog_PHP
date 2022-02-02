@@ -21,10 +21,7 @@ use App\Controller\Front\HomeController;
 use App\Controller\Front\ContactController;
 use App\Controller\Front\PostController;
 use App\Controller\Front\ConnexionController;
-use App\Controller\Front\ProcessController;
 use App\Controller\Admin\NewPostController;
-use App\Controller\Admin\NewTagController;
-//use App\Controller\Admin\AdminController;
 
 
 class Router
@@ -72,9 +69,6 @@ class Router
 
         $route = new Route('/admin/comments/{commentId}/change', ['_controller' => ChangeCommentController::class]);
         $routes->add('commentChange', $route);
-
-        $route = new Route('/admin/tags/add', ['_controller' => NewTagController::class]);
-        $routes->add('newTag', $route);
 
         $route = new Route('/admin/users', ['_controller' => UserAdminController::class]);
         $routes->add('users', $route);

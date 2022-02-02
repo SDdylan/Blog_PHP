@@ -59,19 +59,6 @@ class CommentRepository
         $commentPDO = $pdo->query($sql);
     }
 
-    //Recupérer tout les commentaires d'un utilisateur
-    /*public static function getCommentsUser(int $idUser): array
-    {
-        $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM comment WHERE user_id = ' . $idUser . ' ORDER BY created_at DESC ';
-        $commentsPDO = $pdo->query($sql);
-        $comments =[];
-        foreach ($commentsPDO as $comment) {
-            $comments[] = $comment;
-        }
-        return $comments;
-    }*/
-
     public static function getNbComments() : int
     {
         $pdo = DBConnection::getPDO();

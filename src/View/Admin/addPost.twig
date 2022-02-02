@@ -31,20 +31,7 @@
                     {% if errors.content is defined %}
                         <label for="content" class="col-form-label text-danger">{{ errors.content }}</label>
                     {% else %}
-                        <label for="content">Chapo</label>
-                    {% endif %}
-                </div>
-                <!-- Aller chercher les différents tags disponible sur la BDD -->
-                <div class="form-floating">
-                    <select class="form-control" name="tag" id="tag">
-                        {% for tag in listTag %}
-                            <option value="{{ tag.id }}">{{ tag.name }}</option>
-                        {% endfor %}
-                    </select>
-                    {% if errors.tag is defined %}
-                        <label for="tag" class="col-form-label text-danger">{{ errors.tag }}</label>
-                    {% else %}
-                        <label for="tag">Tag</label>
+                        <label for="content">Contenu</label>
                     {% endif %}
                 </div>
                 <input type="hidden" id="post-form" name="post-form" value="1">

@@ -15,8 +15,6 @@ class Post
 
     private User $user;
 
-    private Tag $tag;
-
     private string $title;
 
     private string $chapo;
@@ -62,27 +60,6 @@ class Post
     public function getUserId(): int
     {
         return $this->getUser()->getId();
-    }
-
-    /**
-     * @return Tag|null
-     */
-    public function getTag(): ?Tag
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @param Tag|null $tag
-     */
-    public function setTag(?Tag $tag): void
-    {
-        $this->tag = $tag;
-    }
-
-    public function getTagId(): int
-    {
-        return $this->getTag()->getId();
     }
 
     /**

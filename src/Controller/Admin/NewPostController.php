@@ -5,8 +5,6 @@ namespace App\Controller\Admin;
 use App\Controller\AbstractController;
 use App\Entity\Post;
 use App\Repository\PostRepository;
-use App\Repository\TagRepository;
-use App\Entity\TagFactory;
 use App\Entity\PostFactory;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
@@ -22,24 +20,16 @@ class NewPostController extends AdminController
             $errors = $this->validateRegisterForm();
             if(empty($errors)) {
                 //Insertion du Post dans la BDD
-                PostRepository::createPost(PostFactory::create(TagRepository::getTag($_POST["tag"]), $this->getUser(), $_POST["title"], new \DateTime(), $_POST["chapo"], $_POST["content"]));
+                PostRepository::createPost(PostFactory::create($this->getUser(), $_POST["title"], new \DateTime(), $_POST["chapo"], $_POST["content"]));
                 $this->redirectToAdminHomepage();
             }
         }
-        $tags = TagRepository::getTags();
-        $this->render('addPost.twig', 'Admin',  ['listTag' => $tags, "errors" => $errors]);
+        $this->render('addPost.twig', 'Admin',  [ "errors" => $errors]);
     }
 
     private function validateRegisterForm(): array //$_POST en paramètre provoque une erreur : Cannot re-assign auto-global variable _POST
     {
         $errors = [];
-
-        $tag = $_POST["tag"];
-        try {
-            Assertion::notEmpty($tag);
-        } catch (AssertionFailedException $exception) {
-            $errors['tag'] = "Le tag ne peut pas être vide";
-        }
 
         $title = $_POST["title"];
         try {

@@ -18,7 +18,6 @@ class PostController extends AbstractController
         $postId = (int) $parameters['postId'];
 
         try {
-            //$isLogged = SessionService::isUserLoggedIn();
             $post = PostRepository::getPost($postId);
             $comments = CommentRepository::getCommentsPost($post->getId());
             if (isset($_GET['commented'])) {
