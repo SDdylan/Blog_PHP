@@ -16,6 +16,7 @@ abstract class AbstractController
         ]);
         $content['isLogged'] = $this->isUserLoggedIn();
         $content['isAdmin'] = $this->isUserAdmin();
+        $content['folder'] = $folderName;
         echo $twig->render($folderName . "/" . $templateName, $content);
     }
 
