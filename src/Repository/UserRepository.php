@@ -8,20 +8,6 @@ use App\Entity\UserFactory;
 
 class UserRepository
 {
-    //Fonction pour récuperer les utilisateurs 
-    public static function getLastUsers(int $limit = 10) : array
-    {
-        $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM user ORDER BY id ASC LIMIT ' . $limit;
-        $usersPDO = $pdo->query($sql);
-        $users =[];
-        foreach ($usersPDO as $user) {
-            $users[] = $user;
-        }
-        return $users;
-        
-    }
-
     public static function getUser(int $userId): User
     {
         $pdo = DBConnection::getPDO();
@@ -31,18 +17,6 @@ class UserRepository
         $userPDO = $select->fetch();
 
         return UserFactory::createFromDatabase($userPDO);
-    }
-
-    //Passer un utilisateur en administrateur
-    public static function setAdmin(User $user): void
-    {
-        $userParams = [
-            'id' => $user->getId()
-        ];
-        $pdo = DBConnection::getPDO();
-        $sql = 'UPDATE user SET is_admin = 1  WHERE id = :id';
-        $insert = $pdo->prepare($sql);
-        $insert->execute($userParams);
     }
 
     public static function getNbUsers() : int
@@ -116,18 +90,6 @@ class UserRepository
         return self::getUserByEmail($user->getEmail());
     }
 
-    //Fonction pour update les infos de l'utilisateur
-    public static function modifyPasswordUser(string $newPassword) : void
-    {
-        $pdo = DBConnection::getPDO();
-        $pwd = password_hash($newPassword, PASSWORD_DEFAULT);
-        //On part du principe que l'utilisateur est déjà loggé
-        $sql = 'UPDATE user SET password = "' . $pwd . '" WHERE id = 1 ' ;
-        $userPDO = $pdo->query($sql);
-    }
-
-    //Fonction de connexion
-    //Respecter les PSR au niveau de l'alignement des accolades
     public static function getUserByEmail(string $mail) : User
     {
         $pdo = DBConnection::getPDO();
@@ -138,7 +100,4 @@ class UserRepository
         return UserFactory::createFromDatabase($userPDO);
     }
 
-    //Fonction de connexion ?
-    //Bannir utilisateur
-    //Modifier alias, mdp, email, ...
 }

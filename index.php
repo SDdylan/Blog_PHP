@@ -12,10 +12,6 @@ require_once __DIR__ . '/src/Entity/User.php';
 
 session_start();
 
-/* PATH A AJOUTER POUR LES DIFFERENTES VUES TWIG
-$loader->addPath(dirname(__DIR__).'/src/View', 'view');
-$loader->addPath( dirname(__DIR__). '/src/View/Front', 'front');
-$loader->addPath( dirname(__DIR__). '/src/View/Admin', 'admin');*/
 require 'vendor/autoload.php';
 
 //constante définissant la racine du projet (AbstractController)

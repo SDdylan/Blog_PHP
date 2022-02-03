@@ -25,7 +25,7 @@ class ConnexionController extends AbstractController
                 $user = UserFactory::create($_POST["firstname-register"], $_POST["lastname-register"], $_POST["mail-register"], $_POST["alias-register"], $_POST["password-register"]);
                 //Insertion de l'utilisateur dans la BDD
                 UserRepository::createUser($user);
-                //Créer la session PHP pour stocker toutes les données de User (plus tard, la session sera gérée dans un service de session)
+                //Création de la session
                 SessionService::createSession($user);
                 $this->redirectToHomepage();
             }
@@ -53,7 +53,7 @@ class ConnexionController extends AbstractController
      * @param array $_POST
      *
      */
-    private function validateRegisterForm(): array //$_POST en paramètre provoque une erreur : Cannot re-assign auto-global variable _POST
+    private function validateRegisterForm(): array
     {
         $errors = [];
 
@@ -76,9 +76,9 @@ class ConnexionController extends AbstractController
         try {
             Assertion::notEmpty($password);
             Assertion::betweenLength($password, 8,255);
-            Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])");
+            Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])"); // au moins 1 lettre majuscule ou minuscule, 1 chiffre et 1 caractère spécial
         } catch (AssertionFailedException $exception) {
-            $errors['password-register'] = "Le format du mot de passe est invalide";
+            $errors['password-register'] = "Le format du mot de passe est invalide : au moins 1 lettre, 1 chiffre et 1 caractère spécial)";
         }
 
         $lastName = $_POST["lastname-register"];
@@ -118,7 +118,7 @@ class ConnexionController extends AbstractController
         try {
             Assertion::notEmpty($password);
             Assertion::betweenLength($password, 8,255);
-            Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])"); // au moins 1 lettre majuscule ou minuscule, 1 chiffre et 1 caractère spécial
+            Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])");
         } catch (AssertionFailedException $exception) {
             $errors['password-connexion'] = "Le format du mot de passe est invalide";
         }

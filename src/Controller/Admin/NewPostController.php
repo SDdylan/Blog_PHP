@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\AbstractController;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use App\Entity\PostFactory;
@@ -27,7 +26,7 @@ class NewPostController extends AdminController
         $this->render('addPost.twig', 'Admin',  [ "errors" => $errors]);
     }
 
-    private function validateRegisterForm(): array //$_POST en paramètre provoque une erreur : Cannot re-assign auto-global variable _POST
+    private function validateRegisterForm(): array
     {
         $errors = [];
 

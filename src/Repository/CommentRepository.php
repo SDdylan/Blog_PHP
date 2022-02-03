@@ -51,14 +51,6 @@ class CommentRepository
         $insert->execute($commentParams);
     }
 
-    //Supprimer un commentaire
-    public static function deleteComment(int $commentId) : void
-    {
-        $pdo = DBConnection::getPDO();
-        $sql = 'DELETE FROM comment WHERE id = ' . $commentId;
-        $commentPDO = $pdo->query($sql);
-    }
-
     public static function getNbComments() : int
     {
         $pdo = DBConnection::getPDO();

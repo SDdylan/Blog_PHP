@@ -21,7 +21,7 @@ class EditPostController extends AdminController
             if (isset($_POST['post-modify-form'])) {
                 $errors = $this->validateRegisterForm();
                 if(empty($errors)) {
-                    $editPost = PostRepository::editPost($this->updatePost($post));
+                    PostRepository::editPost($this->updatePost($post));
                 }
             }
             $this->render('editPost.twig', 'Admin', ['post' => $post, 'errors' => $errors]);

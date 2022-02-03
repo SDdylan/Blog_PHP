@@ -150,11 +150,6 @@ class User
         return $this;
     }
 
-    public function getDisplayName(): string
-    {
-        return $this->getFirstName() .' '.$this->getLastName();
-    }
-
     public function checkPassword($clearPassword) : bool
     {
         return password_verify($clearPassword, $this->getPassword());

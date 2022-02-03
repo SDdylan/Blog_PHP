@@ -15,7 +15,7 @@ class GetCommentController extends AdminController
             $post = PostRepository::getPost($postId);
             $comments = CommentRepository::getCommentsPost($postId, false);
             $this->render('commentPost.twig', 'Admin', ['comments' => $comments, 'post' => $post]);
-        } catch (PostNotFoundException $exception) { //CHANGER L'EXCEPTION
+        } catch (PostNotFoundException $exception) {
             $this->redirectToUrl();
         }
 

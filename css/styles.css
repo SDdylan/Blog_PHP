@@ -11071,13 +11071,13 @@ blockquote {
   #adminNav .navbar-brand {
     color: #000;
   }
-  #adminNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+  #adminNav .navbar-brand:focus, #adminNav .navbar-brand:hover {
     color: rgba(0, 0, 0, 0.8);
   }
   #adminNav .navbar-nav > li.nav-item > a.nav-link {
     color: #000;
   }
-  #adminNav .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
+  #adminNav .navbar-nav > li.nav-item > a.nav-link:focus, #adminNav .navbar-nav > li.nav-item > a.nav-link:hover {
     color: rgba(0, 0, 0, 0.8);
   }
 }
@@ -11100,13 +11100,13 @@ blockquote {
   #adminNav.is-fixed .navbar-brand {
     color: #212529;
   }
-  #adminNav.is-fixed .navbar-brand:focus, #mainNav.is-fixed .navbar-brand:hover {
+  #adminNav.is-fixed .navbar-brand:focus, #adminNav.is-fixed .navbar-brand:hover {
     color: #0085A1;
   }
   #adminNav.is-fixed .navbar-nav > li.nav-item > a {
     color: #212529;
   }
-  #adminNav.is-fixed .navbar-nav > li.nav-item > a:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
+  #adminNav.is-fixed .navbar-nav > li.nav-item > a:focus, #adminNav.is-fixed .navbar-nav > li.nav-item > a:hover {
     color: #0085A1;
   }
   #adminNav.is-visible {
