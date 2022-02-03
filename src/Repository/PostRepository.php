@@ -115,22 +115,6 @@ class PostRepository
         $insert->execute($postParams);
     }
 
-    //récuperation d'un Post à partir d'un slug
-    public static function getPostBySlug(string $slug) : Post
-    {
-        $pdo = DBConnection::getPDO();
-
-        $sql = 'SELECT * FROM post WHERE slug = "' . $slug . '" ';
-        //$postPDO = $pdo->query($sql);
-        $select = $pdo->prepare($sql);
-        $select->execute();
-        $postPDO = $select->fetch();
-        if (!$postPDO) {
-            throw new PostNotFoundException();
-        }
-        return PostFactory::createFromDatabase($postPDO);
-    }
-
     //supprimer un post a partir d'un id
     public static function deletePost(int $id_post)
     {
