@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\UserFactory;
 use App\Service\SessionService;
+use Assert\Assertion;
+use Assert\AssertionFailedException;
 
 abstract class AbstractController
 {
@@ -23,7 +26,6 @@ abstract class AbstractController
     protected function redirectToUrl(string $url = "/")
     {
         header('Location: ' . $url);
-        exit();
     }
 
     protected function redirectToHomepage(): void
@@ -55,6 +57,37 @@ abstract class AbstractController
         $user = $this->getUser();
         return $user->isAdmin();
 
+    }
+
+    protected function validateRegisterForm(): array
+    {
+        $errors = [];
+
+        $title = $_POST["title"];
+        try {
+            Assertion::notEmpty($title);
+            Assertion::minLength($title, Post::TITLE_MIN_LENGTH);
+        } catch (AssertionFailedException $exception) {
+            $errors['title'] = "Le titre ne faire moins de " . Post::TITLE_MIN_LENGTH  . " caractères.";
+        }
+
+        $chapo = $_POST["chapo"];
+        try {
+            Assertion::notEmpty($chapo);
+            Assertion::minLength($chapo, Post::CHAPO_MIN_LENGTH);
+        } catch (AssertionFailedException $exception) {
+            $errors['chapo'] = "Le chapo ne faire moins de " . Post::CHAPO_MIN_LENGTH  . " caractères.";
+        }
+
+        $content = $_POST["content"];
+        try {
+            Assertion::notEmpty($content);
+            Assertion::minLength($content, Post::CONTENT_MIN_LENGTH);
+        } catch (AssertionFailedException $exception) {
+            $errors['content'] = "Le contenu ne faire moins de " . Post::CONTENT_MIN_LENGTH  . " caractères.";
+        }
+
+        return $errors;
     }
 
 }
