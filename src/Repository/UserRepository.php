@@ -62,14 +62,18 @@ class UserRepository
     public static function changeStatusUser(User $user, int $statusUser) : void
     {
         $pdo = DBConnection::getPDO();
-        $idUser = $user->getId();
         if ($statusUser == 0) {
             $newStatus = 1;
         } else {
             $newStatus = 0;
         }
-        $sql = 'UPDATE user SET is_admin = ' . $newStatus . ' WHERE id = ' . $idUser;
-        $userPDO = $pdo->query($sql);
+        $userParams = [
+            'id_user' => $user->getId(),
+            'new_status' => $newStatus
+        ];
+        $sql = 'UPDATE user SET is_admin = :new_status WHERE id = :id_user';
+        $userPDO = $pdo->prepare($sql);
+        $userPDO->execute($userParams);
     }
 
     //Créer un nouvel utilisateur
@@ -86,16 +90,18 @@ class UserRepository
         $sql = 'INSERT INTO user (email, password, alias, firstname, lastname) VALUES (:email, :password, :alias, :firstname, :lastname) ';
         $insert = $pdo->prepare($sql);
         $insert->execute($userParams);
-
         return self::getUserByEmail($user->getEmail());
     }
 
     public static function getUserByEmail(string $mail) : User
     {
+        $userParam = [
+            'mail' => $mail
+        ];
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM user WHERE email = "'.  $mail . '"';
+        $sql = 'SELECT * FROM user WHERE email = :mail';
         $select = $pdo->prepare($sql);
-        $select->execute();
+        $select->execute($userParam);
         $userPDO = $select->fetch();
         return UserFactory::createFromDatabase($userPDO);
     }

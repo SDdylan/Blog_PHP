@@ -17,9 +17,12 @@ class PostRepository
     public static function getLastPosts(int $limit = 10): array
     {
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM post ORDER BY updated_at DESC LIMIT ' . $limit;
-        $postsPDO = $pdo->query($sql);
-
+        $postParam = [
+          'limit' => $limit
+        ];
+        $sql = 'SELECT * FROM post ORDER BY updated_at DESC LIMIT :limit';
+        $postsPDO = $pdo->prepare($sql);
+        $postsPDO -> execute($postParam);
         $posts = [];
         foreach ($postsPDO as $postPDO) {
             $posts[] = PostFactory::createFromDatabase($postPDO);
@@ -118,11 +121,13 @@ class PostRepository
     //supprimer un post a partir d'un id
     public static function deletePost(int $id_post)
     {
+        $postParam = [
+            'id_post' => $id_post
+        ];
         $pdo = DBConnection::getPDO();
-
-        $sql = 'DELETE FROM post WHERE id = ' . $id_post ;
-        $insert = $pdo->prepare($sql);
-        $insert->execute();
+        $sql = 'DELETE FROM post WHERE id = :id_post';
+        $delete = $pdo->prepare($sql);
+        $delete->execute($postParam);
     }
 
 }
