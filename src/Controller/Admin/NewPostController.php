@@ -14,7 +14,7 @@ class NewPostController extends AdminController
         // Si on a soumis le formulaire d'enregistrement
         if (isset($_POST["post-form"])) {
             //Validation des données (à compléter)
-            $errors = AbstractController::validateRegisterForm();
+            $errors = AbstractController::validatePostForm();
             if(empty($errors)) {
                 //Insertion du Post dans la BDD
                 PostRepository::createPost(PostFactory::create($this->getUser(), $_POST["title"], new \DateTime(), $_POST["chapo"], $_POST["content"]));

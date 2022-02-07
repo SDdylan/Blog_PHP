@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Entity;
-
-use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use Cocur\Slugify\Slugify;
 

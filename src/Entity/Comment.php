@@ -108,13 +108,19 @@ class Comment
     }
 
     /**
+     * @return bool
+     */
+    public function isValidated(): bool
+    {
+        return $this->isValidated;
+    }
+
+    /**
      * @param bool $isValidated
      */
     public function setIsValidated(bool $isValidated): void
     {
         $this->isValidated = $isValidated;
     }
-
-
 
 }

@@ -105,5 +105,4 @@ class UserRepository
         $userPDO = $select->fetch();
         return UserFactory::createFromDatabase($userPDO);
     }
-
 }

@@ -27,7 +27,7 @@
                     {% endif %}
                 </div>
                 <div class="form-floating my-2">
-                    <textarea class="form-control" style="height: 12rem" id="content" name="content" type="text" placeholder="Content..." required/></textarea>
+                    <textarea class="form-control" style="height: 12rem" id="content" name="content" type="text" placeholder="Content..." required></textarea>
                     {% if errors.content is defined %}
                         <label for="content" class="col-form-label text-danger">{{ errors.content }}</label>
                     {% else %}
@@ -61,4 +61,3 @@
     </div>
 </div>
 {% endblock %}
-

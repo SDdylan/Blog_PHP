@@ -16,7 +16,7 @@ class EditPostController extends AdminController
         try {
             $post = PostRepository::getPost($postId);
             if (isset($_POST['post-modify-form'])) {
-                $errors = AbstractController::validateRegisterForm();
+                $errors = AbstractController::validatePostForm();
                 if(empty($errors)) {
                     PostRepository::editPost($this->updatePost($post));
                 }

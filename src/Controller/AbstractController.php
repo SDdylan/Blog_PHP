@@ -59,7 +59,7 @@ abstract class AbstractController
 
     }
 
-    protected function validateRegisterForm(): array
+    protected function validatePostForm(): array
     {
         $errors = [];
 

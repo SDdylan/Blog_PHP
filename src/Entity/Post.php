@@ -142,7 +142,4 @@ class Post
         $this->updatedAt = $updatedAt;
     }
 
-
-
 }
-

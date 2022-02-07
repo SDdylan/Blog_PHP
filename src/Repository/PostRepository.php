@@ -129,5 +129,4 @@ class PostRepository
         $delete = $pdo->prepare($sql);
         $delete->execute($postParam);
     }
-
 }
