@@ -44,7 +44,6 @@ class ConnexionController extends AbstractController
                 }
             }
         }
-
         //Ajouter aux paramètres envoyées à la vue notre nouveau table d'erreur de saisie et afficher les messages d'erreur côté front le cas échéant
         $this->render('connexion.twig', 'Front', ["errors" => $errors]);
     }
@@ -61,7 +60,7 @@ class ConnexionController extends AbstractController
         try {
             Assertion::notEmpty($firstName);
         } catch (AssertionFailedException $exception) {
-            $errors['firstname-register'] = "Le prénom ne peut pas être vide";
+            $errors['firstnameRegister'] = "Le prénom ne peut pas être vide";
         }
 
         $email = $_POST["mail-register"];
@@ -69,30 +68,35 @@ class ConnexionController extends AbstractController
             Assertion::notEmpty($email);
             Assertion::email($email);
         } catch (AssertionFailedException $exception) {
-            $errors['mail-register'] = "Le format de l'adresse mail est invalide";
+            $errors['mailRegister'] = "Le format de l'adresse mail est invalide";
         }
 
         $password = $_POST["password-register"];
         try {
             Assertion::notEmpty($password);
-            Assertion::betweenLength($password, 8,255);
             Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])"); // au moins 1 lettre majuscule ou minuscule, 1 chiffre et 1 caractère spécial
         } catch (AssertionFailedException $exception) {
-            $errors['password-register'] = "Le format du mot de passe est invalide : au moins 1 lettre, 1 chiffre et 1 caractère spécial)";
+            $errors['passwordRegister'] = "Le format du mot de passe est invalide : au moins 1 lettre, 1 chiffre et 1 caractère spécial (8 caractères minimum)";
+        }
+        try {
+            Assertion::betweenLength($password, 8,255);
+        } catch (AssertionFailedException $exception) {
+            $errors['passwordRegister'] = "Le mot de passe doit faire 8 caractères minimum";
         }
 
         $lastName = $_POST["lastname-register"];
         try {
-            Assertion::notEmpty($password);
+            Assertion::notEmpty($lastName);
         } catch (AssertionFailedException $exception) {
-            $errors['lastname-register'] = "Le format du nom n'est pas valide";
+            $errors['lastnameRegister'] = "Le format du nom n'est pas valide";
         }
 
-        $firstName = $_POST["firstname-register"];
+        $alias = $_POST["alias-register"];
         try {
-            Assertion::notEmpty($firstName);
+            Assertion::notEmpty($alias);
+            Assertion::betweenLength($alias, 8,255);
         } catch (AssertionFailedException $exception) {
-            $errors['lastname-register'] = "Le format du prénom n'est pas valide";
+            $errors['aliasRegister'] = "Le pseudo doit faire 8 caractères minimum";
         }
 
         return $errors;
@@ -111,16 +115,20 @@ class ConnexionController extends AbstractController
             Assertion::notEmpty($email);
             Assertion::email($email);
         } catch (AssertionFailedException $exception) {
-            $errors['mail-connexion'] = "Le format de l'adresse mail est invalide";
+            $errors['mailConnexion'] = "Le format de l'adresse mail est invalide";
         }
 
         $password = $_POST["password-connexion"];
         try {
             Assertion::notEmpty($password);
-            Assertion::betweenLength($password, 8,255);
             Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])");
         } catch (AssertionFailedException $exception) {
-            $errors['password-connexion'] = "Le format du mot de passe est invalide";
+            $errors['passwordConnexion'] = "Le format du mot de passe est invalide : au moins 1 lettre, 1 chiffre et 1 caractère spécial (8 caractères minimum)";
+        }
+        try {
+            Assertion::betweenLength($password, 8,255);
+        } catch (AssertionFailedException $exception) {
+            $errors['passwordConnexion'] = "Le mot de passe doit faire 8 caractères minimum";
         }
 
         return $errors;

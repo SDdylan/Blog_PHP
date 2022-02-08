@@ -21,6 +21,6 @@ class NewPostController extends AdminController
                 $this->redirectToAdminHomepage();
             }
         }
-        $this->render('addPost.twig', 'Admin',  [ "errors" => $errors]);
+        $this->render('addPost.twig', 'Admin',  ['errors' => $errors]);
     }
 }
