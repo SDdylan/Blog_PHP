@@ -15,7 +15,8 @@ class UserAdminController extends AdminController
             //changement de statut de l'utilisateur
             $users = UserRepository::getUsers($page);
             //transmettre le numéro de page et le nbpost pour la pagination
-            $this->render('users.twig', 'Admin', ['listUsers' => $users, 'nbPages' => $nbPages, 'currentPage' => $page]);
+            $userLogged = $this->getUser();
+            $this->render('users.twig', 'Admin', ['listUsers' => $users, 'nbPages' => $nbPages, 'currentPage' => $page, 'loggedUserId' => $userLogged->getId()]);
         } catch (UserNotFoundException $exception) {
             $this->redirectToUrl();
         }

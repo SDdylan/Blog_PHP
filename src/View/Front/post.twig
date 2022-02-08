@@ -69,11 +69,17 @@
                     {% for comment in comments %}
                         <hr class="my-4" />
                         <!-- Post preview-->
-                        <div class="card">
-                            <h5>{{ comment.user.alias }}</h5>
-                            <p>Posté le {{ comment.createdAt|date('d-m-Y')  }} à {{ comment.createdAt|date('H:i') }}<br>
-                                {{ comment.content }}
-                            </p>
+                        <div class="card container">
+                            <div class="row">
+                                <span class="col-1 fa-stack fa-md">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                                </span>
+                                <h5 class="col-11">{{ comment.user.alias }}</h5>
+                                <p class="offset-1">Posté le {{ comment.createdAt|date('d-m-Y')  }} à {{ comment.createdAt|date('H:i') }}<br>
+                                    {{ comment.content }}
+                                </p>
+                            </div>
                         </div>
                         <hr class="my-4" />
                     {% endfor %}

@@ -62,11 +62,7 @@ class UserRepository
     public static function changeStatusUser(User $user, int $statusUser) : void
     {
         $pdo = DBConnection::getPDO();
-        if ($statusUser == 0) {
-            $newStatus = 1;
-        } else {
-            $newStatus = 0;
-        }
+        $newStatus = $statusUser == 0 ? 1 : 0;
         $userParams = [
             'id_user' => $user->getId(),
             'new_status' => $newStatus
@@ -95,13 +91,10 @@ class UserRepository
 
     public static function getUserByEmail(string $mail) : User
     {
-        $userParam = [
-            'mail' => $mail
-        ];
         $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM user WHERE email = :mail';
+        $sql = 'SELECT * FROM user WHERE email = ?';
         $select = $pdo->prepare($sql);
-        $select->execute($userParam);
+        $select->execute([$mail]);
         $userPDO = $select->fetch();
         return UserFactory::createFromDatabase($userPDO);
     }

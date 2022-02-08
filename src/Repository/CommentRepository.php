@@ -12,15 +12,10 @@ class CommentRepository
     //Fonction pour récupérer tous les commentaires d'un post validés ou non
     public static function getCommentsPost(int $postId, bool $validOnly = true) : array
     {
-        $validOnly = ($validOnly === true) ? ' AND is_validated = 1' : null;
-        $commentParams = [
-            'valid_only' => $validOnly,
-            'post_id' =>$postId
-        ];
-        $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM comment WHERE post_id = :post_id :valid_only ORDER BY created_at DESC ';
+      $pdo = DBConnection::getPDO();
+        $sql = ($validOnly === true) ? 'SELECT * FROM comment WHERE post_id = ?  AND is_validated = 1 ORDER BY created_at DESC ' : 'SELECT * FROM comment WHERE post_id = ? ORDER BY created_at DESC ';
         $commentsPDO = $pdo->prepare($sql);
-        $commentsPDO -> execute($commentParams);
+        $commentsPDO -> execute([$postId]);
         $comments =[];
         foreach ($commentsPDO as $comment) {
             $comments[] = CommentFactory::createFromDatabase($comment);
@@ -78,12 +73,10 @@ class CommentRepository
     {
         $pdo = DBConnection::getPDO();
         $nbComments = self::getNbComments();
-        $commentParam = [
-            'id_user' => $user->getId()
-        ];
-        $sql = $nbComments > $numPages * 10 && $numPages === 1 ? "SELECT * FROM comment WHERE user_id = :id_user ORDER BY created_at DESC LIMIT 10 " : "SELECT * FROM comment WHERE user_id = :id_user ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numPages - 1) * 10;
+        $userId = $user->getId();
+        $sql = $nbComments > $numPages * 10 && $numPages === 1 ? "SELECT * FROM comment WHERE user_id = ? ORDER BY created_at DESC LIMIT 10 " : "SELECT * FROM comment WHERE user_id = ? ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numPages - 1) * 10;
         $commentsPDO = $pdo->prepare($sql);
-        $commentsPDO -> execute($commentParam);
+        $commentsPDO -> execute([$userId]);
         $comments = [];
         foreach ($commentsPDO as $commentPDO) {
             $comments[] = CommentFactory::createFromDatabase($commentPDO);
@@ -102,5 +95,13 @@ class CommentRepository
         $sql = 'UPDATE comment SET is_validated = :new_status WHERE id = :comment_id';
         $commentPDO = $pdo->prepare($sql);
         $commentPDO -> execute($commentParams);
+    }
+
+    public static function deleteCommentsForPost(int $postId) : void
+    {
+        $pdo = DBConnection::getPDO();
+        $sql = 'DELETE FROM comment WHERE post_id = ?';
+        $delete = $pdo->prepare($sql);
+        $delete->execute([$postId]);
     }
 }

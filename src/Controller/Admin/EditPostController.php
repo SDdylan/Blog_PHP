@@ -19,6 +19,7 @@ class EditPostController extends AdminController
                 $errors = AbstractController::validatePostForm();
                 if(empty($errors)) {
                     PostRepository::editPost($this->updatePost($post));
+                    $this->redirectToAdminHomepage();
                 }
             }
             $this->render('editPost.twig', 'Admin', ['post' => $post, 'errors' => $errors]);

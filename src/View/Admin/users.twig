@@ -81,7 +81,8 @@
                         <td><p>{{ user.isAdmin ? '<i class="fas fa-user-shield"></i>' : '<i class="fas fa-user"></i>' }}<p/></td>
                         <td>
                             <!-- Input pour accèder au modal de changement de statut -->
-                            <p><input class="btn btn-primary btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ user.id }}" value="Changer Statut"></p>
+                            {% if loggedUserId != user.id  %}
+                                <p><input class="btn btn-primary btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ user.id }}" value="Changer Statut"></p>
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -104,6 +105,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                         </td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="/admin/users/{{ user.id }}/comments">commentaires</a>
