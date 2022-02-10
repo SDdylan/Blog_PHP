@@ -80,11 +80,11 @@
                         <tr>
                             <td>{{ post.title }}</td>
                             <td>{{ post.updatedAt | date('d/m/Y') }}</td>
-                            <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/comments">commentaires</a></td>
-                            <td><a class="btn btn-primary btn-sm" href="admin/posts/{{ post.id }}/edit">éditer</a></td>
+                            <td><a class="btn btn-primary btn-sm text-uppercase" href="admin/posts/{{ post.id }}/comments">commentaires</a></td>
+                            <td><a class="btn btn-primary btn-sm text-uppercase" href="admin/posts/{{ post.id }}/edit">éditer</a></td>
                             <td>
                                 <!-- Input pour accèder au modal de suppression -->
-                                <input class="btn btn-danger btn-sm" type="button" id="post-form" name="post-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ post.id }}" value="supprimer">
+                                <input class="btn btn-danger btn-sm text-uppercase" type="button" id="post-form" name="post-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ post.id }}" value="supprimer">
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal{{ post.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">

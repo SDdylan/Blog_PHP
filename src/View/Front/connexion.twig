@@ -10,15 +10,19 @@
                     <div class="form-floating my-2">
                         <input class="form-control" id="mail-connexion" name="mail-connexion" type="text" placeholder="Votre e-mail" required/>
                         {% if errors.mailConnexion is defined %}
-                            <label for="mail-connexion">{{ errors.mailConnexion }}</label>
+                            <label style="color: red" for="mail-connexion">{{ errors.mailConnexion }}</label>
+                        {% elseif errors.userNotFound is defined %}
+                            <label style="color: red" for="mail-connexion">{{ errors.userNotFound }}</label>
                         {% else %}
-                            <label for="mail-connexion">E-mail</label>
+                            <label for="mail-connexion">Email</label>
                         {% endif %}
                     </div>
                     <div class="form-floating my-2">
                         <input class="form-control" id="password-connexion" name="password-connexion" type="password" placeholder="Votre mot de passe" required/>
                         {% if errors.passwordConnexion is defined %}
-                            <label for="password-connexion">{{ errors.passwordConnexion }}</label>
+                            <label style="color: red" for="password-connexion">{{ errors.passwordConnexion }}</label>
+                        {% elseif errors.badPassword is defined %}
+                            <label style="color: red" for="password-connexion">{{ errors.badPassword }}</label>
                         {% else %}
                             <label for="password-connexion">Mot de passe</label>
                         {% endif %}
@@ -35,7 +39,7 @@
                     <div class="form-floating my-2">
                         <input class="form-control" id="firstname-register" name="firstname-register" type="text" placeholder="Votre nom" required/>
                         {% if errors.firstnameRegister is defined %}
-                            <label for="firstname-register">{{ errors.firstnameRegister }}</label>
+                            <label style="color: red" for="firstname-register">{{ errors.firstnameRegister }}</label>
                         {% else %}
                             <label for="firstname-register">Prénom</label>
                         {% endif %}
@@ -43,7 +47,7 @@
                     <div class="form-floating my-2">
                         <input class="form-control" id="lastname-register" name="lastname-register" type="text" placeholder="Votre prénom" required/>
                         {% if errors.lastnameRegister is defined %}
-                            <label for="lastname-register">{{ errors.firstnameRegister }}</label>
+                            <label style="color: red" for="lastname-register">{{ errors.firstnameRegister }}</label>
                         {% else %}
                             <label for="lastname-register">Nom</label>
                         {% endif %}
@@ -51,7 +55,7 @@
                     <div class="form-floating my-2">
                         <input class="form-control" id="alias-register" name="alias-register" type="text" placeholder="Votre pseudo" required/>
                         {% if errors.aliasRegister is defined %}
-                            <label for="alias-register">{{ errors.aliasRegister }}</label>
+                            <label style="color: red" for="alias-register">{{ errors.aliasRegister }}</label>
                         {% else %}
                             <label for="alias-register">Pseudo</label>
                         {% endif %}
@@ -59,7 +63,7 @@
                     <div class="form-floating my-2">
                         <input class="form-control" id="mail-register" name="mail-register" type="email" placeholder="Votre e-mail" required/>
                         {% if errors.mailRegister is defined %}
-                            <label for="mail-register">{{ errors.mailRegister }}</label>
+                            <label style="color: red" for="mail-register">{{ errors.mailRegister }}</label>
                         {% else %}
                             <label for="mail-register">E-mail</label>
                         {% endif %}
@@ -67,13 +71,13 @@
                     <div class="form-floating my-2">
                         <input class="form-control" id="password-register" name="password-register" type="password" placeholder="Votre mot de passe" required/>
                         {% if errors.passwordRegister is defined %}
-                            <label for="password-register">{{ errors.passwordRegister }}</label>
+                            <label style="color: red" for="password-register">{{ errors.passwordRegister }}</label>
                         {% else %}
                             <label for="password-register">Mot de passe</label>
                         {% endif %}
                     </div>
                     <input type="hidden" id="register-form" name="register-form" value="1">
-                    <input class="btn btn-primary text-uppercase" type="submit" value="Connexion">
+                    <input class="btn btn-primary text-uppercase" type="submit" value="Inscription">
                     <br>
                 </form>
             </div>

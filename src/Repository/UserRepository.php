@@ -89,13 +89,17 @@ class UserRepository
         return self::getUserByEmail($user->getEmail());
     }
 
-    public static function getUserByEmail(string $mail) : User
+    public static function getUserByEmail(string $mail) : ?User
     {
         $pdo = DBConnection::getPDO();
         $sql = 'SELECT * FROM user WHERE email = ?';
         $select = $pdo->prepare($sql);
         $select->execute([$mail]);
         $userPDO = $select->fetch();
-        return UserFactory::createFromDatabase($userPDO);
+        if ($userPDO == null) {
+            return null;
+        } else {
+            return UserFactory::createFromDatabase($userPDO);
+        }
     }
 }

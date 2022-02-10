@@ -30,7 +30,7 @@
                         <td><p>{{ comment.createdAt | date('d/m/Y H:i:s') }}</p></td>
                         <td><p>{{ comment.isValidated ? '<p><i color="green" class="fa fa-check " aria-hidden="true"></i></p>' : '<p><i color="red" class="fa fa-times " aria-hidden="true"></i></p>' }}</p></td>
                         <td>
-                            <p><input class="btn btn-danger btn-sm" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ comment.id }}" value="Changer Statut"></p>
+                            <p><input class="btn btn-danger btn-sm text-uppercase" type="button" id="status-form" name="status-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ comment.id }}" value="Changer Statut"></p>
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{ comment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">

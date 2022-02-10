@@ -37,10 +37,16 @@ class ConnexionController extends AbstractController
             $errors = $this->validateSignInForm();
             if(empty($errors)) {
                 $user = UserRepository::getUserByEmail($_POST["mail-connexion"]);
-                //Vérifier la validité du password en comparant $user->getPassword() à $_POST["password-connexion"]
-                if ($user->checkPassword($_POST["password-connexion"])) {
-                    SessionService::createSession($user);
-                    $this->redirectToAdminHomepage();
+                if ($user == null) {
+                    $errors['userNotFound'] = "L'adresse mail saisie n'existe pas.";
+                } else {
+                    //Vérifier la validité du password en comparant $user->getPassword() à $_POST["password-connexion"]
+                    if ($user->checkPassword($_POST["password-connexion"])) {
+                        SessionService::createSession($user);
+                        $this->redirectToAdminHomepage();
+                    } else {
+                        $errors['badPassword'] = "Le mot de passe saisi est incorrect";
+                    }
                 }
             }
         }
@@ -76,7 +82,7 @@ class ConnexionController extends AbstractController
             Assertion::notEmpty($password);
             Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])"); // au moins 1 lettre majuscule ou minuscule, 1 chiffre et 1 caractère spécial
         } catch (AssertionFailedException $exception) {
-            $errors['passwordRegister'] = "Le format du mot de passe est invalide : au moins 1 lettre, 1 chiffre et 1 caractère spécial (8 caractères minimum)";
+            $errors['passwordRegister'] = "Format du mot de passe invalide : 1 lettre, 1 chiffre et 1 caractère spécial (8 caractères minimum)";
         }
         try {
             Assertion::betweenLength($password, 8,255);
@@ -123,7 +129,7 @@ class ConnexionController extends AbstractController
             Assertion::notEmpty($password);
             Assertion::regex($password,"([a-zA-Z]*[0-9]*[$&+,:;=?@#|'<>.^*()%!-])");
         } catch (AssertionFailedException $exception) {
-            $errors['passwordConnexion'] = "Le format du mot de passe est invalide : au moins 1 lettre, 1 chiffre et 1 caractère spécial (8 caractères minimum)";
+            $errors['passwordConnexion'] = "Format du mot de passe invalide : 1 lettre, 1 chiffre et 1 caractère spécial (8 caractères minimum)";
         }
         try {
             Assertion::betweenLength($password, 8,255);
