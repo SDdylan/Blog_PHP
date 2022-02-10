@@ -1,15 +1,18 @@
 
 # Blog PHP
 
-Ce projet est un blog en PHP réalisé dans le cadre de la formation PHP/Symfony de l'organisme OpenClassrooms.  
+Ce projet est un blog en PHP réalisé dans le cadre de la formation PHP/Symfony de l'organisme OpenClassrooms, réalisé selon l'architecture MVC.
+## Fonctionnalités
+Le visiteur peut naviguer sur les différentes pages du site dont le contenu découle d'une base de données stockant les informations des utilisateurs, articles et commentaires.
 
-Réalisé selon l'architecture MVC, le visiteur peut naviguer sur les différentes pages du site dont le contenu découle d'une base de donnée stockant les informations des utilisateurs, articles et commentaires.
-Un système d'authentification permet aux utilisateurs inscrits de commenter les articles mais également aux administrateurs d'interagir avec la base de donnée pour ajouter, modifier et supprimer du contenu.
+Un système d'authentification permet aux utilisateurs inscrits de commenter les articles mais également aux administrateurs d'interagir avec la base de données pour ajouter, modifier et supprimer du contenu.
 
 ## Technologies
 
 * PHP 7.4
 * Bootstrap 5
+* JavaScript
+* MySQL 5.7.36
 
 ### Libraries
 
@@ -23,7 +26,9 @@ Un système d'authentification permet aux utilisateurs inscrits de commenter les
 * [twig/extra-bundle](https://github.com/twigphp/twig-extra-bundle) 3.3
 ## Installation
 
-Dans un premier temps vous devez exécuter le script SQL **projet5-structure.sql** puis le script **projet5-donnees.sql** disponible à la racine du projet dans votre système de base de donnée.  
+Il suffit de placer le projet dans un serveur PHP classique et d'aller sur l'URL du VirtualHost configuré.  
+Pour la configuration d'un VirtualHost je vous laisse le soin de consulter la documentation de votre plateforme de développement web (par exemple: [WAMP](https://www.wampserver.com/) ou [XAMPP](https://doc.ubuntu-fr.org/xampp)).  
+Dans un premier temps vous devez exécuter le script SQL **projet5-structure.sql** puis le script **projet5-donnees.sql** disponible à la racine du projet dans votre système de base de données.
 
 Téléchargez et installez Composer en suivant les étapes de la [documentation officielle](https://getcomposer.org/download/).
 
@@ -33,9 +38,9 @@ Il faut ensuite installer les librairies, en exécutant cette commande dans un t
   composer install
 ```
 ### Variables d'environnement
-Une fois les librairies installées, vous devez configurer les variables d'environnement en copiant le contenu du fichier **.env.example** dans un nouveau fichier **.env** 
+Une fois les librairies installées, vous devez configurer les variables d'environnement en copiant le contenu du fichier **.env.example** dans un nouveau fichier **.env**
 
-Les valeurs devront être modifier en fonction de votre configuration au niveau de l'accès a votre système de base de donnée et de SMTP, nous vous recommandons par ailleurs l'utilisation de *MailTrap* pour la page de contact.
+Les valeurs devront être modifier en fonction de votre configuration au niveau de l'accès a votre système de base de données et de SMTP, nous vous recommandons par ailleurs l'utilisation de *[MailTrap](https://mailtrap.io/)* pour la page de contact.
 
 
 
@@ -43,3 +48,4 @@ Les valeurs devront être modifier en fonction de votre configuration au niveau 
 ## Auteurs
 
 [@SDdylan](https://github.com/SDdylan) sous la supervision de [@julienrusso-oc](https://github.com/julienrusso-oc).
+
