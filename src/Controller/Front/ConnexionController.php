@@ -37,7 +37,7 @@ class ConnexionController extends AbstractController
             $errors = $this->validateSignInForm();
             if(empty($errors)) {
                 $user = UserRepository::getUserByEmail($_POST["mail-connexion"]);
-                if ($user == null) {
+                if ($user === null) {
                     $errors['userNotFound'] = "L'adresse mail saisie n'existe pas.";
                 } else {
                     //Vérifier la validité du password en comparant $user->getPassword() à $_POST["password-connexion"]
