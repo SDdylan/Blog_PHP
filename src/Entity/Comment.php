@@ -123,6 +123,4 @@ class Comment
         $this->isValidated = $isValidated;
     }
 
-
-
 }

@@ -18,14 +18,13 @@ class CommentController extends AbstractController
         if (isset($_POST["comment-form"])) {
             //Validation des données (à compléter)
             $errors = $this->validateCommentForm();
-
             if (empty($errors)) {
                 $comment = CommentFactory::create($this->getUser(), $post, new \DateTime(), $_POST["comment-text"]);
                 //Insertion de l'utilisateur dans la BDD
                 CommentRepository::addComment($comment);
             }
         }
-        $this->redirectToUrl('/posts/' . $postId . '-' . $post->getSlug());
+        $this->redirectToUrl('/posts/' . $postId . '-' . $post->getSlug() . "?commented=true");
     }
 
     private function validateCommentForm(): array

@@ -10,10 +10,6 @@ class DBConnection {
 
     public static function getPDO(): PDO 
     {
-        //return self::$pdo ?? self::$pdo = new PDO("mysql:dbname={$_ENV['DATABASE_NAME']};host={$_ENV['DATABASE_HOST']}", $_ENV['DATABASE_USER'], $_ENV['DATABASE_PASSWORD'],
-        /*PDO::ATTR_ERRMODE -> PDO::ERRMODE_EXCEPTION, 
-        PDO_ATTR_DEFAULT_FETCH_MODE -> PDO::FETCH_OBJ);*/
-
         if (is_null(self::$pdo)) {
             $host= $_ENV['DATABASE_HOST'];
             $dbName=$_ENV['DATABASE_NAME'];

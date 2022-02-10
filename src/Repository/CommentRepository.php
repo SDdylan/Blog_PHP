@@ -12,10 +12,10 @@ class CommentRepository
     //Fonction pour récupérer tous les commentaires d'un post validés ou non
     public static function getCommentsPost(int $postId, bool $validOnly = true) : array
     {
-        $pdo = DBConnection::getPDO();
-        $validOnly = ($validOnly === true) ? ' AND is_validated = 1' : null;
-        $sql = 'SELECT * FROM comment WHERE post_id = ' . $postId . ' ' . $validOnly . ' ORDER BY created_at DESC ';
-        $commentsPDO = $pdo->query($sql);
+      $pdo = DBConnection::getPDO();
+        $sql = ($validOnly === true) ? 'SELECT * FROM comment WHERE post_id = ?  AND is_validated = 1 ORDER BY created_at DESC ' : 'SELECT * FROM comment WHERE post_id = ? ORDER BY created_at DESC ';
+        $commentsPDO = $pdo->prepare($sql);
+        $commentsPDO -> execute([$postId]);
         $comments =[];
         foreach ($commentsPDO as $comment) {
             $comments[] = CommentFactory::createFromDatabase($comment);
@@ -51,27 +51,6 @@ class CommentRepository
         $insert->execute($commentParams);
     }
 
-    //Supprimer un commentaire
-    public static function deleteComment(int $commentId) : void
-    {
-        $pdo = DBConnection::getPDO();
-        $sql = 'DELETE FROM comment WHERE id = ' . $commentId;
-        $commentPDO = $pdo->query($sql);
-    }
-
-    //Recupérer tout les commentaires d'un utilisateur
-    /*public static function getCommentsUser(int $idUser): array
-    {
-        $pdo = DBConnection::getPDO();
-        $sql = 'SELECT * FROM comment WHERE user_id = ' . $idUser . ' ORDER BY created_at DESC ';
-        $commentsPDO = $pdo->query($sql);
-        $comments =[];
-        foreach ($commentsPDO as $comment) {
-            $comments[] = $comment;
-        }
-        return $comments;
-    }*/
-
     public static function getNbComments() : int
     {
         $pdo = DBConnection::getPDO();
@@ -86,8 +65,7 @@ class CommentRepository
     {
         $nbComments = self::getNbComments();
         $nbpages = floatval($nbComments/10);
-        $nbpages = ceil($nbpages);
-        return $nbpages;
+        return ceil($nbpages);
     }
 
     //Récuperation et affichage de tout les commentaires d'un utilisateur
@@ -95,9 +73,10 @@ class CommentRepository
     {
         $pdo = DBConnection::getPDO();
         $nbComments = self::getNbComments();
-        $idUser = $user->getId();
-        $sql = $nbComments > $numPages * 10 && $numPages === 1 ? "SELECT * FROM comment WHERE user_id = " . $idUser . " ORDER BY created_at DESC LIMIT 10 " : "SELECT * FROM comment WHERE user_id = " . $idUser . " ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numPages - 1) * 10;
-        $commentsPDO = $pdo->query($sql);
+        $userId = $user->getId();
+        $sql = $nbComments > $numPages * 10 && $numPages === 1 ? "SELECT * FROM comment WHERE user_id = ? ORDER BY created_at DESC LIMIT 10 " : "SELECT * FROM comment WHERE user_id = ? ORDER BY created_at DESC LIMIT 10 OFFSET " . ($numPages - 1) * 10;
+        $commentsPDO = $pdo->prepare($sql);
+        $commentsPDO -> execute([$userId]);
         $comments = [];
         foreach ($commentsPDO as $commentPDO) {
             $comments[] = CommentFactory::createFromDatabase($commentPDO);
@@ -109,7 +88,20 @@ class CommentRepository
     {
         $pdo = DBConnection::getPDO();
         $new_status = $commentStatus == 0 ? 1 : 0;
-        $sql = 'UPDATE comment SET is_validated = ' . $new_status . ' WHERE id = ' . $comment->getId();
-        $commentsPDO = $pdo->query($sql);
+        $commentParams = [
+            'new_status' => $new_status,
+            'comment_id' => $comment->getId()
+        ];
+        $sql = 'UPDATE comment SET is_validated = :new_status WHERE id = :comment_id';
+        $commentPDO = $pdo->prepare($sql);
+        $commentPDO -> execute($commentParams);
+    }
+
+    public static function deleteCommentsForPost(int $postId) : void
+    {
+        $pdo = DBConnection::getPDO();
+        $sql = 'DELETE FROM comment WHERE post_id = ?';
+        $delete = $pdo->prepare($sql);
+        $delete->execute([$postId]);
     }
 }

@@ -12,7 +12,7 @@ class ChangeUserController extends AdminController
         try {
             //changement de statut de l'utilisateur
             if (isset($_POST["user-id"])) {
-                $user = UserRepository::getUser($_POST["user-id"]);
+                UserRepository::getUser($_POST["user-id"]);
                 UserRepository::changeStatusUser(UserRepository::getUser($_POST["user-id"]), $_POST["user-status"]);
             }
             $this->redirectToUrl('/admin/users');

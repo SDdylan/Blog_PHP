@@ -33,54 +33,59 @@
     <div id="form-comments" class="mb-4 px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-        <h4>Commentaires</h4>
-        {% if isLogged == true %}
-        <!-- Modal : Commentaire envoyé)
-        <div id="modalCommentaire" class="modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Commentaire posté</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4>Commentaires</h4>
+                {% if isLogged == true %}
+                <!-- Modal : Commentaire envoyé -->
+                <div id="modalComment" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Commentaire posté</h5>
+                            </div>
+                            <div class="modal-body row">
+                                <p>Votre commentaire à été envoyé avec succès, une vérification manuelle sera effectuée afin de le valider.</p>
+                                <button class="btn btn-primary col-md-2 offset-md-5 col-xs-8 offset-xs-2 close" type="button" data-dismiss="modal">OK</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <p>Votre commentaire à été envoyé avec succès, une vérification manuelle sera effectuée afin de le valider.</p>
+                </div>
+                <form id="addCommentForm" method="POST" class="row gx-4 gx-lg-5 justify-content-center" action="/posts/{{ post.id }}/comments/add">
+                    <div class="form-floating my-2">
+                        <input class="form-control" id="comment-text" name="comment-text" type="text" placeholder="Titre..." required/>
+                        <label for="comment-text">Commentaire</label>
+                    </div>
+                    <input type="hidden" id="comment-form" name="comment-form" value="1">
+                    <br/>
+                    <button class="btn btn-dark text-uppercase col-2" id="submitButton" type="submit">Envoyer</button>
+                </form>
+                {% else %}
+                <p class="row gx-4 gx-lg-5 justify-content-center">Vous devez être connecté pour commenter.</p>
+                {% endif %}
+            </div>
+            <!-- Comments -->
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                    {% for comment in comments %}
+                        <hr class="my-4" />
+                        <!-- Post preview-->
+                        <div class="card container">
+                            <div class="row">
+                                <span class="col-1 fa-stack fa-md">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                                </span>
+                                <h5 class="col-11">{{ comment.user.alias }}</h5>
+                                <p class="offset-1">Posté le {{ comment.createdAt|date('d-m-Y')  }} à {{ comment.createdAt|date('H:i') }}<br>
+                                    {{ comment.content }}
+                                </p>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                    {% endfor %}
                     </div>
                 </div>
             </div>
-        </div>-->
-        <form id="addCommentForm" method="POST" class="row gx-4 gx-lg-5 justify-content-center" action="/posts/{{ post.id }}/comments/add">
-            <div class="form-floating my-2">
-                <input class="form-control" id="comment-text" name="comment-text" type="text" placeholder="Titre..." required/>
-                <label for="comment-text">Commentaire</label>
-            </div>
-            <input type="hidden" id="comment-form" name="comment-form" value="1">
-            <br/>
-            <button class="btn btn-primary text-uppercase col-2" id="submitButton" type="submit">Envoyer</button>
-        </form>
-        {% else %}
-        <p class="row gx-4 gx-lg-5 justify-content-center">Vous devez être connecté pour commenter.</p>
-        {% endif %}
-    </div>
-    <!-- Comments -->
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-            {% for comment in comments %}
-                <hr class="my-4" />
-                <!-- Post preview-->
-                <div class="card">
-                    <h5>{{ comment.user.alias }}</h5>
-                    <p>Posté le {{ comment.createdAt|date('d-m-Y')  }} à {{ comment.createdAt|date('H:i') }}<br>
-                        {{ comment.content }}
-                    </p>
-                </div>
-                <hr class="my-4" /> 
-            {% endfor %}
-            </div>
-        </div>
-    </div>
         </div>
     </div>
 {% endblock %}
-    
