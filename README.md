@@ -26,21 +26,20 @@ Un système d'authentification permet aux utilisateurs inscrits de commenter les
 * [twig/extra-bundle](https://github.com/twigphp/twig-extra-bundle) 3.3
 ## Installation
 
-Il suffit de placer le projet dans un serveur PHP classique et d'aller sur l'URL du VirtualHost configuré.  
-Pour la configuration d'un VirtualHost je vous laisse le soin de consulter la documentation de votre plateforme de développement web (par exemple: [WAMP](https://www.wampserver.com/) ou [XAMPP](https://doc.ubuntu-fr.org/xampp)).  
-Dans un premier temps vous devez exécuter le script SQL **projet5-structure.sql** puis le script **projet5-donnees.sql** disponible à la racine du projet dans votre système de base de données.
+- Il suffit de placer le projet dans un serveur PHP classique et d'aller sur l'URL du VirtualHost configuré.  
+Pour la configuration d'un VirtualHost je vous laisse le soin de consulter la documentation de votre plateforme de développement web (par exemple: [WAMP](https://www.wampserver.com/) ou [XAMPP](https://doc.ubuntu-fr.org/xampp)).
+- Dans un second temps vous devez exécuter le script SQL **projet5-structure.sql** puis le script **projet5-donnees.sql** disponible dans le dossier **migration** dans votre système de base de données.
 
-Téléchargez et installez Composer en suivant les étapes de la [documentation officielle](https://getcomposer.org/download/).
-
+- Téléchargez et installez Composer en suivant les étapes de la [documentation officielle](https://getcomposer.org/download/).
 Il faut ensuite installer les librairies, en exécutant cette commande dans un terminal à la racine du projet :
 
 ```bash
   composer install
 ```
 ### Variables d'environnement
-Une fois les librairies installées, vous devez configurer les variables d'environnement en copiant le contenu du fichier **.env.example** dans un nouveau fichier **.env**
+- Une fois les librairies installées, vous devez configurer les variables d'environnement en copiant le contenu du fichier **.env.example** dans un nouveau fichier **.env**
 
-Les valeurs devront être modifier en fonction de votre configuration au niveau de l'accès a votre système de base de données et de SMTP, nous vous recommandons par ailleurs l'utilisation de *[MailTrap](https://mailtrap.io/)* pour la page de contact.
+- Les valeurs devront être modifier en fonction de votre configuration au niveau de l'accès a votre système de base de données et de SMTP, nous vous recommandons par ailleurs l'utilisation de *[MailTrap](https://mailtrap.io/)* pour la page de contact.
 
 
 
