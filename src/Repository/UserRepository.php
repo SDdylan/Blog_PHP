@@ -96,7 +96,7 @@ class UserRepository
         $select = $pdo->prepare($sql);
         $select->execute([$mail]);
         $userPDO = $select->fetch();
-        if ($userPDO === null) {
+        if ($userPDO === false) {
             return null;
         } else {
             return UserFactory::createFromDatabase($userPDO);
